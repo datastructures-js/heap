@@ -1,0 +1,40 @@
+{
+  "name": "@datastructures-js/heap",
+  "version": "0.0.0",
+  "description": "Heap (min & max) implementation in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datastructures-js/heap.git"
+  },
+  "keywords": [
+    "heap",
+    "min heap",
+    "max heap",
+    "heap js",
+    "heap es6",
+    "heap sort",
+    "heapify"
+  ],
+  "author": "Eyas Ranjous <https://github.com/eyas-ranjous>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/datastructures-js/heap/issues"
+  },
+  "homepage": "https://github.com/datastructures-js/heap#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "grunt": "^1.0.4",
+    "grunt-eslint": "^22.0.0",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "grunt-mocha-test": "^0.13.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.2.2"
+  }
+}
