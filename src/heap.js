@@ -103,6 +103,7 @@ class Heap {
   heapifyUp() {
     let childIndex = this.getLastIndex();
     let parentIndex = this.getParentIndex(childIndex);
+
     while (childIndex > 0 && this.shouldSwap(childIndex, parentIndex)) {
       this.swap(childIndex, parentIndex);
       childIndex = parentIndex;
@@ -117,6 +118,7 @@ class Heap {
   heapifyDown() {
     let parentIndex = 0;
     let childIndex = this.compareChildrenOf(parentIndex);
+
     while (childIndex > 0 && this.shouldSwap(childIndex, parentIndex)) {
       this.swap(childIndex, parentIndex);
       parentIndex = childIndex;
@@ -129,14 +131,17 @@ class Heap {
    * @param {number} i -  swapped node's index
    * @private
    */
-  heapifyDownUntil(i) {
+  heapifyDownUntil(index) {
     let parentIndex = 0;
     let leftChildIndex = 1;
     let rightChildIndex = 2;
     let childIndex;
+
     while (rightChildIndex < i) {
       childIndex = this.compareChildrenUntil(
-        i, leftChildIndex, rightChildIndex
+        index,
+        leftChildIndex,
+        rightChildIndex
       );
 
       if (this.shouldSwap(childIndex, parentIndex)) {
@@ -159,6 +164,7 @@ class Heap {
       this.swap(0, i);
       this.heapifyDownUntil(i);
     }
+
     return this.nodes;
   }
 

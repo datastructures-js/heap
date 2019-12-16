@@ -24,9 +24,9 @@ class MaxHeap extends Heap {
 
   /**
    * gets the max child's index of two node's children
+   * @private
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
-   * @privaye
    * @returns {number}
    */
   getMaxChildIndex(leftChildIndex, rightChildIndex) {
@@ -83,6 +83,7 @@ class MaxHeap extends Heap {
   /**
    * applies a shallow clone on the max heap
    * @public
+   * @override
    * @returns {MinHeap}
    */
   clone() {
@@ -93,6 +94,7 @@ class MaxHeap extends Heap {
    * builds a max heap from an array of items
    * @param {array} items
    * @public
+   * @override
    * @static
    * @returns {MaxHeap}
    */

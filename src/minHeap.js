@@ -24,9 +24,9 @@ class MinHeap extends Heap {
 
   /**
    * gets the min child's index of two node's children
+   * @private
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
-   * @privaye
    * @returns {number}
    */
   getMinChildIndex(leftChildIndex, rightChildIndex) {
@@ -71,6 +71,7 @@ class MinHeap extends Heap {
   /**
    * applies a shallow clone on the min heap
    * @public
+   * @override
    * @returns {MinHeap}
    */
   clone() {
@@ -81,6 +82,7 @@ class MinHeap extends Heap {
    * builds a min heap from an array of items
    * @param {array} items
    * @public
+   * @override
    * @static
    * @returns {MinHeap}
    */
