@@ -1,9 +1,11 @@
 # @datastructures-js/heap
-Javscript implementation for the Min/Max Heap Data Structures & Heap Sort Algorithm.
-
 [![build:?](https://travis-ci.org/datastructures-js/heap.svg?branch=master)](https://travis-ci.org/datastructures-js/heap) 
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
+
+Javscript implementation for the Min/Max Heap Data Structures & Heap Sort Algorithm.
+
+![heap](https://user-images.githubusercontent.com/6517308/70871547-bd852900-1f65-11ea-909f-86f4d090f152.jpg)
 
 # API
 
