@@ -151,7 +151,7 @@ console.log(minHeap.root().getKey()); // 30
 ```
 
 ### .sort()
-implements Heap Sort and sorts a heap in ascending order for Max Heap or descending order for Min Heap.
+implements Heap Sort and sorts a **Max Heap in ascneding order** or a **Min Heap in descending order**.
 
 calling .sort() directly on a heap will mutate its nodes location. To avoid that, you can sort a shallow copy of the heap.
 
