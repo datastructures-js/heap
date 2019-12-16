@@ -91,7 +91,7 @@ maxHeap.insert(20, { name: 'test' });
 returned with .root() & .extractRoot() functions. It implements the following interface
 
 #### .getKey()
-returns the node's key (number or string) that is used to compare with other.
+returns the node's key (number or string) that is used to compare with other nodes.
 
 #### .getValue()
 returns the value that is associated with the key.
