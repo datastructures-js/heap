@@ -1,6 +1,6 @@
 {
   "name": "@datastructures-js/heap",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Heap (min & max) implementation in javascript",
   "main": "index.js",
   "scripts": {
