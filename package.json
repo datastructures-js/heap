@@ -1,7 +1,7 @@
 {
   "name": "@datastructures-js/heap",
-  "version": "1.0.0",
-  "description": "Heap (min & max) implementation in javascript",
+  "version": "1.0.1",
+  "description": "Min/Max Heap & Heap Sort implementation in javascript",
   "main": "index.js",
   "scripts": {
     "test": "grunt test"
