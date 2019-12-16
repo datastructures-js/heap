@@ -169,8 +169,9 @@ class Heap {
   }
 
   /**
-   * applies a shallow clone on a heap
+   * returns a shallow copy of a heap
    * @protected
+   * @param {class} HeapType
    * @returns {Heap}
    */
   clone(HeapType) {
@@ -236,7 +237,7 @@ class Heap {
   /**
    * convert a list of items into a heap
    * @param {array} items
-   * @param {Class} HeapType
+   * @param {class} HeapType
    * @protected
    * @static
    * @returns {Heap}

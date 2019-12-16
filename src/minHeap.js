@@ -81,7 +81,7 @@ class MinHeap extends Heap {
   }
 
   /**
-   * applies a shallow clone on the min heap
+   * returns a shallow copy of a min heap
    * @public
    * @override
    * @returns {MinHeap}
