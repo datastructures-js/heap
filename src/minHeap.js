@@ -55,7 +55,6 @@ class MinHeap extends Heap {
     return leftChildIndex;
   }
 
-
   /**
    * implements the parent's function to select a child's index
    * @protected

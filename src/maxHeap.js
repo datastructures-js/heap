@@ -49,10 +49,10 @@ class MaxHeap extends Heap {
   getMaxChildIndexBefore(index, leftChildIndex, rightChildIndex) {
     const leftChild = this.nodes[leftChildIndex];
     const rightChild = this.nodes[rightChildIndex];
-    if (leftChild.getKey() > rightChild.getKey() && leftChildIndex < index) {
-      return leftChildIndex;
+    if (rightChild.getKey() > leftChild.getKey() && rightChildIndex < index) {
+      return rightChildIndex;
     }
-    return rightChildIndex;
+    return leftChildIndex;
   }
 
   /**

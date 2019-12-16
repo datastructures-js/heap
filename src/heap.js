@@ -137,7 +137,7 @@ class Heap {
     let rightChildIndex = 2;
     let childIndex;
 
-    while (rightChildIndex < index) {
+    while (leftChildIndex < index) {
       childIndex = this.compareChildrenBefore(
         index,
         leftChildIndex,
