@@ -41,15 +41,15 @@ class MaxHeap extends Heap {
   /**
    * returns the max child's index of two children before an index
    * @private
-   * @param {number} i
+   * @param {number} index
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
    * @returns {number}
    */
-  getMaxChildIndexBefore(i, leftChildIndex, rightChildIndex) {
+  getMaxChildIndexBefore(index, leftChildIndex, rightChildIndex) {
     const leftChild = this.nodes[leftChildIndex];
     const rightChild = this.nodes[rightChildIndex];
-    if (leftChild.getKey() > rightChild.getKey() && leftChildIndex < i) {
+    if (leftChild.getKey() > rightChild.getKey() && leftChildIndex < index) {
       return leftChildIndex;
     }
     return rightChildIndex;
@@ -71,13 +71,13 @@ class MaxHeap extends Heap {
    * implements the parent's function to select a child's index before an index
    * @protected
    * @override
-   * @param {number} i
+   * @param {number} index
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
    * @returns {number}
    */
-  compareChildrenUntil(i, leftChildIndex, rightChildIndex) {
-    return this.getMaxChildIndexBefore(i, leftChildIndex, rightChildIndex);
+  compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
+    return this.getMaxChildIndexBefore(index, leftChildIndex, rightChildIndex);
   }
 
   /**

@@ -39,6 +39,24 @@ class MinHeap extends Heap {
   }
 
   /**
+   * returns the min child's index of two children before an index
+   * @private
+   * @param {number} index
+   * @param {number} leftChildIndex
+   * @param {number} rightChildIndex
+   * @returns {number}
+   */
+  getMinChildIndexBefore(index, leftChildIndex, rightChildIndex) {
+    const leftChild = this.nodes[leftChildIndex];
+    const rightChild = this.nodes[rightChildIndex];
+    if (rightChild.getKey() < leftChild.getKey() && rightChildIndex < index) {
+      return rightChildIndex;
+    }
+    return leftChildIndex;
+  }
+
+
+  /**
    * implements the parent's function to select a child's index
    * @protected
    * @override
@@ -54,18 +72,13 @@ class MinHeap extends Heap {
    * implements the parent's function to select a child's index before an index
    * @protected
    * @override
-   * @param {number} i
+   * @param {number} index
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
    * @returns {number}
    */
-  compareChildrenUntil(index, leftChildIndex, rightChildIndex) {
-    const leftChild = this.nodes[leftChildIndex];
-    const rightChild = this.nodes[rightChildIndex];
-    if (rightChild.getKey() < leftChild.getKey() && rightChildIndex < index) {
-      return rightChildIndex;
-    }
-    return leftChildIndex;
+  compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
+    return this.getMinChildIndexBefore(index, leftChildIndex, rightChildIndex);
   }
 
   /**
