@@ -45,7 +45,7 @@ O(n)
 ##### params
 list : *array* of *number*, *string* or *serialized heap node*
 
-##### return
+##### return : {Heap}
 *MinHeap* or *MaxHeap* instance.
 
 ##### Example
@@ -117,8 +117,8 @@ peeks on the root without removing it.
 ##### runtime
 O(1)
 
-##### return
-*HeapNode* the root node in the heap. It implements the following interface
+##### return : {HeapNode}
+the root node in the heap. It implements the following interface
 
 ###### .getKey()
 returns the node's key that is used to compare with other nodes.
@@ -149,8 +149,8 @@ removes and returns the root node in the heap.
 ##### runtime
 O(log(n))
 
-##### return
-*HeapNode* the root node in the heap.
+##### return : {HeapNode}
+the root node in the heap.
 
 ##### Example
 
@@ -173,8 +173,8 @@ console.log(maxHeap.root().getKey()); // 'x'
 ##### runtime
 O(1)
 
-##### return
-*number* the number of nodes in the heap.
+##### return : {number}
+the number of nodes in the heap.
 
 ##### Example
 ```js
@@ -202,13 +202,13 @@ console.log(minHeap.root().getKey()); // 30
 ```
 
 ### .sort()
-implements Heap Sort and sorts a **Max Heap in ascneding order** or a **Min Heap in descending order**.
+implements Heap Sort and sorts a *Max Heap in ascneding order* or a *Min Heap in descending order*.
 
 ##### runtime
 O(n\*log(n))
 
-##### return
-*array* a sorted list by key of the heap nodes.
+##### return : {array}
+a sorted list by key of the heap nodes.
 
 *note : calling .sort() directly on a heap will mutate its nodes location. If you want to avoid that, you can sort a shallow copy of the heap.*
 
