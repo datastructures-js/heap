@@ -176,7 +176,8 @@ console.log(maxHeap.root().getKey()); // 'x'
 ##### runtime
 O(n)
 
-##### return : {array<object>}
+##### return : {array\<object\>}
+
 a serialized list of heap nodes
 
 ##### Example
