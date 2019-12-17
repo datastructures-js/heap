@@ -172,6 +172,7 @@ console.log(maxHeap.root().getKey()); // 'x'
 ```
 
 ### .serialize()
+converts the heap into a list of serialized nodes.
 
 ##### runtime
 O(n)
