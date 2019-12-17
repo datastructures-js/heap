@@ -43,7 +43,8 @@ converts an array of objects to a heap.
 O(n)
 
 ##### params
-list : *array* of *number*, *string* or *serialized heap node*
+###### list<{number}|{string}|{object}> : {array}
+elements can be number, string or serialized heap node objects.
 
 ##### return : {Heap}
 *MinHeap* or *MaxHeap* instance.
@@ -83,9 +84,11 @@ insert a node into the heap.
 O(log(n))
 
 ##### params
-key : *number* or *string* the value that is used to compare nodes in the heap.
+###### key : {number} | {string}
+the value that is used to compare nodes in the heap.
 
-value : *object* the value that is associated with a key.
+###### value {object}
+the value that is associated with a key.
 
 ##### Example
 
@@ -188,7 +191,7 @@ creates a shallow copy of a heap by slicing the nodes array and passing it to a 
 ##### runtime
 O(n)
 
-##### return
+##### return : {Heap}
 *MinHeap* or *MaxHeap* instance.
 
 ##### Example
