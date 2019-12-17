@@ -192,6 +192,16 @@ class Heap {
   }
 
   /**
+   * returns the root node in the heap
+   * @public
+   * @returns {HeapNode}
+   */
+  root() {
+    if (this.size() === 0) return null;
+    return this.nodes[0];
+  }
+
+  /**
    * removes and returns the root node in the heap
    * @public
    * @returns {HeapNode}
@@ -208,22 +218,21 @@ class Heap {
   }
 
   /**
-   * returns the root node in the heap
-   * @public
-   * @returns {HeapNode}
-   */
-  root() {
-    if (this.size() === 0) return null;
-    return this.nodes[0];
-  }
-
-  /**
    * returns the number of nodes in the heap
    * @public
    * @returns {number}
    */
   size() {
     return this.nodes.length;
+  }
+
+  /**
+   * serializes the heap nodes into a list of objects
+   * @public
+   * @returns {array}
+   */
+  serialize() {
+    return this.nodes.map((n) => n.serialize());
   }
 
   /**

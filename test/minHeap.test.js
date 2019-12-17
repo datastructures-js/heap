@@ -46,6 +46,41 @@ describe('MinHeap unit tests', () => {
     });
   });
 
+  describe('.serialize()', () => {
+    it('should serialize the heap nodes', () => {
+      expect(minHeap.serialize()).to.deep.equal([
+        {
+          key: 20,
+          value: { name: 'test' }
+        },
+        {
+          key: 60,
+          value: null
+        },
+        {
+          key: 30,
+          value: 'something'
+        },
+        {
+          key: 90,
+          value: undefined
+        },
+        {
+          key: 80,
+          value: undefined
+        },
+        {
+          key: 50,
+          value: undefined
+        },
+        {
+          key: 40,
+          value: undefined
+        }
+      ]);
+    });
+  });
+
   describe('.extractRoot()', () => {
     it('should extract the root (min key) from the heap', () => {
       expect(minHeap.extractRoot().serialize()).to.deep.equal({

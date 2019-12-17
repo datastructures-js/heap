@@ -46,6 +46,41 @@ describe('MaxHeap unit tests', () => {
     });
   });
 
+  describe('.serialize()', () => {
+    it('should serialize the heap nodes', () => {
+      expect(maxHeap.serialize()).to.deep.equal([
+        {
+          key: 90,
+          value: undefined
+        },
+        {
+          key: 80,
+          value: undefined
+        },
+        {
+          key: 40,
+          value: undefined
+        },
+        {
+          key: 50,
+          value: undefined
+        },
+        {
+          key: 60,
+          value: null
+        },
+        {
+          key: 30,
+          value: 'something'
+        },
+        {
+          key: 20,
+          value: { name: 'test' }
+        }
+      ]);
+    });
+  });
+
   describe('.extractRoot()', () => {
     it('should extract the root (max key) from the heap', () => {
       expect(maxHeap.extractRoot().serialize()).to.deep.equal({
