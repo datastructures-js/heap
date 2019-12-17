@@ -171,6 +171,42 @@ console.log(max.serialize()); // { key: 'z', value: null }
 console.log(maxHeap.root().getKey()); // 'x'
 ```
 
+### .serialize()
+
+##### runtime
+O(n)
+
+##### return : {array<object>}
+a serialized list of heap nodes
+
+##### Example
+
+```js
+console.log(minHeap.serialize());
+/*
+[
+  { key: 30, value: 'something' },
+  { key: 60, value: null },
+  { key: 40, value: undefined },
+  { key: 90, value: undefined },
+  { key: 80, value: undefined },
+  { key: 50, value: undefined }
+]
+*/
+
+console.log(maxHeap.serialize());
+/*
+[
+  { key: 'x', value: undefined },
+  { key: 'm', value: undefined },
+  { key: 'k', value: undefined },
+  { key: 'b', value: undefined },
+  { key: 'c', value: { name: 'test' } },
+  { key: 'f', value: 'something' }
+]
+*/
+```
+
 ### .size()
 
 ##### runtime
