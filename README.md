@@ -29,6 +29,7 @@ import { MinHeap, MaxHeap } from '@datastructures-js/heap';
 #### new
 creates an empty heap.
 
+##### Example
 ```js
 const minHeap = new MinHeap();
 
@@ -38,10 +39,19 @@ const maxHeap = new MaxHeap();
 #### .heapify(list)
 converts an array of objects to a heap.
 
-the function can read a list elements that are **number**, **string**, or a **serialized heap node** like `{ key: 10, value: { someProp: 'someVal' } }`.
+##### runtime
+O(n)
 
+##### params
+###### list
+**array** of **number**, **string** or **serialized heap node**
+
+##### return
+**MinHeap** or **MaxHeap** instance.
+
+##### Example
 ```js
-const list = [
+const numList = [
   50,
   80,
   { key: 30, value: 'something' },
@@ -51,20 +61,35 @@ const list = [
   { key: 20, value: { name: 'test' } }
 ];
 
-const minHeap = MinHeap.heapify(list);
+const strList = [
+  'm',
+  'x',
+  { key: 'f', value: 'something' },
+  'b',
+  { key: 'z', value: null },
+  'k',
+  { key: 'c', value: { name: 'test' } }
+];
 
-const maxHeap = MaxHeap.heapify(list);
+const minHeap = MinHeap.heapify(numList);
+
+const maxHeap = MaxHeap.heapify(strList);
 ```
 
 ### .insert(key, value)
 insert a node into the heap.
 
-**key** can be a **number** or a **string**
+#### runtime
+O(log(n))
 
-**value** can be any **object** type.
+#### params
+##### key
+**number** or **string** the value that is used to compare nodes in the heap.
 
-a heap node is created as an instance of **NodeHeap**.
+##### value
+**object** the value that is associated with a key.
 
+#### Example
 ```js
 const minHeap = new MinHeap();
 
@@ -78,30 +103,34 @@ minHeap.insert(60, null);
 minHeap.insert(40);
 minHeap.insert(20, { name: 'test' });
 
-maxHeap.insert(50);
-maxHeap.insert(80);
-maxHeap.insert(30, 'something');
-maxHeap.insert(90);
-maxHeap.insert(60, null);
-maxHeap.insert(40);
-maxHeap.insert(20, { name: 'test' });
+maxHeap.insert('m');
+maxHeap.insert('x');
+maxHeap.insert('f', 'something');
+maxHeap.insert('b');
+maxHeap.insert('z', null);
+maxHeap.insert('k');
+maxHeap.insert('c', { name: 'test' });
 ```
 
-### HeapNode
-returned with .root() & .extractRoot() functions. It implements the following interface
+### .root()
+peeks on the root without removing it.
 
-#### .getKey()
-returns the node's key (number or string) that is used to compare with other nodes.
+##### runtime
+O(1)
 
-#### .getValue()
+#### return
+**HeapNode** the root node in the heap.
+
+##### .getKey()
+returns the node's key that is used to compare with other nodes.
+
+##### .getValue()
 returns the value that is associated with the key.
 
-#### .serialize()
+##### .serialize()
 returns an object literal of key/value of the node.
 
-### .root()
-returns (peeks) the root node without removing it.
-
+#### Example
 ```js
 const min = minHeap.root();
 console.log(min.getKey()); // 20
@@ -109,14 +138,21 @@ console.log(min.getValue()); // { name: 'test' }
 console.log(min.serialize()); // { key: 20, value: { name: 'test' } }
 
 const max = maxHeap.root();
-console.log(max.getKey()); // 90
-console.log(max.getValue()); // undefined
-console.log(max.serialize()); // { key: 90, value: undefined }
+console.log(max.getKey()); // 'z'
+console.log(max.getValue()); // null
+console.log(max.serialize()); // { key: 'z', value: null }
 ```
 
 ### .extractRoot()
-returns and remove the root node in the heap.
+removes and returns the root node in the heap.
 
+#### runtime
+O(log(n))
+
+#### return
+**HeapNode** the root node in the heap.
+
+#### Example
 ```js
 const min = minHeap.extractRoot();
 console.log(min.getKey()); // 20
@@ -125,15 +161,21 @@ console.log(min.serialize()); // { key: 20, value: { name: 'test' } }
 console.log(minHeap.root().getKey()); // 30
 
 const max = maxHeap.extractRoot();
-console.log(max.getKey()); // 90
-console.log(max.getValue()); // undefined
-console.log(max.serialize()); // { key: 20, value: undefined }
-console.log(maxHeap.root().getKey()); // 80
+console.log(max.getKey()); // 'z'
+console.log(max.getValue()); // null
+console.log(max.serialize()); // { key: 'z', value: null }
+console.log(maxHeap.root().getKey()); // 'x'
 ```
 
 ### .size()
-returns the number of nodes in the heap.
 
+#### runtime
+O(1)
+
+#### return
+**number** the number of nodes in the heap.
+
+#### Example
 ```js
 console.log(minHeap.size()); // 6
 console.log(maxHeap.size()); // 6
@@ -142,6 +184,13 @@ console.log(maxHeap.size()); // 6
 ### .clone()
 creates a shallow copy of a heap by slicing the nodes array and passing it to a new heap instance. 
 
+#### runtime
+O(n)
+
+#### return
+**MinHeap** or **MaxHeap** instance.
+
+#### Example
 ```js
 const minHeapClone = minHeap.clone();
 minHeapClone.extractRoot();
@@ -153,23 +202,63 @@ console.log(minHeap.root().getKey()); // 30
 ### .sort()
 implements Heap Sort and sorts a **Max Heap in ascneding order** or a **Min Heap in descending order**.
 
-calling .sort() directly on a heap will mutate its nodes location. To avoid that, you can sort a shallow copy of the heap.
+#### runtime
+O(n\*log(n))
 
+#### return
+**array** a sorted list by key of the heap nodes.
+
+#### *note*
+calling .sort() directly on a heap will mutate its nodes location. If you want to avoid that, you can sort a shallow copy of the heap.
+
+#### Example
 ```js
-const sortedAsc = maxHeap.clone().sort(); // does not mutate the heap structure
-const sortedDesc = minHeap.clone().sort(); // does not mutate the heap structure
+console.log(maxHeap.clone().sort()); // does not mutate the heap structure
+/*
+[
+  HeapNode { key: 'b', value: undefined },
+  HeapNode { key: 'c', value: { name: 'test' } },
+  HeapNode { key: 'f', value: 'something' },
+  HeapNode { key: 'k', value: undefined },
+  HeapNode { key: 'm', value: undefined },
+  HeapNode { key: 'x', value: undefined }
+]
+*/
+console.log(maxHeap.root()); // HeapNode { key: 'x', value: undefined }
+
+console.log(minHeap.clone().sort()); // does not mutate the heap structure
+/*
+[
+  HeapNode { key: 90, value: undefined },
+  HeapNode { key: 80, value: undefined },
+  HeapNode { key: 60, value: null },
+  HeapNode { key: 50, value: undefined },
+  HeapNode { key: 40, value: undefined },
+  HeapNode { key: 30, value: 'something' }
+]
+*/
+console.log(minHeap.root()); // HeapNode { key: 30, value: 'something' }
 ```
 
-If you are using this npm for the purpose of sorting a list of elements using Heap Sort, you can do it like this
+If you are using this npm for the purpose of sorting a list of elements using Heap Sort, you can do this:
 
 ```js
-const sortedAsc = MaxHeap.heapify(unsortedList).sort();
-const sortedDesc = MinHeap.heapify(unsortedList).sort();
+const unsortedList = [3, 7, 2, 10, 4, 9, 8, 5, 1, 6];
+
+const ascSorted = MaxHeap.heapify(unsortedList).sort().map(n => n.getKey());
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+const descSorted = MinHeap.heapify(unsortedList).sort().map(n => n.getKey());
+// [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 ```
 
 ### .clear()
 clears the nodes in the heap
 
+#### runtime
+O(n\*log(n))
+
+#### Example
 ```js
 minHeap.clear();
 maxHeap.clear();
