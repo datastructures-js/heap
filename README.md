@@ -87,7 +87,7 @@ O(log(n))
 ###### key : {number} | {string}
 the value that is used to compare nodes in the heap.
 
-###### value {object}
+###### value : {object}
 the value that is associated with a key.
 
 ##### Example
