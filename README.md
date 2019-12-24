@@ -214,14 +214,19 @@ console.log(maxHeap.root().getKey()); // 'x'
 ```
 
 <h3 id="serialize-topic">.serialize()</h3>
-converts the heap into a list of serialized nodes.
+converts the heap into a list of serialized nodes objects.
 
-##### runtime
-O(n)
-
-##### return : {array\<object\>}
-
-a serialized list of heap nodes
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(n)</td>
+  <td>{array}
+</td>
+ </tr>
+</table>
 
 ##### Example
 
@@ -253,11 +258,17 @@ console.log(maxHeap.serialize());
 
 ### .size()
 
-##### runtime
-O(1)
-
-##### return : {number}
-the number of nodes in the heap.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(1)</td>
+  <td>{number}
+</td>
+ </tr>
+</table>
 
 ##### Example
 ```js
@@ -268,11 +279,17 @@ console.log(maxHeap.size()); // 6
 ### .clone()
 creates a shallow copy of a heap by slicing the nodes array and passing it to a new heap instance. 
 
-##### runtime
-O(n)
-
-##### return : {Heap}
-*MinHeap* or *MaxHeap* instance.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(n)</td>
+  <td>{MinHeap} or {MaxHeap}
+</td>
+ </tr>
+</table>
 
 ##### Example
 
@@ -287,11 +304,17 @@ console.log(minHeap.root().getKey()); // 30
 ### .sort()
 implements Heap Sort and sorts a *Max Heap in ascneding order* or a *Min Heap in descending order*.
 
-##### runtime
-O(n\*log(n))
-
-##### return : {array}
-a sorted list by key of the heap nodes.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(n\*log(n))</td>
+  <td>{array}<br>a sorted list by key of the heap nodes.
+</td>
+ </tr>
+</table>
 
 *note : calling .sort() directly on a heap will mutate its nodes location. If you want to avoid that, you can sort a shallow copy of the heap.*
 
@@ -324,8 +347,7 @@ console.log(minHeap.clone().sort()); // does not mutate the heap structure
 */
 console.log(minHeap.root()); // HeapNode { key: 30, value: 'something' }
 ```
-
-If you are using this npm for the purpose of sorting a list of elements using Heap Sort, you can do this:
+To sort a list of elements directtly using Heap Sort, it can be done like:
 
 ```js
 const unsortedList = [3, 7, 2, 10, 4, 9, 8, 5, 1, 6];
@@ -340,8 +362,14 @@ const descSorted = MinHeap.heapify(unsortedList).sort().map(n => n.getKey());
 ### .clear()
 clears the nodes in the heap.
 
-##### runtime
-O(1)
+<table>
+ <tr>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>O(1)</td>
+ </tr>
+</table>
 
 ##### Example
 
