@@ -310,7 +310,7 @@ implements Heap Sort and sorts a *Max Heap in ascneding order* or a *Min Heap in
   <th>return</th>
  </tr>
  <tr>
-  <td>O(n\*log(n))</td>
+  <td>O(n*log(n))</td>
   <td>{array}<br>a sorted list by key of the heap nodes.
 </td>
  </tr>
