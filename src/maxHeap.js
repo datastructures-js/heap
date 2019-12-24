@@ -84,7 +84,7 @@ class MaxHeap extends Heap {
    * returns a shallow copy of a max heap
    * @public
    * @override
-   * @returns {MinHeap}
+   * @returns {MaxHeap}
    */
   clone() {
     return super.clone(MaxHeap);
