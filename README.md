@@ -155,7 +155,7 @@ peeks on the root without removing it.
   <td>
    <b>list</b>: {array}<br>elements can be {number}, {string} or serialized heap node.
   </td>
-  <td>{HeapNode}<br>the root node in the heap. It implements the following interface
+  <td>{HeapNode}
    <br><br>
 
 <b>.getKey()</b> returns the node's key that is used to compare with other nodes.
@@ -185,11 +185,17 @@ console.log(max.serialize()); // { key: 'z', value: null }
 ### .extractRoot()
 removes and returns the root node in the heap.
 
-##### runtime
-O(log(n))
-
-##### return : {HeapNode}
-the root node in the heap.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(log(n))</td>
+  <td>{HeapNode}
+</td>
+ </tr>
+</table>
 
 ##### Example
 
