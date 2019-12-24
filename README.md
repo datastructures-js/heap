@@ -7,6 +7,24 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 
 ![heap](https://user-images.githubusercontent.com/6517308/70871547-bd852900-1f65-11ea-909f-86f4d090f152.jpg)
 
+# Table of Contents
+* [Install](#install)
+* [API](#build)
+  * [require](#require)
+  * [import](#import)
+  * [Creating a Heap](#create-a-heap)
+    * [new](#new)
+    * [.heapify(list)](#heapifylist)
+  * [.insert(key, value)](#insertkey-value)
+  * [.root()](#root)
+  * [.extractRoot()](#extractroot)
+  * [.serialize()](#serialize)
+  * [.size()](#size)
+  * [.clone()](#clone)
+  * [.sort()](#sort)
+  * [.clear()](#clear)
+ * [Build](#build)
+
 ## install
 ```sh
 npm install --save @datastructures-js/heap
