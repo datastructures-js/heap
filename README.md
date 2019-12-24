@@ -57,15 +57,20 @@ const maxHeap = new MaxHeap();
 #### .heapify(list)
 converts an array of objects to a heap.
 
-##### runtime
-O(n)
-
-##### params
-###### list<{number}|{string}|{object}> : {array}
-elements can be number, string or serialized heap node objects.
-
-##### return : {Heap}
-*MinHeap* or *MaxHeap* instance.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>params</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(n)</td>
+  <td>
+   <b>list</b>: {array}<br>elements can be {number}, {string} or serialized heap node.
+  </td>
+  <td>{MinHeap} or {MaxHeap}</td>
+ </tr>
+</table>
 
 ##### Example
 
@@ -97,16 +102,20 @@ const maxHeap = MaxHeap.heapify(strList);
 
 ### .insert(key, value)
 insert a node into the heap.
-
-##### runtime
-O(log(n))
-
-##### params
-###### key : {number} | {string}
-the value that is used to compare nodes in the heap.
-
-###### value : {object}
-the value that is associated with a key.
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>params</th>
+ </tr>
+ <tr>
+  <td>O(log(n))</td>
+  <td>
+   <b>key</b>: {number} or {string}<br>the value that is used to compare nodes in the heap
+   <br><br>
+   <b>value</b>: {object}<br>the value that is associated with a key
+  </td>
+ </tr>
+</table>
 
 ##### Example
 
@@ -135,20 +144,29 @@ maxHeap.insert('c', { name: 'test' });
 ### .root()
 peeks on the root without removing it.
 
-##### runtime
-O(1)
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>params</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(1)</td>
+  <td>
+   <b>list</b>: {array}<br>elements can be {number}, {string} or serialized heap node.
+  </td>
+  <td>{HeapNode}<br>the root node in the heap. It implements the following interface
+   <br><br>
 
-##### return : {HeapNode}
-the root node in the heap. It implements the following interface
+<b>.getKey()</b> returns the node's key that is used to compare with other nodes.
 
-###### .getKey()
-returns the node's key that is used to compare with other nodes.
+<b>.getValue()</b> returns the value that is associated with the key.
 
-###### .getValue()
-returns the value that is associated with the key.
+<b>.serialize()</b> returns an object literal of key/value of the node.
 
-###### .serialize()
-returns an object literal of key/value of the node.
+</td>
+ </tr>
+</table>
 
 ##### Example
 
