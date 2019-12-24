@@ -9,7 +9,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 
 # Table of Contents
 * [Install](#install)
-* [API](#build)
+* [API](#api)
   * [require](#require)
   * [import](#import)
   * [Creating a Heap](#create-a-heap)
@@ -18,7 +18,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
   * [.insert(key, value)](#insertkey-value)
   * [.root()](#root)
   * [.extractRoot()](#extractroot)
-  * [.serialize()](#serialize)
+  * [.serialize()](#serialize-topic)
   * [.size()](#size)
   * [.clone()](#clone)
   * [.sort()](#sort)
@@ -189,7 +189,7 @@ console.log(max.serialize()); // { key: 'z', value: null }
 console.log(maxHeap.root().getKey()); // 'x'
 ```
 
-### .serialize()
+<h3 id="serialize-topic">.serialize()</h3>
 converts the heap into a list of serialized nodes.
 
 ##### runtime
