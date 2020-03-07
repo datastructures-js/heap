@@ -12,14 +12,14 @@ const Heap = require('./heap');
  */
 class MinHeap extends Heap {
   /**
-   * checks if the min child should be swapped with its parent
+   * checks if child's key is smaller than its parent's key
    * @protected
    * @returns {boolean}
    */
-  shouldSwap(minChildIndex, parentIndex) {
-    const minChild = this.nodes[minChildIndex];
+  shouldSwap(childIndex, parentIndex) {
+    const child = this.nodes[childIndex];
     const parent = this.nodes[parentIndex];
-    return minChild.getKey() < parent.getKey();
+    return child.getKey() < parent.getKey();
   }
 
   /**
