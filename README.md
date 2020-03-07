@@ -24,6 +24,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
   * [.sort()](#sort)
   * [.clear()](#clear)
  * [Build](#build)
+ * [License](#license)
 
 ## install
 ```sh
