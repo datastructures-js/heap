@@ -38,10 +38,19 @@ describe('MaxHeap unit tests', () => {
   });
 
   describe('.root()', () => {
-    it('should get the root of the heap', () => {
+    it('should get the root (max key node) of the heap', () => {
       expect(maxHeap.root().serialize()).to.deep.equal({
         key: 90,
         value: undefined
+      });
+    });
+  });
+
+  describe('.leaf()', () => {
+    it('should get the leaf (min key node) in the heap', () => {
+      expect(maxHeap.leaf().serialize()).to.deep.equal({
+        key: 20,
+        value: { name: 'test' }
       });
     });
   });
@@ -111,11 +120,19 @@ describe('MaxHeap unit tests', () => {
         key: 40,
         value: undefined
       });
+      expect(maxHeap.leaf().serialize()).to.deep.equal({
+        key: 20,
+        value: { name: 'test' }
+      });
       expect(maxHeap.size()).to.equal(2);
 
       expect(maxHeap.extractRoot().serialize()).to.deep.equal({
         key: 30,
         value: 'something'
+      });
+      expect(maxHeap.leaf().serialize()).to.deep.equal({
+        key: 20,
+        value: { name: 'test' }
       });
       expect(maxHeap.size()).to.equal(1);
 
@@ -123,6 +140,7 @@ describe('MaxHeap unit tests', () => {
         key: 20,
         value: { name: 'test' }
       });
+      expect(maxHeap.leaf()).to.equal(null);
       expect(maxHeap.size()).to.equal(0);
 
       expect(maxHeap.extractRoot()).to.equal(null);

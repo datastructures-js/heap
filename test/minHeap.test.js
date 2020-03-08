@@ -38,10 +38,19 @@ describe('MinHeap unit tests', () => {
   });
 
   describe('.root()', () => {
-    it('should get the root of the heap', () => {
+    it('should get the root (min key node) of the heap', () => {
       expect(minHeap.root().serialize()).to.deep.equal({
         key: 20,
         value: { name: 'test' }
+      });
+    });
+  });
+
+  describe('.leaf()', () => {
+    it('should get the leaf (max key node) in the heap', () => {
+      expect(minHeap.leaf().serialize()).to.deep.equal({
+        key: 90,
+        value: undefined
       });
     });
   });
@@ -111,6 +120,10 @@ describe('MinHeap unit tests', () => {
         key: 60,
         value: null
       });
+      expect(minHeap.leaf().serialize()).to.deep.equal({
+        key: 90,
+        value: undefined
+      });
       expect(minHeap.size()).to.equal(2);
 
       expect(minHeap.extractRoot().serialize()).to.deep.equal({
@@ -123,6 +136,7 @@ describe('MinHeap unit tests', () => {
         key: 90,
         value: undefined
       });
+      expect(minHeap.leaf()).to.equal(null);
       expect(minHeap.size()).to.equal(0);
 
       expect(minHeap.extractRoot()).to.equal(null);

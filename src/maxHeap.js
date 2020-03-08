@@ -12,6 +12,20 @@ const Heap = require('./heap');
  */
 class MaxHeap extends Heap {
   /**
+   * inserts a node into the heap and rebase leaf node to min key
+   * @param {number|string} key
+   * @param {object} value
+   * @public
+   * @override
+   */
+  insert(key, value) {
+    const newNode = super.insert(key, value);
+    if (this.leafNode === null || key < this.leafNode.getKey()) {
+      this.leafNode = newNode;
+    }
+  }
+
+  /**
    * checks if child's key is bigger that its parent's key
    * @protected
    * @returns {boolean}

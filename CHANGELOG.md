@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2020-03-07
+### Added
+- `.leaf()` to get the max node in a MinHeap or the min node in a MaxHeap. 
+
 ## [1.1.2] - 2020-03-06
 ### Fixed
 - params naming.
