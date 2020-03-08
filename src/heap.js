@@ -18,6 +18,7 @@ const isNoneEmptyArray = (a) => Array.isArray(a) && a.length > 0;
 class Heap {
   constructor() {
     this.init();
+    this.leafNode = null;
   }
 
   /**
@@ -184,11 +185,14 @@ class Heap {
    * inserts a node into the heap
    * @param {number|string} key
    * @param {object} value
+   * @returns {HeapNode}
    * @public
    */
   insert(key, value) {
-    this.nodes.push(new HeapNode(key, value));
+    const newNode = new HeapNode(key, value);
+    this.nodes.push(newNode);
     this.heapifyUp();
+    return newNode;
   }
 
   /**
@@ -199,6 +203,15 @@ class Heap {
   root() {
     if (this.size() === 0) return null;
     return this.nodes[0];
+  }
+
+  /**
+   * returns a leaf node in the heap
+   * @public
+   * @returns {HeapNode}
+   */
+  leaf() {
+    return this.leafNode;
   }
 
   /**
@@ -213,6 +226,14 @@ class Heap {
     this.nodes[0] = this.nodes[this.getLastIndex()];
     this.nodes.pop();
     this.heapifyDown();
+
+    if (root === this.leafNode) {
+      if (this.size() === 0) {
+        this.leafNode = null;
+      } else {
+        this.leafNode = this.root();
+      }
+    }
 
     return root;
   }

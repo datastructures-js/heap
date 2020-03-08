@@ -17,6 +17,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
     * [.heapify(list)](#heapifylist)
   * [.insert(key, value)](#insertkey-value)
   * [.root()](#root)
+  * [.leaf()](#leaf)
   * [.extractRoot()](#extractroot)
   * [.serialize()](#serialize-topic)
   * [.size()](#size)
@@ -143,7 +144,7 @@ maxHeap.insert('c', { name: 'test' });
 ```
 
 ### .root()
-peeks on the root without removing it.
+returns the root without removing it.
 
 <table>
  <tr>
@@ -181,6 +182,30 @@ const max = maxHeap.root();
 console.log(max.getKey()); // 'z'
 console.log(max.getValue()); // null
 console.log(max.serialize()); // { key: 'z', value: null }
+```
+
+### .leaf()
+returns a node with max key in MinHeap, or a node with min key in MaxHeap.
+
+<table>
+ <tr>
+  <th>runtime</th>
+  <th>return</th>
+ </tr>
+ <tr>
+  <td>O(1)</td>
+  <td>{HeapNode}</td>
+ </tr>
+</table>
+
+##### Example
+
+```js
+const maxLeaf = minHeap.leaf();
+console.log(maxLeaf.getKey()); // 90
+
+const minLeaf = maxHeap.leaf();
+console.log(minLeaf.getKey()); // 'b'
 ```
 
 ### .extractRoot()
