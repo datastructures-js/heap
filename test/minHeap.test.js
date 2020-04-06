@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const HeapNode = require('../src/heapNode');
 const MinHeap = require('../src/minHeap');
 
 describe('MinHeap unit tests', () => {
@@ -6,13 +7,13 @@ describe('MinHeap unit tests', () => {
 
   describe('.insert(key, value)', () => {
     it('should insert nodes into the heap', () => {
-      minHeap.insert(50);
-      minHeap.insert(80);
-      minHeap.insert(30, 'something');
-      minHeap.insert(90);
-      minHeap.insert(60, null);
-      minHeap.insert(40);
-      minHeap.insert(20, { name: 'test' });
+      expect(minHeap.insert(50)).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(80)).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(30, 'something')).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(90)).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(60, null)).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(40)).to.be.instanceof(HeapNode);
+      expect(minHeap.insert(20, { name: 'test' })).to.be.instanceof(HeapNode);
     });
   });
 
@@ -24,118 +25,56 @@ describe('MinHeap unit tests', () => {
 
   describe('.sort()', () => {
     it('should sort a copy of the heap\'s nodes in descending order', () => {
-      expect(minHeap.clone().sort().map((n) => n.serialize()))
-        .to.deep.equal([
-          { key: 90, value: undefined },
-          { key: 80, value: undefined },
-          { key: 60, value: null },
-          { key: 50, value: undefined },
-          { key: 40, value: undefined },
-          { key: 30, value: 'something' },
-          { key: 20, value: { name: 'test' } }
-        ]);
+      const sorted = minHeap.clone().sort().map((n) => ({
+        key: n.getKey(),
+        value: n.getValue()
+      }));
+      expect(sorted).to.deep.equal([
+        { key: 90, value: undefined },
+        { key: 80, value: undefined },
+        { key: 60, value: null },
+        { key: 50, value: undefined },
+        { key: 40, value: undefined },
+        { key: 30, value: 'something' },
+        { key: 20, value: { name: 'test' } }
+      ]);
     });
   });
 
   describe('.root()', () => {
     it('should get the root (min key node) of the heap', () => {
-      expect(minHeap.root().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(minHeap.root().getKey()).to.equal(20);
     });
   });
 
   describe('.leaf()', () => {
     it('should get the leaf (max key node) in the heap', () => {
-      expect(minHeap.leaf().serialize()).to.deep.equal({
-        key: 90,
-        value: undefined
-      });
-    });
-  });
-
-  describe('.serialize()', () => {
-    it('should serialize the heap nodes', () => {
-      expect(minHeap.serialize()).to.deep.equal([
-        {
-          key: 20,
-          value: { name: 'test' }
-        },
-        {
-          key: 60,
-          value: null
-        },
-        {
-          key: 30,
-          value: 'something'
-        },
-        {
-          key: 90,
-          value: undefined
-        },
-        {
-          key: 80,
-          value: undefined
-        },
-        {
-          key: 50,
-          value: undefined
-        },
-        {
-          key: 40,
-          value: undefined
-        }
-      ]);
+      expect(minHeap.leaf().getKey()).to.equal(90);
     });
   });
 
   describe('.extractRoot()', () => {
     it('should extract the root (min key) from the heap', () => {
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(20);
       expect(minHeap.size()).to.equal(6);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 30,
-        value: 'something'
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(30);
       expect(minHeap.size()).to.equal(5);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 40,
-        value: undefined
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(40);
       expect(minHeap.size()).to.equal(4);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 50,
-        value: undefined
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(50);
       expect(minHeap.size()).to.equal(3);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 60,
-        value: null
-      });
-      expect(minHeap.leaf().serialize()).to.deep.equal({
-        key: 90,
-        value: undefined
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(60);
+      expect(minHeap.leaf().getKey()).to.equal(90);
       expect(minHeap.size()).to.equal(2);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 80,
-        value: undefined
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(80);
       expect(minHeap.size()).to.equal(1);
 
-      expect(minHeap.extractRoot().serialize()).to.deep.equal({
-        key: 90,
-        value: undefined
-      });
+      expect(minHeap.extractRoot().getKey()).to.equal(90);
       expect(minHeap.leaf()).to.equal(null);
       expect(minHeap.size()).to.equal(0);
 
@@ -167,16 +106,10 @@ describe('MinHeap unit tests', () => {
       ];
       const heap = MinHeap.heapify(items);
 
-      expect(heap.extractRoot().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(heap.extractRoot().getKey()).to.equal(20);
       expect(heap.size()).to.equal(6);
 
-      expect(heap.root().serialize()).to.deep.equal({
-        key: 30,
-        value: 'something'
-      });
+      expect(heap.root().getKey()).to.equal(30);
       expect(heap.root().getValue()).to.equal('something');
       expect(heap.size()).to.equal(6);
     });

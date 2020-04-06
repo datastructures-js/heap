@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const HeapNode = require('../src/heapNode');
 const MaxHeap = require('../src/maxHeap');
 
 describe('MaxHeap unit tests', () => {
@@ -6,13 +7,13 @@ describe('MaxHeap unit tests', () => {
 
   describe('.insert(key, value)', () => {
     it('should insert nodes into the heap', () => {
-      maxHeap.insert(50);
-      maxHeap.insert(80);
-      maxHeap.insert(30, 'something');
-      maxHeap.insert(90);
-      maxHeap.insert(60, null);
-      maxHeap.insert(40);
-      maxHeap.insert(20, { name: 'test' });
+      expect(maxHeap.insert(50)).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(80)).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(30, 'something')).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(90)).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(60, null)).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(40)).to.be.instanceof(HeapNode);
+      expect(maxHeap.insert(20, { name: 'test' })).to.be.instanceof(HeapNode);
     });
   });
 
@@ -24,122 +25,57 @@ describe('MaxHeap unit tests', () => {
 
   describe('.sort()', () => {
     it('should sort a copy of the heap\'s nodes in ascending order', () => {
-      expect(maxHeap.clone().sort().map((n) => n.serialize()))
-        .to.deep.equal([
-          { key: 20, value: { name: 'test' } },
-          { key: 30, value: 'something' },
-          { key: 40, value: undefined },
-          { key: 50, value: undefined },
-          { key: 60, value: null },
-          { key: 80, value: undefined },
-          { key: 90, value: undefined }
-        ]);
+      const sorted = maxHeap.clone().sort().map((n) => ({
+        key: n.getKey(),
+        value: n.getValue()
+      }));
+      expect(sorted).to.deep.equal([
+        { key: 20, value: { name: 'test' } },
+        { key: 30, value: 'something' },
+        { key: 40, value: undefined },
+        { key: 50, value: undefined },
+        { key: 60, value: null },
+        { key: 80, value: undefined },
+        { key: 90, value: undefined }
+      ]);
     });
   });
 
   describe('.root()', () => {
     it('should get the root (max key node) of the heap', () => {
-      expect(maxHeap.root().serialize()).to.deep.equal({
-        key: 90,
-        value: undefined
-      });
+      expect(maxHeap.root().getKey()).to.equal(90);
     });
   });
 
   describe('.leaf()', () => {
     it('should get the leaf (min key node) in the heap', () => {
-      expect(maxHeap.leaf().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
-    });
-  });
-
-  describe('.serialize()', () => {
-    it('should serialize the heap nodes', () => {
-      expect(maxHeap.serialize()).to.deep.equal([
-        {
-          key: 90,
-          value: undefined
-        },
-        {
-          key: 80,
-          value: undefined
-        },
-        {
-          key: 40,
-          value: undefined
-        },
-        {
-          key: 50,
-          value: undefined
-        },
-        {
-          key: 60,
-          value: null
-        },
-        {
-          key: 30,
-          value: 'something'
-        },
-        {
-          key: 20,
-          value: { name: 'test' }
-        }
-      ]);
+      expect(maxHeap.leaf().getKey()).to.equal(20);
     });
   });
 
   describe('.extractRoot()', () => {
     it('should extract the root (max key) from the heap', () => {
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 90,
-        value: undefined
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(90);
       expect(maxHeap.size()).to.equal(6);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 80,
-        value: undefined
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(80);
       expect(maxHeap.size()).to.equal(5);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 60,
-        value: null
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(60);
       expect(maxHeap.size()).to.equal(4);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 50,
-        value: undefined
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(50);
       expect(maxHeap.size()).to.equal(3);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 40,
-        value: undefined
-      });
-      expect(maxHeap.leaf().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(40);
+      expect(maxHeap.leaf().getKey()).to.equal(20);
       expect(maxHeap.size()).to.equal(2);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 30,
-        value: 'something'
-      });
-      expect(maxHeap.leaf().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(30);
+      expect(maxHeap.leaf().getKey()).to.equal(20);
       expect(maxHeap.size()).to.equal(1);
 
-      expect(maxHeap.extractRoot().serialize()).to.deep.equal({
-        key: 20,
-        value: { name: 'test' }
-      });
+      expect(maxHeap.extractRoot().getKey()).to.equal(20);
       expect(maxHeap.leaf()).to.equal(null);
       expect(maxHeap.size()).to.equal(0);
 
@@ -171,16 +107,10 @@ describe('MaxHeap unit tests', () => {
       ];
       const heap = MaxHeap.heapify(items);
 
-      expect(heap.extractRoot().serialize()).to.deep.equal({
-        key: 'x',
-        value: undefined
-      });
+      expect(heap.extractRoot().getKey()).to.equal('x');
       expect(heap.size()).to.equal(6);
 
-      expect(heap.root().serialize()).to.deep.equal({
-        key: 't',
-        value: undefined
-      });
+      expect(heap.root().getKey()).to.equal('t');
       expect(heap.root().getValue()).to.equal(undefined);
       expect(heap.size()).to.equal(6);
     });
