@@ -52,9 +52,9 @@ const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
 import { MinHeap, MaxHeap } from '@datastructures-js/heap';
 ```
 
-### create a heap
+### Construction
 
-#### new
+#### using "new"
 creates an empty heap.
 
 ##### Example
@@ -64,21 +64,28 @@ const minHeap = new MinHeap();
 const maxHeap = new MaxHeap();
 ```
 
-#### .heapify(list)
-converts an array of objects to a heap.
+#### using ".heapify(list)"
+converts an existing array to a heap.
+
+<table>
+  <tr><th align="center" colspan="2">params</th></tr>
+  <tr><td><b>name</b></td><td><b>type</b></td><td><b>description</b></td></tr>
+  <tr><td>list</td><td>array</td><td>elements can be strings, numbers or an object literal with key/value props.</td></tr>
+</table>
+
+<table>
+ <tr><th>return</th></tr>
+ <tr>
+  <td>MinHeap or MaxHeap</td>
+ </tr>
+</table>
 
 <table>
  <tr>
   <th>runtime</th>
-  <th>params</th>
-  <th>return</th>
  </tr>
  <tr>
   <td>O(n)</td>
-  <td>
-   <b>list</b>: {array}<br>elements can be {number}, {string} or serialized heap node.
-  </td>
-  <td>{MinHeap} or {MaxHeap}</td>
  </tr>
 </table>
 
