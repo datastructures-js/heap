@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - remove none-standard method `.serialize()`. 
 
 ### Fixed
+- return inserted node in Min/Max Heap.
 - README
 - jsdoc
 
