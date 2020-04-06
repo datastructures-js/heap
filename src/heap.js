@@ -97,7 +97,7 @@ class Heap {
     let childIndex = this._getLastIndex();
     let parentIndex = this._getParentIndex(childIndex);
 
-    while (childIndex > 0 && this._shouldSwap(childIndex, parentIndex)) {
+    while (this._shouldSwap(childIndex, parentIndex)) {
       this._swap(childIndex, parentIndex);
       childIndex = parentIndex;
       parentIndex = this._getParentIndex(childIndex);
