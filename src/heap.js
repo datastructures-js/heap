@@ -82,7 +82,7 @@ class Heap {
     const rightChildIndex = this._getRightChildIndex(parentIndex);
     const size = this.size();
 
-    if (leftChildIndex >= size && rightChildIndex >= size) return 0;
+    if (leftChildIndex >= size && rightChildIndex >= size) return -1;
     if (leftChildIndex >= size) return rightChildIndex;
     if (rightChildIndex >= size) return leftChildIndex;
 
@@ -111,8 +111,7 @@ class Heap {
   _heapifyDown() {
     let parentIndex = 0;
     let childIndex = this._compareChildrenOf(parentIndex);
-
-    while (childIndex > 0 && this._shouldSwap(childIndex, parentIndex)) {
+    while (this._shouldSwap(childIndex, parentIndex)) {
       this._swap(childIndex, parentIndex);
       parentIndex = childIndex;
       childIndex = this._compareChildrenOf(parentIndex);
