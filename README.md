@@ -200,7 +200,7 @@ console.log(max.getValue()); // null
 ```
 
 ### .leaf()
-returns the node with max key in MinHeap, or with min key in MaxHeap.
+returns the node with the max key in MinHeap, or with the min key in MaxHeap.
 
 <table>
  <tr><th>return</th></tr>
