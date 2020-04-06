@@ -50,10 +50,11 @@ class MaxHeap extends Heap {
    * @returns {boolean}
    */
   _shouldSwap(childIndex, parentIndex) {
+    if (childIndex < 0 || childIndex >= this.size()) return false;
+    if (parentIndex < 0 || parentIndex >= this.size()) return false;
+
     const child = this._nodes[childIndex];
     const parent = this._nodes[parentIndex];
-
-    if (child === undefined || parent === undefined) return false;
 
     return child.getKey() > parent.getKey();
   }
