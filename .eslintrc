@@ -1,19 +1,17 @@
 {
   "rules": {
-    max-len: [
+    max-len: ["error", { "code": 80, "ignoreComments": true }],
+    "comma-dangle": ["error", {
+      "functions": "ignore"
+    }],
+    no-underscore-dangle: [
       "error",
       {
-        "code": 80,
-        "ignoreComments": true
+        "allowAfterThis": true,
+        "allowAfterSuper": true
       }
     ],
-    "comma-dangle": [
-      "error",
-      {
-        "functions": "ignore"
-      }
-    ],
-    "class-methods-use-this":0
+    "class-methods-use-this": 0
   },
   "env": {
     "mocha": true,
