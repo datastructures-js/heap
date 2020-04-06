@@ -27,7 +27,6 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
   * [.root()](#root)
   * [.leaf()](#leaf)
   * [.extractRoot()](#extractroot)
-  * [.serialize()](#serialize-topic)
   * [.size()](#size)
   * [.clone()](#clone)
   * [.sort()](#sort)
@@ -68,7 +67,7 @@ const maxHeap = new MaxHeap();
 converts an existing array to a heap.
 
 <table>
-  <tr><th align="center" colspan="2">params</th></tr>
+  <tr><th align="center" colspan="3">params</th></tr>
   <tr><td><b>name</b></td><td><b>type</b></td><td><b>description</b></td></tr>
   <tr><td>list</td><td>array</td><td>elements can be strings, numbers or an object literal with key/value props.</td></tr>
 </table>
@@ -252,49 +251,6 @@ console.log(max.getKey()); // 'z'
 console.log(max.getValue()); // null
 console.log(max.serialize()); // { key: 'z', value: null }
 console.log(maxHeap.root().getKey()); // 'x'
-```
-
-<h3 id="serialize-topic">.serialize()</h3>
-converts the heap into a list of serialized nodes objects.
-
-<table>
- <tr>
-  <th>runtime</th>
-  <th>return</th>
- </tr>
- <tr>
-  <td>O(n)</td>
-  <td>{array}
-</td>
- </tr>
-</table>
-
-##### Example
-
-```js
-console.log(minHeap.serialize());
-/*
-[
-  { key: 30, value: 'something' },
-  { key: 60, value: null },
-  { key: 40, value: undefined },
-  { key: 90, value: undefined },
-  { key: 80, value: undefined },
-  { key: 50, value: undefined }
-]
-*/
-
-console.log(maxHeap.serialize());
-/*
-[
-  { key: 'x', value: undefined },
-  { key: 'm', value: undefined },
-  { key: 'k', value: undefined },
-  { key: 'b', value: undefined },
-  { key: 'c', value: { name: 'test' } },
-  { key: 'f', value: 'something' }
-]
-*/
 ```
 
 ### .size()
