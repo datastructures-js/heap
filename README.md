@@ -5,16 +5,27 @@
 
 a complete javascript implementation for the Min/Max Heap data structures & Heap Sort algorithm.
 
-![heap](https://user-images.githubusercontent.com/6517308/70871547-bd852900-1f65-11ea-909f-86f4d090f152.jpg)
+<table>
+<tr>
+<td><b>Min Heap</b></td>
+<td>
+<img alt="Min Heap" src="https://user-images.githubusercontent.com/6517308/36940955-78f30c82-1f15-11e8-9ed1-6d9414c243c4.png">
+</td>
+</tr>
+<tr>
+<td><b>Max Heap</b></td>
+<td>
+<img alt="Max Heap" src="https://user-images.githubusercontent.com/6517308/36940962-844a7fe8-1f15-11e8-8165-6fd62ba1914f.png">
+</td>
+</tr>
+</table>
 
 # Table of Contents
 * [Install](#install)
 * [API](#api)
   * [require](#require)
   * [import](#import)
-  * [Creating a Heap](#create-a-heap)
-    * [new](#new)
-    * [.heapify(list)](#heapifylist)
+  * [Construction](#construction)
   * [.insert(key, value)](#insertkey-value)
   * [.root()](#root)
   * [.leaf()](#leaf)
