@@ -68,7 +68,7 @@ converts an existing array to a heap.
 
 <table>
   <tr><th align="center" colspan="3">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td><td><b>description</b></td></tr>
+  <tr><td><b>name</b></td><td><b>type</b></td><td align="center"><b>description</b></td></tr>
   <tr><td>list</td><td>array</td><td>elements can be strings, numbers or an object literal with key/value props.</td></tr>
 </table>
 
