@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-04-06
+### Changed
+- remove none-standard method `.serialize()`. 
+
+### Fixed
+- return inserted node in Min/Max Heap.
+- README
+- jsdoc
+
 ## [1.2.0] - 2020-03-07
 ### Added
 - `.leaf()` to get the max node in a MinHeap or the min node in a MaxHeap. 

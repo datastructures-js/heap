@@ -1,6 +1,6 @@
 /**
- * datastructures-js/heap
- * @copyright 2019 Eyas Ranjous <eyas.ranjous@gmail.com>
+ * @datastructures-js/heap
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  * @license MIT
  */
 
@@ -9,8 +9,8 @@
  */
 class HeapNode {
   constructor(key, value) {
-    this.key = key;
-    this.value = value;
+    this._key = key;
+    this._value = value;
   }
 
   /**
@@ -18,7 +18,7 @@ class HeapNode {
    * @returns {number|string}
    */
   getKey() {
-    return this.key;
+    return this._key;
   }
 
   /**
@@ -26,19 +26,7 @@ class HeapNode {
    * @returns {object}
    */
   getValue() {
-    return this.value;
-  }
-
-  /**
-   * serialize heap node's properties
-   * @public
-   * @returns {object}
-   */
-  serialize() {
-    return {
-      key: this.key,
-      value: this.value
-    };
+    return this._value;
   }
 }
 

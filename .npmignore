@@ -3,6 +3,6 @@
 .gitignore
 .eslintrc
 Gruntfile.js
-test/
 coverage/
 node_modules/
+test/
