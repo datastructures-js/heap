@@ -1,29 +1,19 @@
 /**
- * @datastructures-js/heap
- * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  * @license MIT
- */
-
-const HeapNode = require('./heapNode');
-
-const isNumber = (n) => typeof n === 'number';
-const isNoneEmptyString = (s) => typeof s === 'string' && s.length;
-const isNoneNullObject = (o) => typeof o === 'object' && o !== null;
-const isNoneEmptyArray = (a) => Array.isArray(a) && a.length > 0;
-
-/**
- * @class Heap
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
+ *
+ * @class
  * @abstract
  */
 class Heap {
-  constructor(nodes) {
+  constructor(nodes, leaf) {
     this._nodes = Array.isArray(nodes) ? nodes : [];
-    this._leaf = null;
+    this._leaf = leaf || null;
   }
 
   /**
+   * Calculates left child's index of a parent node
    * @private
-   * calculates the left child's index of a parent's index
    * @param {number} parentIndex
    * @returns {number}
    */
@@ -32,8 +22,8 @@ class Heap {
   }
 
   /**
+   * Calculates right child's index of a parent node
    * @private
-   * calculates the right child's index of a parent's index
    * @param {number} parentIndex
    * @returns {number}
    */
@@ -42,8 +32,8 @@ class Heap {
   }
 
   /**
+   * Calculates parent's index of a child node
    * @private
-   * calculates a parent's index from a child's index
    * @param {number} parentIndex
    * @returns {number}
    */
@@ -51,17 +41,14 @@ class Heap {
     return Math.floor((childIndex - 1) / 2);
   }
 
-  /**
-   * @private
-   * gets the last node's index
-   * @returns {number}
-   */
-  _getLastIndex() {
-    return this._nodes.length - 1;
+  _getKey(node) {
+    if (typeof node === 'object') return node.key;
+    return node;
   }
 
   /**
-   * swaps two nodes in the heap by their indices
+   * Swaps two nodes in the heap
+   * @private
    * @param {number} i
    * @param {number} j
    */
@@ -71,11 +58,41 @@ class Heap {
     this._nodes[j] = temp;
   }
 
+  _compare(parent, child) {
+    return this._compareKeys(this._getKey(parent), this._getKey(child));
+  }
+
   /**
+   * @protected
+   * checks if child's key is bigger that its parent's key
+   * @returns {boolean}
+   */
+  _shouldSwap(childIndex, parentIndex) {
+    if (childIndex < 0 || childIndex >= this.size()) return false;
+    if (parentIndex < 0 || parentIndex >= this.size()) return false;
+
+    return !this._compare(this._nodes[parentIndex], this._nodes[childIndex]);
+  }
+
+  /**
+   * Bubbles last inserted node up in the heap
+   * @internal
+   */
+  heapifyUp(startingIndex = this.size() - 1) {
+    let childIndex = startingIndex;
+    let parentIndex = this._getParentIndex(childIndex);
+    while (this._shouldSwap(childIndex, parentIndex)) {
+      this._swap(childIndex, parentIndex);
+      childIndex = parentIndex;
+      parentIndex = this._getParentIndex(childIndex);
+    }
+  }
+
+  /**
+   * Selects the proper child's index to fix the heap
    * @private
-   * selects the proper child's index to fix the heap
    * @param {number} parentIndex
-   * @returns {number}
+   * @returns {number} - a child index
    */
   _compareChildrenOf(parentIndex) {
     const leftChildIndex = this._getLeftChildIndex(parentIndex);
@@ -86,30 +103,20 @@ class Heap {
     if (leftChildIndex >= size) return rightChildIndex;
     if (rightChildIndex >= size) return leftChildIndex;
 
-    return this._compareChildren(leftChildIndex, rightChildIndex);
+    const leftChildKey = this._getKey(this._nodes[leftChildIndex]);
+    const rightChildKey = this._getKey(this._nodes[rightChildIndex]);
+
+    return this._compare(leftChildKey, rightChildKey)
+      ? leftChildIndex
+      : rightChildIndex;
   }
 
   /**
-   * @private
-   * bubbles the last inserted node up in the heap
+   * Pushes the root node down in the heap after root's removal
+   * @internal
    */
-  _heapifyUp() {
-    let childIndex = this._getLastIndex();
-    let parentIndex = this._getParentIndex(childIndex);
-
-    while (this._shouldSwap(childIndex, parentIndex)) {
-      this._swap(childIndex, parentIndex);
-      childIndex = parentIndex;
-      parentIndex = this._getParentIndex(childIndex);
-    }
-  }
-
-  /**
-   * @private
-   * pushes the replaced root node down in the heap after root's removal
-   */
-  _heapifyDown() {
-    let parentIndex = 0;
+  heapifyDown(startingIndex = 0) {
+    let parentIndex = startingIndex;
     let childIndex = this._compareChildrenOf(parentIndex);
     while (this._shouldSwap(childIndex, parentIndex)) {
       this._swap(childIndex, parentIndex);
@@ -119,9 +126,33 @@ class Heap {
   }
 
   /**
+   * Removes and returns the root node in the heap
+   * @public
+   * @returns {object}
+   */
+  extractRoot() {
+    if (this.isEmpty()) return null;
+
+    const root = this.root();
+    this._nodes[0] = this._nodes[this.size() - 1];
+    this._nodes.pop();
+    this.heapifyDown();
+
+    if (root === this._leaf) {
+      if (this.isEmpty()) {
+        this._leaf = null;
+      } else {
+        this._leaf = this.root();
+      }
+    }
+
+    return root;
+  }
+
+  /**
+   * Pushes the swapped node with root down in its correct location
    * @private
-   * pushes the swapped node with root down in its correct location
-   * @param {number} i -  swapped node's index
+   * @param {number} index -  swapped node's index
    */
   _heapifyDownUntil(index) {
     let parentIndex = 0;
@@ -147,22 +178,22 @@ class Heap {
   }
 
   /**
+   * Returns a shallow copy of the heap
    * @protected
-   * returns a shallow copy of a heap
    * @param {class} HeapType
    * @returns {Heap}
    */
   _clone(HeapType) {
-    return new HeapType(this._nodes.slice());
+    return new HeapType(this._nodes.slice(), this._leaf);
   }
 
   /**
+   * Implements heap sort algorithm by swapping anf fixing
    * @public
-   * implements heap sort algorithm by swapping root with i nodes
    * @returns {array} the sorted nodes
    */
   sort() {
-    for (let i = this._getLastIndex(); i > 0; i -= 1) {
+    for (let i = this.size() - 1; i > 0; i -= 1) {
       this._swap(0, i);
       this._heapifyDownUntil(i);
     }
@@ -171,23 +202,26 @@ class Heap {
   }
 
   /**
+   * Inserts a node in the right position into the heap
    * @public
-   * inserts a node into the heap
    * @param {number|string} key
-   * @param {object} value
-   * @returns {HeapNode}
+   * @param {any} value
+   * @returns {object}
    */
   insert(key, value) {
-    const newNode = new HeapNode(key, value);
+    const newNode = value !== undefined ? { key, value } : key;
     this._nodes.push(newNode);
-    this._heapifyUp();
-    return newNode;
+    this.heapifyUp();
+    if (this._leaf === null || !this._compare(newNode, this._leaf)) {
+      this._leaf = newNode;
+    }
+    return this;
   }
 
   /**
+   * Returns the root node in the heap
    * @public
-   * returns the root node in the heap
-   * @returns {HeapNode}
+   * @returns {object}
    */
   root() {
     if (this.isEmpty()) return null;
@@ -195,41 +229,17 @@ class Heap {
   }
 
   /**
+   * Returns a leaf node in the heap
    * @public
-   * returns a leaf node in the heap
-   * @returns {HeapNode}
+   * @returns {object}
    */
   leaf() {
     return this._leaf;
   }
 
   /**
+   * Returns the number of nodes in the heap
    * @public
-   * removes and returns the root node in the heap
-   * @returns {HeapNode}
-   */
-  extractRoot() {
-    if (this.isEmpty()) return null;
-
-    const root = this.root();
-    this._nodes[0] = this._nodes[this._getLastIndex()];
-    this._nodes.pop();
-    this._heapifyDown();
-
-    if (root === this._leaf) {
-      if (this.isEmpty()) {
-        this._leaf = null;
-      } else {
-        this._leaf = this.root();
-      }
-    }
-
-    return root;
-  }
-
-  /**
-   * @public
-   * returns the number of nodes in the heap
    * @returns {number}
    */
   size() {
@@ -237,8 +247,8 @@ class Heap {
   }
 
   /**
+   * Checks if the heap is empty
    * @public
-   * checks if the heap is empty
    * @returns {boolean}
    */
   isEmpty() {
@@ -246,8 +256,8 @@ class Heap {
   }
 
   /**
+   * Clears the heap
    * @public
-   * clears the heap
    */
   clear() {
     this._nodes = [];
@@ -255,25 +265,22 @@ class Heap {
   }
 
   /**
+   * Convert a list of items into a heap
    * @protected
    * @static
-   * convert a list of items into a heap
-   * @param {array} items
+   * @param {array} array
    * @param {class} HeapType
    * @returns {Heap}
    */
-  static _heapify(items, HeapType) {
-    if (!isNoneEmptyArray(items)) return null;
+  static _heapify(list, HeapType) {
+    if (!Array.isArray(list)) {
+      throw new Error('.heapify expect an array');
+    }
 
-    const heap = new HeapType();
-    items.forEach((item) => {
-      if (isNumber(item) || isNoneEmptyString(item)) {
-        heap.insert(item);
-      } else if (isNoneNullObject(item)
-        && (isNumber(item.key) || isNoneEmptyString(item.key))) {
-        heap.insert(item.key, item.value);
-      }
-    });
+    const heap = new HeapType(list);
+    for (let i = 0; i < heap.size(); i += 1) {
+      heap.heapifyUp(i);
+    }
 
     return heap;
   }
