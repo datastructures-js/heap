@@ -67,7 +67,7 @@ class MinHeap extends Heap {
    * @returns {boolean}
    */
   static isValidHeap(list) {
-    return new MinHeap(list).isValid();
+    return super._isValidHeap(items, MaxHeap);
   }
 }
 
