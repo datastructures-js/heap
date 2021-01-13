@@ -397,6 +397,18 @@ class Heap {
 
     return new HeapType(list).fix();
   }
+
+  /**
+   * Checks if a list of items is a valid heap
+   * @protected
+   * @static
+   * @param {array} array
+   * @param {class} HeapType
+   * @returns {boolean}
+   */
+  static isValidHeap(list, HeapType) {
+    return new HeapType(list).isValid();
+  }
 }
 
 module.exports = Heap;

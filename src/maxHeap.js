@@ -58,6 +58,17 @@ class MaxHeap extends Heap {
   static heapify(items) {
     return super._heapify(items, MaxHeap);
   }
+
+  /**
+   * Checks if a list of items is a valid max heap
+   * @public
+   * @static
+   * @param {array} array
+   * @returns {boolean}
+   */
+  static isValidHeap(list) {
+    return new MaxHeap(list).isValid();
+  }
 }
 
 module.exports = MaxHeap;
