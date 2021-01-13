@@ -22,6 +22,12 @@ describe('MaxHeap unit tests', () => {
     });
   });
 
+  describe('.isValid()', () => {
+    it('should validate the heap', () => {
+      expect(maxHeap.isValid()).to.equal(true);
+    });
+  });
+
   describe('.sort()', () => {
     it('should sort a copy of the heap\'s nodes in ascending order', () => {
       const sorted = maxHeap.clone().sort();
@@ -87,6 +93,14 @@ describe('MaxHeap unit tests', () => {
       maxHeap.clear();
       expect(maxHeap.root()).to.equal(null);
       expect(maxHeap.size()).to.equal(0);
+    });
+  });
+
+  describe('.fix()', () => {
+    it('fixes nodes position of heap list', () => {
+      const testHeap = new MaxHeap([1, 2, 3, 4, 5, 6, 7]);
+      expect(testHeap.isValid()).to.equal(false);
+      expect(testHeap.fix().isValid()).to.equal(true);
     });
   });
 

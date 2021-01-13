@@ -22,6 +22,12 @@ describe('MinHeap unit tests', () => {
     });
   });
 
+  describe('.isValid()', () => {
+    it('should validate the heap', () => {
+      expect(minHeap.isValid()).to.equal(true);
+    });
+  });
+
   describe('.sort()', () => {
     it('should sort a copy of the heap\'s nodes in descending order', () => {
       const sorted = minHeap.clone().sort();
@@ -86,6 +92,14 @@ describe('MinHeap unit tests', () => {
       minHeap.clear();
       expect(minHeap.root()).to.equal(null);
       expect(minHeap.size()).to.equal(0);
+    });
+  });
+
+  describe('.fix()', () => {
+    it('fixes nodes position of heap list', () => {
+      const testHeap = new MinHeap([7, 6, 5, 4, 3, 2, 1]);
+      expect(testHeap.isValid()).to.equal(false);
+      expect(testHeap.fix().isValid()).to.equal(true);
     });
   });
 

@@ -6,13 +6,19 @@
  * @abstract
  */
 class Heap {
+  /**
+   * Creates a heap instance
+   * @param {array<string|number|object>} nodes
+   * @param {string|number|object} [leaf]
+   * @returns {number}
+   */
   constructor(nodes, leaf) {
     this._nodes = Array.isArray(nodes) ? nodes : [];
     this._leaf = leaf || null;
   }
 
   /**
-   * Calculates left child's index of a parent node
+   * Calculates left child's index from a parent's index
    * @private
    * @param {number} parentIndex
    * @returns {number}
@@ -22,7 +28,7 @@ class Heap {
   }
 
   /**
-   * Calculates right child's index of a parent node
+   * Calculates right child's index from a parent's index
    * @private
    * @param {number} parentIndex
    * @returns {number}
@@ -32,7 +38,7 @@ class Heap {
   }
 
   /**
-   * Calculates parent's index of a child node
+   * Calculates parent's index from a child's index
    * @private
    * @param {number} parentIndex
    * @returns {number}
@@ -41,9 +47,23 @@ class Heap {
     return Math.floor((childIndex - 1) / 2);
   }
 
+  /**
+   * Returns heap node's key
+   * @private
+   * @param {object|number|string} node
+   * @returns {number|string}
+   */
   _getKey(node) {
     if (typeof node === 'object') return node.key;
     return node;
+  }
+
+  _hasLeftChild(parentIndex) {
+    return this._getLeftChildIndex(parentIndex) < this.size();
+  }
+
+  _hasRightChild(parentIndex) {
+    return this._getRightChildIndex(parentIndex) < this.size();
   }
 
   /**
@@ -58,41 +78,72 @@ class Heap {
     this._nodes[j] = temp;
   }
 
-  _compare(parent, child) {
-    return this._compareKeys(this._getKey(parent), this._getKey(child));
-  }
-
   /**
-   * @protected
-   * checks if child's key is bigger that its parent's key
+   * Compares parent & child nodes
+   * and returns true if they are in right positions
+   *
+   * @private
+   * @param {object|number|string} parent
+   * @param {object|number|string} child
    * @returns {boolean}
    */
-  _shouldSwap(childIndex, parentIndex) {
-    if (childIndex < 0 || childIndex >= this.size()) return false;
-    if (parentIndex < 0 || parentIndex >= this.size()) return false;
-
-    return !this._compare(this._nodes[parentIndex], this._nodes[childIndex]);
+  _compare(parentNode, childNode) {
+    return this._compareKeys(
+      this._getKey(parentNode),
+      this._getKey(childNode)
+    );
   }
 
   /**
-   * Bubbles last inserted node up in the heap
-   * @internal
+   * Compares parent & child nodes
+   * and returns true if they are in right positions
+   *
+   * @private
+   * @param {object|number|string} parent
+   * @param {object|number|string} child
+   * @returns {boolean}
+   */
+  _compareByIndex(parentIndex, childIndex) {
+    return this._compareKeys(
+      this._getKey(this._nodes[parentIndex]),
+      this._getKey(this._nodes[childIndex])
+    );
+  }
+
+  /**
+   * Checks if parent and child nodes should be swapped
+   * @private
+   * @param {number} parentIndex
+   * @param {number} childIndex
+   * @returns {boolean}
+   */
+  _shouldSwap(parentIndex, childIndex) {
+    if (parentIndex < 0 || parentIndex >= this.size()) return false;
+    if (childIndex < 0 || childIndex >= this.size()) return false;
+
+    return !this._compareByIndex(parentIndex, childIndex);
+  }
+
+  /**
+   * Bubbles a node from a starting index up in the heap
+   * @param {number} [startingIndex]
+   * @public
    */
   heapifyUp(startingIndex = this.size() - 1) {
     let childIndex = startingIndex;
     let parentIndex = this._getParentIndex(childIndex);
-    while (this._shouldSwap(childIndex, parentIndex)) {
-      this._swap(childIndex, parentIndex);
+    while (this._shouldSwap(parentIndex, childIndex)) {
+      this._swap(parentIndex, childIndex);
       childIndex = parentIndex;
       parentIndex = this._getParentIndex(childIndex);
     }
   }
 
   /**
-   * Selects the proper child's index to fix the heap
+   * Compares left and right & children of a parent
    * @private
    * @param {number} parentIndex
-   * @returns {number} - a child index
+   * @returns {number} - a child's index
    */
   _compareChildrenOf(parentIndex) {
     const leftChildIndex = this._getLeftChildIndex(parentIndex);
@@ -112,14 +163,14 @@ class Heap {
   }
 
   /**
-   * Pushes the root node down in the heap after root's removal
-   * @internal
+   * Pushes a node from a starting index down in the heap
+   * @private
    */
-  heapifyDown(startingIndex = 0) {
+  _heapifyDown(startingIndex = 0) {
     let parentIndex = startingIndex;
     let childIndex = this._compareChildrenOf(parentIndex);
-    while (this._shouldSwap(childIndex, parentIndex)) {
-      this._swap(childIndex, parentIndex);
+    while (this._shouldSwap(parentIndex, childIndex)) {
+      this._swap(parentIndex, childIndex);
       parentIndex = childIndex;
       childIndex = this._compareChildrenOf(parentIndex);
     }
@@ -136,23 +187,19 @@ class Heap {
     const root = this.root();
     this._nodes[0] = this._nodes[this.size() - 1];
     this._nodes.pop();
-    this.heapifyDown();
+    this._heapifyDown();
 
     if (root === this._leaf) {
-      if (this.isEmpty()) {
-        this._leaf = null;
-      } else {
-        this._leaf = this.root();
-      }
+      this._leaf = this.root();
     }
 
     return root;
   }
 
   /**
-   * Pushes the swapped node with root down in its correct location
+   * Pushes a node with down in the heap before an index
    * @private
-   * @param {number} index -  swapped node's index
+   * @param {number} index
    */
   _heapifyDownUntil(index) {
     let parentIndex = 0;
@@ -167,8 +214,8 @@ class Heap {
         rightChildIndex
       );
 
-      if (this._shouldSwap(childIndex, parentIndex)) {
-        this._swap(childIndex, parentIndex);
+      if (this._shouldSwap(parentIndex, childIndex)) {
+        this._swap(parentIndex, childIndex);
       }
 
       parentIndex = childIndex;
@@ -188,7 +235,7 @@ class Heap {
   }
 
   /**
-   * Implements heap sort algorithm by swapping anf fixing
+   * Sorts the heap by swapping root with all nodes and fixing positions
    * @public
    * @returns {array} the sorted nodes
    */
@@ -206,7 +253,7 @@ class Heap {
    * @public
    * @param {number|string} key
    * @param {any} value
-   * @returns {object}
+   * @returns {Heap}
    */
   insert(key, value) {
     const newNode = value !== undefined ? { key, value } : key;
@@ -219,9 +266,47 @@ class Heap {
   }
 
   /**
+   * Fixes all positions of the nodes in the heap
+   * @public
+   * @returns {Heap}
+   */
+  fix() {
+    for (let i = 0; i < this.size(); i += 1) {
+      this.heapifyUp(i);
+    }
+    return this;
+  }
+
+  /**
+   * Verifies that the heap is valid
+   * @public
+   * @returns {boolean}
+   */
+  isValid(startingIndex = 0) {
+    const parentIndex = startingIndex;
+    if (!this._hasLeftChild(parentIndex) && !this._hasRightChild(parentIndex)) {
+      return true;
+    }
+
+    const leftChildIndex = this._getLeftChildIndex(parentIndex);
+    const rightChildIndex = this._getRightChildIndex(parentIndex);
+    const isLeftInPlace = this._compareByIndex(parentIndex, leftChildIndex);
+    const isRightInPlace = this._compareByIndex(parentIndex, rightChildIndex);
+    if (
+      (!this._hasLeftChild(parentIndex) && !isRightInPlace)
+      || (!this._hasRightChild(parentIndex) && !isLeftInPlace)
+      || (!isLeftInPlace || !isRightInPlace)
+    ) {
+      return false;
+    }
+
+    return this.isValid(leftChildIndex) && this.isValid(rightChildIndex);
+  }
+
+  /**
    * Returns the root node in the heap
    * @public
-   * @returns {object}
+   * @returns {object|number|string|null}
    */
   root() {
     if (this.isEmpty()) return null;
@@ -231,7 +316,7 @@ class Heap {
   /**
    * Returns a leaf node in the heap
    * @public
-   * @returns {object}
+   * @returns {object|number|string|null}
    */
   leaf() {
     return this._leaf;
@@ -277,12 +362,7 @@ class Heap {
       throw new Error('.heapify expect an array');
     }
 
-    const heap = new HeapType(list);
-    for (let i = 0; i < heap.size(); i += 1) {
-      heap.heapifyUp(i);
-    }
-
-    return heap;
+    return new HeapType(list).fix();
   }
 }
 
