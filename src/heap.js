@@ -311,8 +311,7 @@ class Heap {
    * @public
    * @returns {boolean}
    */
-  isValid(startingIndex = 0) {
-    const parentIndex = startingIndex;
+  isValid(parentIndex = 0) {
     if (
       !this._hasLeftChild(parentIndex)
       && !this._hasRightChild(parentIndex)
