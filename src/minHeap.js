@@ -22,7 +22,7 @@ class MinHeap extends Heap {
   }
 
   /**
-   * implements the parent's function to select a child's index before an index
+   * Returns min child's index of two children before an index
    * @protected
    * @param {number} index
    * @param {number} leftChildIndex
@@ -40,8 +40,8 @@ class MinHeap extends Heap {
   }
 
   /**
+   * Returns a shallow copy of the heap
    * @public
-   * returns a shallow copy of a min heap
    * @returns {MinHeap}
    */
   clone() {
@@ -49,8 +49,9 @@ class MinHeap extends Heap {
   }
 
   /**
+   * Builds a min heap from an array of items
    * @public
-   * builds a min heap from an array of items
+   * @static
    * @param {array} items
    * @returns {MinHeap}
    */

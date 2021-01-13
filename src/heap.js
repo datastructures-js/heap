@@ -48,6 +48,36 @@ class Heap {
   }
 
   /**
+   * Checks if a parent has a left child
+   * @private
+   * @param {number} parentIndex
+   * @returns {boolean}
+   */
+  _hasLeftChild(parentIndex) {
+    return this._getLeftChildIndex(parentIndex) < this.size();
+  }
+
+  /**
+   * Checks if a parent has a right child
+   * @private
+   * @param {number} parentIndex
+   * @returns {boolean}
+   */
+  _hasRightChild(parentIndex) {
+    return this._getRightChildIndex(parentIndex) < this.size();
+  }
+
+  /**
+   * Checks if a child has a parent
+   * @private
+   * @param {number} childIndex
+   * @returns {boolean}
+   */
+  _hasParent(childIndex) {
+    return this._getParentIndex(childIndex) >= 0;
+  }
+
+  /**
    * Returns heap node's key
    * @private
    * @param {object|number|string} node
@@ -56,14 +86,6 @@ class Heap {
   _getKey(node) {
     if (typeof node === 'object') return node.key;
     return node;
-  }
-
-  _hasLeftChild(parentIndex) {
-    return this._getLeftChildIndex(parentIndex) < this.size();
-  }
-
-  _hasRightChild(parentIndex) {
-    return this._getRightChildIndex(parentIndex) < this.size();
   }
 
   /**
@@ -146,18 +168,25 @@ class Heap {
    * @returns {number} - a child's index
    */
   _compareChildrenOf(parentIndex) {
+    if (
+      !this._hasLeftChild(parentIndex)
+      && !this._hasRightChild(parentIndex)
+    ) {
+      return -1;
+    }
+
     const leftChildIndex = this._getLeftChildIndex(parentIndex);
     const rightChildIndex = this._getRightChildIndex(parentIndex);
-    const size = this.size();
 
-    if (leftChildIndex >= size && rightChildIndex >= size) return -1;
-    if (leftChildIndex >= size) return rightChildIndex;
-    if (rightChildIndex >= size) return leftChildIndex;
+    if (!this._hasLeftChild(parentIndex)) {
+      return rightChildIndex;
+    }
 
-    const leftChildKey = this._getKey(this._nodes[leftChildIndex]);
-    const rightChildKey = this._getKey(this._nodes[rightChildIndex]);
+    if (!this._hasRightChild(parentIndex)) {
+      return leftChildIndex;
+    }
 
-    return this._compare(leftChildKey, rightChildKey)
+    return this._compareByIndex(leftChildIndex, rightChildIndex)
       ? leftChildIndex
       : rightChildIndex;
   }
@@ -284,14 +313,19 @@ class Heap {
    */
   isValid(startingIndex = 0) {
     const parentIndex = startingIndex;
-    if (!this._hasLeftChild(parentIndex) && !this._hasRightChild(parentIndex)) {
+    if (
+      !this._hasLeftChild(parentIndex)
+      && !this._hasRightChild(parentIndex)
+    ) {
       return true;
     }
 
     const leftChildIndex = this._getLeftChildIndex(parentIndex);
     const rightChildIndex = this._getRightChildIndex(parentIndex);
+
     const isLeftInPlace = this._compareByIndex(parentIndex, leftChildIndex);
     const isRightInPlace = this._compareByIndex(parentIndex, rightChildIndex);
+
     if (
       (!this._hasLeftChild(parentIndex) && !isRightInPlace)
       || (!this._hasRightChild(parentIndex) && !isLeftInPlace)

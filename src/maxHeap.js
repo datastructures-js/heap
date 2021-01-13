@@ -1,7 +1,6 @@
 /**
- * @datastructures-js/heap
- * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  * @license MIT
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  */
 
 const Heap = require('./heap');
@@ -23,8 +22,8 @@ class MaxHeap extends Heap {
   }
 
   /**
+   * Returns max child's index of two children before an index
    * @private
-   * returns the max child's index of two children before an index
    * @param {number} index
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
@@ -41,8 +40,8 @@ class MaxHeap extends Heap {
   }
 
   /**
+   * Returns a shallow copy of the heap
    * @public
-   * returns a shallow copy of a max heap
    * @returns {MaxHeap}
    */
   clone() {
@@ -50,9 +49,9 @@ class MaxHeap extends Heap {
   }
 
   /**
+   * Builds a max heap from an array of items
    * @public
    * @static
-   * builds a max heap from an array of items
    * @param {array} items
    * @returns {MaxHeap}
    */
