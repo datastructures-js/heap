@@ -52,22 +52,22 @@ class MinHeap extends Heap {
    * Builds a min heap from an array of items
    * @public
    * @static
-   * @param {array} items
+   * @param {array} list
    * @returns {MinHeap}
    */
-  static heapify(items) {
-    return super._heapify(items, MinHeap);
+  static heapify(list) {
+    return super._heapify(list, MinHeap);
   }
 
   /**
-   * Checks if a list of items is a valid min heap
+   * Checks if a list of list is a valid min heap
    * @public
    * @static
-   * @param {array} array
+   * @param {array} list
    * @returns {boolean}
    */
   static isValidHeap(list) {
-    return super._isValidHeap(items, MaxHeap);
+    return super._isValidHeap(list, MinHeap);
   }
 }
 

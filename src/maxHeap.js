@@ -52,22 +52,22 @@ class MaxHeap extends Heap {
    * Builds a max heap from an array of items
    * @public
    * @static
-   * @param {array} items
+   * @param {array} list
    * @returns {MaxHeap}
    */
-  static heapify(items) {
-    return super._heapify(items, MaxHeap);
+  static heapify(list) {
+    return super._heapify(list, MaxHeap);
   }
 
   /**
    * Checks if a list of items is a valid max heap
    * @public
    * @static
-   * @param {array} array
+   * @param {array} list
    * @returns {boolean}
    */
   static isValidHeap(list) {
-    return super._isValidHeap(items, MaxHeap);
+    return super._isValidHeap(list, MaxHeap);
   }
 }
 
