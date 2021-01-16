@@ -88,7 +88,7 @@ describe('MaxHeap unit tests', () => {
   });
 
   describe('.clear()', () => {
-    it('should clear the items in the heap', () => {
+    it('should clear the list in the heap', () => {
       maxHeap.insert(50);
       maxHeap.clear();
       expect(maxHeap.root()).to.equal(null);
@@ -104,9 +104,9 @@ describe('MaxHeap unit tests', () => {
     });
   });
 
-  describe('.heapify(items)', () => {
-    it('should build a heap from a list of items', () => {
-      const items = [
+  describe('.heapify(list)', () => {
+    it('should build a heap from a list of list', () => {
+      const list = [
         'b',
         'x',
         { key: 'r', value: 'something' },
@@ -115,7 +115,7 @@ describe('MaxHeap unit tests', () => {
         'c',
         { key: 'm', value: { name: 'test' } }
       ];
-      const heap = MaxHeap.heapify(items);
+      const heap = MaxHeap.heapify(list);
 
       expect(heap.extractRoot()).to.equal('x');
       expect(heap.size()).to.equal(6);
@@ -128,6 +128,32 @@ describe('MaxHeap unit tests', () => {
     it('should throw an error if list is not an array', () => {
       expect(() => MaxHeap.heapify('test')).to.throw(Error)
         .and.to.have.property('message', '.heapify expect an array');
+    });
+  });
+
+  describe('.isHeapified(list)', () => {
+    it('returns true for a valid heap list', () => {
+      expect(MaxHeap.isHeapified([
+        90,
+        80,
+        40,
+        50,
+        { key: 60, value: null },
+        { key: 30, value: 'something' },
+        { key: 20, value: { name: 'test' } }
+      ])).to.equal(true);
+    });
+
+    it('returns false for invalid heap list', () => {
+      expect(MaxHeap.isHeapified([
+        { key: 20, value: { name: 'test' } },
+        { key: 30, value: 'something' },
+        40,
+        { key: 60, value: null },
+        80,
+        50,
+        90
+      ])).to.equal(false);
     });
   });
 });

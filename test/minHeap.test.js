@@ -137,4 +137,30 @@ describe('MinHeap unit tests', () => {
         .and.to.have.property('message', '.heapify expect an array');
     });
   });
+
+  describe('.isHeapified(list)', () => {
+    it('returns true for a valid heap list', () => {
+      expect(MinHeap.isHeapified([
+        { key: 20, value: { name: 'test' } },
+        { key: 60, value: null },
+        { key: 30, value: 'something' },
+        90,
+        80,
+        50,
+        40
+      ])).to.equal(true);
+    });
+
+    it('returns false for invalid heap list', () => {
+      expect(MinHeap.isHeapified([
+        { key: 20, value: { name: 'test' } },
+        { key: 30, value: 'something' },
+        80,
+        40,
+        { key: 60, value: null },
+        50,
+        90
+      ])).to.equal(false);
+    });
+  });
 });

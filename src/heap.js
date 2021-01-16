@@ -406,7 +406,7 @@ class Heap {
    * @param {class} HeapType
    * @returns {boolean}
    */
-  static _isValidHeap(list, HeapType) {
+  static _isHeapified(list, HeapType) {
     return new HeapType(list).isValid();
   }
 }

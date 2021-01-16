@@ -66,8 +66,8 @@ class MaxHeap extends Heap {
    * @param {array} list
    * @returns {boolean}
    */
-  static isValidHeap(list) {
-    return super._isValidHeap(list, MaxHeap);
+  static isHeapified(list) {
+    return super._isHeapified(list, MaxHeap);
   }
 }
 
