@@ -132,136 +132,105 @@ removes and returns the root node in the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number|string|object</td>
+    <td align="center">number | string | object</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
 
 ```js
-const min = minHeap.extractRoot();
-console.log(min.key); // 20
-console.log(min.value); // { name: 'test' }
-console.log(minHeap.root().key); // 30
+console.log(minHeap.extractRoot()); // { key: 20, value: { name: 'test' } }
+console.log(minHeap.extractRoot()); // { key: 30, value: 'something' }
+console.log(minHeap.extractRoot()); // 40
 
-const max = maxHeap.extractRoot();
-console.log(max.key); // 'z'
-console.log(max.value); // null
-console.log(maxHeap.root()); // 'x'
+console.log(maxHeap.extractRoot()); // { key: 'z', value: null }
+console.log(maxHeap.extractRoot()); // 'x'
+console.log(maxHeap.extractRoot()); // 'm'
 ```
 
 ### .root()
-returns the root without removing it.
+returns the root node without removing it.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | object</td>
+    <td align="center">O(1)</td>
+  </tr>
 </table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
-const min = minHeap.root();
-console.log(min.key); // 20
-console.log(min.value); // { name: 'test' }
+console.log(minHeap.root()); // 50
 
-const max = maxHeap.root();
-console.log(max.key); // 'z'
-console.log(max.value); // null
+console.log(maxHeap.root()); // 'k'
 ```
 
 ### .leaf()
-returns the node with the max key in MinHeap, or with the min key in MaxHeap.
+returns a node with max key in MinHeap, or with min key in MaxHeap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | object</td>
+    <td align="center">O(1)</td>
+  </tr>
 </table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
-const maxLeaf = minHeap.leaf();
-console.log(maxLeaf.key); // 90
+console.log(minHeap.leaf()); // 90
 
-const minLeaf = maxHeap.leaf();
-console.log(minLeaf.key); // 'b'
+console.log(maxHeap.leaf()); // 'b'
 ```
 
 ### .size()
 returns the number of nodes in the heap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td>number</td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+    <td align="center">O(1)</td>
+  </tr>
 </table>
 
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
-console.log(minHeap.size()); // 6
-console.log(maxHeap.size()); // 6
+console.log(minHeap.size()); // 4
+console.log(maxHeap.size()); // 4
 ```
 
 ### .clone()
-creates a shallow copy of a heap by slicing the nodes array and passing it to a new heap instance. 
+creates a shallow copy of the heap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td>MinHeap or MaxHeap</td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(n)</td>
+  </tr>
 </table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
 const minHeapClone = minHeap.clone();
 minHeapClone.extractRoot();
+console.log(minHeapClone.root()); // 40
+console.log(minHeap.root()); // 30
 
-console.log(minHeapClone.root().key); // 40
-console.log(minHeap.root().key); // 30
+const maxHeapClone = maxHeap.clone();
+maxHeapClone.extractRoot();
+console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
+console.log(maxHeap.root()); // 'k'
 ```
 
 ### .sort()
