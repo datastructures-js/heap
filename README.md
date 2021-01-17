@@ -64,7 +64,7 @@ const maxHeap = new MaxHeap();
 ```
 
 ### .insert(key[, value])
-insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the same as key (number or string).
+insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string).
 
 <table>
   <tr>
@@ -103,6 +103,52 @@ const maxHeap = new MaxHeap()
   .insert('c', { name: 'test' });
 ```
 
+### .isValid()
+checks if the heap is valid.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.isValid()); // true
+
+console.log(maxHeap.isValid()); // true
+```
+
+### .extractRoot()
+removes and returns the root node in the heap.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number|string|object</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+const min = minHeap.extractRoot();
+console.log(min.key); // 20
+console.log(min.value); // { name: 'test' }
+console.log(minHeap.root().key); // 30
+
+const max = maxHeap.extractRoot();
+console.log(max.key); // 'z'
+console.log(max.value); // null
+console.log(maxHeap.root()); // 'x'
+```
+
 ### .root()
 returns the root without removing it.
 
@@ -126,12 +172,12 @@ returns the root without removing it.
 
 ```js
 const min = minHeap.root();
-console.log(min.getKey()); // 20
-console.log(min.getValue()); // { name: 'test' }
+console.log(min.key); // 20
+console.log(min.value); // { name: 'test' }
 
 const max = maxHeap.root();
-console.log(max.getKey()); // 'z'
-console.log(max.getValue()); // null
+console.log(max.key); // 'z'
+console.log(max.value); // null
 ```
 
 ### .leaf()
@@ -157,43 +203,10 @@ returns the node with the max key in MinHeap, or with the min key in MaxHeap.
 
 ```js
 const maxLeaf = minHeap.leaf();
-console.log(maxLeaf.getKey()); // 90
+console.log(maxLeaf.key); // 90
 
 const minLeaf = maxHeap.leaf();
-console.log(minLeaf.getKey()); // 'b'
-```
-
-### .extractRoot()
-removes and returns the root node in the heap.
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
-#### Example
-
-```js
-const min = minHeap.extractRoot();
-console.log(min.getKey()); // 20
-console.log(min.getValue()); // { name: 'test' }
-console.log(minHeap.root().getKey()); // 30
-
-const max = maxHeap.extractRoot();
-console.log(max.getKey()); // 'z'
-console.log(max.getValue()); // null
-console.log(maxHeap.root().getKey()); // 'x'
+console.log(minLeaf.key); // 'b'
 ```
 
 ### .size()
@@ -247,8 +260,8 @@ creates a shallow copy of a heap by slicing the nodes array and passing it to a 
 const minHeapClone = minHeap.clone();
 minHeapClone.extractRoot();
 
-console.log(minHeapClone.root().getKey()); // 40
-console.log(minHeap.root().getKey()); // 30
+console.log(minHeapClone.root().key); // 40
+console.log(minHeap.root().key); // 30
 ```
 
 ### .sort()
@@ -307,10 +320,10 @@ To sort a list of elements directtly using Heap Sort, it can be done like:
 ```js
 const unsortedList = [3, 7, 2, 10, 4, 9, 8, 5, 1, 6];
 
-const ascSorted = MaxHeap.heapify(unsortedList).sort().map((node) => node.getKey());
+const ascSorted = MaxHeap.heapify(unsortedList).sort();
 // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-const descSorted = MinHeap.heapify(unsortedList).sort().map((node) => node.getKey());
+const descSorted = MinHeap.heapify(unsortedList).sort();
 // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 ```
 
