@@ -13,9 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.heapify` static function now heapify the input list as well as returning a heap insatnce.
 
 ### Added
-- `.fix()` to fix positions of nodes in a heap.
-- `.isValid` to validate a heap nodes are in right positions.
-- `.isHeapified` static function to valida if a given list of items is heapified.
+- `.fix()` to fix positions of nodes in the heap.
+- `.isValid` to validate heap nodes are in right positions.
+- `.isHeapified` static function to valida if a given list is heapified.
 
 ### Fixed
 - jsdoc
