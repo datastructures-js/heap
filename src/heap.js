@@ -312,33 +312,22 @@ class Heap {
    * @returns {boolean}
    */
   isValid(parentIndex = 0) {
-    if (
-      !this._hasLeftChild(parentIndex)
-      && !this._hasRightChild(parentIndex)
-    ) {
-      return true;
-    }
+    let isValidLeft = true;
+    let isValidRight = true;
 
-    if (!this._hasLeftChild(parentIndex)) {
-      const rightChildIndex = this._getLeftChildIndex(parentIndex);
-      if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
-    }
-
-    if (!this._hasRightChild(parentIndex)) {
+    if (this._hasLeftChild(parentIndex)) {
       const leftChildIndex = this._getLeftChildIndex(parentIndex);
       if (!this._compareByIndex(parentIndex, leftChildIndex)) return false;
+      isValidLeft = this.isValid(leftChildIndex);
     }
 
-    const leftChildIndex = this._getLeftChildIndex(parentIndex);
-    const rightChildIndex = this._getRightChildIndex(parentIndex);
-    if (
-      !this._compareByIndex(parentIndex, leftChildIndex)
-      || !this._compareByIndex(parentIndex, rightChildIndex)
-    ) {
-      return false;
+    if (this._hasRightChild(parentIndex)) {
+      const rightChildIndex = this._getRightChildIndex(parentIndex);
+      if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
+      isValidRight = this.isValid(rightChildIndex);
     }
 
-    return this.isValid(leftChildIndex) && this.isValid(rightChildIndex);
+    return isValidLeft && isValidRight;
   }
 
   /**
