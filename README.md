@@ -290,6 +290,7 @@ console.log(minHeap.isValid()); // false
 minHeap.fix(); // fix it
 console.log(minHeap.isValid()); // true
 ```
+
 To sort a list of elements directtly using Heap Sort, it can be done like:
 
 ```js
