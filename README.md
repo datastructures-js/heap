@@ -351,25 +351,6 @@ const numList = [
   20
 ];
 
-const strList = [
-  'm',
-  'x',
-  'f',
-  'b',
-  'z',
-  'k',
-  'c'
-];
-
-const objList = [
-  { key: 50, value: 't1' },
-  { key: 80, value: 't2' },
-  { key: 30, value: 't3' },
-  { key: 90, value: 't4' },
-  { key: 60, value: 't5' },
-  { key: 40, value: 't6' },
-  { key: 20, value: 't7' }
-];
 
 MinHeap.heapify(numList);
 console.log(numList);
@@ -385,6 +366,16 @@ console.log(numList);
 ]
 */
 
+const strList = [
+  'm',
+  'x',
+  'f',
+  'b',
+  'z',
+  'k',
+  'c'
+];
+
 const maxHeap = MaxHeap.heapify(strList);
 console.log(strList);
 /*
@@ -399,6 +390,16 @@ console.log(strList);
 ]
 */
 console.log(maxHeap.isValid()); // true
+
+const objList = [
+  { key: 50, value: 't1' },
+  { key: 80, value: 't2' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 60, value: 't5' },
+  { key: 40, value: 't6' },
+  { key: 20, value: 't7' }
+];
 
 MinHeap.heapify(objList);
 console.log(objList);
