@@ -23,7 +23,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 * [import](#import)
 * [API](#api)
   * [new](#new)
-  * [.insert(key, value)](#insertkey-value)
+  * [.insert(key[, value])](#insertkey-value)
   * [.extractRoot()](#extractroot)
   * [.root()](#root)
   * [.leaf()](#leaf)
@@ -263,7 +263,7 @@ implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min 
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">array\<number|string|object\></td>
+    <td align="center">array&lt;number|string|object&gt;</td>
     <td align="center">O(n*log(n))</td>
   </tr>
 </table>
