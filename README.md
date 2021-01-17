@@ -19,19 +19,21 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 
 # Table of Contents
 * [Install](#install)
+* [require](#require)
+* [import](#import)
 * [API](#api)
-  * [require](#require)
-  * [import](#import)
-  * [Construction](#construction)
+  * [new](#construction)
   * [.insert(key, value)](#insertkey-value)
+  * [.isValid()](#isvalid)
+  * [.extractRoot()](#extractroot)
   * [.root()](#root)
   * [.leaf()](#leaf)
-  * [.extractRoot()](#extractroot)
   * [.size()](#size)
   * [.clone()](#clone)
   * [.sort()](#sort)
   * [.clear()](#clear)
-  * [HeapNode](#heapnode)
+  * [Heap.heapify(list)](#heapify)
+  * [Heap.isHeapified(list)](#heapify)
  * [Build](#build)
  * [License](#license)
 
@@ -39,8 +41,6 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 ```sh
 npm install --save @datastructures-js/heap
 ```
-
-## API
 
 ### require
 ```js
@@ -52,97 +52,36 @@ const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
 import { MinHeap, MaxHeap } from '@datastructures-js/heap';
 ```
 
-### Construction
+## API
 
-#### using "new"
+### new
 creates an empty heap.
 
-##### Example
 ```js
 const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
 ```
 
-#### using ".heapify(list)"
-converts an existing array to a heap.
+### .insert(key[, value])
+insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the same as key (number or string).
 
 <table>
-  <tr><th align="center" colspan="3">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td><td align="center"><b>item type</b></td></tr>
-  <tr><td>list</td><td>array</td><td><i>number</i>, <i>string</i> or <i>object literal</i> with key/value props</td></tr>
+  <tr>
+    <th align="center">params</th>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td>
+      key: number | string
+      <br />
+      value: any
+    </td>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(log(n))</td>
+  </tr>
 </table>
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td>MinHeap or MaxHeap</td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n)</td>
- </tr>
-</table>
-
-##### Example
-
-```js
-const numList = [
-  50,
-  80,
-  { key: 30, value: 'something' },
-  90,
-  { key: 60, value: null },
-  40,
-  { key: 20, value: { name: 'test' } }
-];
-
-const strList = [
-  'm',
-  'x',
-  { key: 'f', value: 'something' },
-  'b',
-  { key: 'z', value: null },
-  'k',
-  { key: 'c', value: { name: 'test' } }
-];
-
-const minHeap = MinHeap.heapify(numList);
-
-const maxHeap = MaxHeap.heapify(strList);
-```
-
-### .insert(key, value)
-insert a node into the heap.
-
-<table>
-  <tr><th align="center" colspan="2">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td></tr>
-  <tr><td>key</td><td>number or string</td></tr>
-  <tr><td>value</td><td>object</td></tr>
-</table>
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
 
 #### Example
 
@@ -404,23 +343,58 @@ console.log(maxHeap.size()); // 0
 console.log(maxHeap.root()); // null
 ```
 
-### HeapNode
+#### using ".heapify(list)"
+converts an existing array to a heap.
 
-#### .getKey()
-returns the node's key.
+<table>
+  <tr><th align="center" colspan="3">params</th></tr>
+  <tr><td><b>name</b></td><td><b>type</b></td><td align="center"><b>item type</b></td></tr>
+  <tr><td>list</td><td>array</td><td><i>number</i>, <i>string</i> or <i>object literal</i> with key/value props</td></tr>
+</table>
 
 <table>
  <tr><th>return</th></tr>
- <tr><td>string or number</td></tr>
+ <tr>
+  <td>MinHeap or MaxHeap</td>
+ </tr>
 </table>
-
-#### .getValue()
-returns the node's associated value.
 
 <table>
- <tr><th>return</th></tr>
- <tr><td>object</td></tr>
+ <tr>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>O(n)</td>
+ </tr>
 </table>
+
+##### Example
+
+```js
+const numList = [
+  50,
+  80,
+  { key: 30, value: 'something' },
+  90,
+  { key: 60, value: null },
+  40,
+  { key: 20, value: { name: 'test' } }
+];
+
+const strList = [
+  'm',
+  'x',
+  { key: 'f', value: 'something' },
+  'b',
+  { key: 'z', value: null },
+  'k',
+  { key: 'c', value: { name: 'test' } }
+];
+
+const minHeap = MinHeap.heapify(numList);
+
+const maxHeap = MaxHeap.heapify(strList);
+```
 
 ## Build
 lint + tests
