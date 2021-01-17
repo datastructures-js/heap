@@ -19,19 +19,22 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 
 # Table of Contents
 * [Install](#install)
+* [require](#require)
+* [import](#import)
 * [API](#api)
-  * [require](#require)
-  * [import](#import)
-  * [Construction](#construction)
-  * [.insert(key, value)](#insertkey-value)
+  * [new](#new)
+  * [.insert(key[, value])](#insertkey-value)
+  * [.extractRoot()](#extractroot)
   * [.root()](#root)
   * [.leaf()](#leaf)
-  * [.extractRoot()](#extractroot)
   * [.size()](#size)
   * [.clone()](#clone)
+  * [.isValid()](#isvalid)
+  * [.fix()](#fix)
   * [.sort()](#sort)
   * [.clear()](#clear)
-  * [HeapNode](#heapnode)
+  * [Heap.heapify(list)](#heapheapifylist)
+  * [Heap.isHeapified(list)](#heapisHeapifiedlist)
  * [Build](#build)
  * [License](#license)
 
@@ -39,8 +42,6 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 ```sh
 npm install --save @datastructures-js/heap
 ```
-
-## API
 
 ### require
 ```js
@@ -52,330 +53,251 @@ const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
 import { MinHeap, MaxHeap } from '@datastructures-js/heap';
 ```
 
-### Construction
+## API
 
-#### using "new"
+### new
 creates an empty heap.
 
-##### Example
 ```js
 const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
 ```
 
-#### using ".heapify(list)"
-converts an existing array to a heap.
+### .insert(key[, value])
+insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string).
 
 <table>
-  <tr><th align="center" colspan="3">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td><td align="center"><b>item type</b></td></tr>
-  <tr><td>list</td><td>array</td><td><i>number</i>, <i>string</i> or <i>object literal</i> with key/value props</td></tr>
+  <tr>
+    <th align="center">params</th>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td>
+      key: number | string
+      <br />
+      value: any
+    </td>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(log(n))</td>
+  </tr>
 </table>
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td>MinHeap or MaxHeap</td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n)</td>
- </tr>
-</table>
-
-##### Example
 
 ```js
-const numList = [
-  50,
-  80,
-  { key: 30, value: 'something' },
-  90,
-  { key: 60, value: null },
-  40,
-  { key: 20, value: { name: 'test' } }
-];
+const minHeap = new MinHeap()
+  .insert(50)
+  .insert(80)
+  .insert(30, 'something')
+  .insert(90)
+  .insert(60, null)
+  .insert(40)
+  .insert(20, { name: 'test' });
 
-const strList = [
-  'm',
-  'x',
-  { key: 'f', value: 'something' },
-  'b',
-  { key: 'z', value: null },
-  'k',
-  { key: 'c', value: { name: 'test' } }
-];
-
-const minHeap = MinHeap.heapify(numList);
-
-const maxHeap = MaxHeap.heapify(strList);
-```
-
-### .insert(key, value)
-insert a node into the heap.
-
-<table>
-  <tr><th align="center" colspan="2">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td></tr>
-  <tr><td>key</td><td>number or string</td></tr>
-  <tr><td>value</td><td>object</td></tr>
-</table>
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
-
-#### Example
-
-```js
-const minHeap = new MinHeap();
-
-const maxHeap = new MaxHeap();
-
-minHeap.insert(50);
-minHeap.insert(80);
-minHeap.insert(30, 'something');
-minHeap.insert(90);
-minHeap.insert(60, null);
-minHeap.insert(40);
-minHeap.insert(20, { name: 'test' });
-
-maxHeap.insert('m');
-maxHeap.insert('x');
-maxHeap.insert('f', 'something');
-maxHeap.insert('b');
-maxHeap.insert('z', null);
-maxHeap.insert('k');
-maxHeap.insert('c', { name: 'test' });
-```
-
-### .root()
-returns the root without removing it.
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
-
-```js
-const min = minHeap.root();
-console.log(min.getKey()); // 20
-console.log(min.getValue()); // { name: 'test' }
-
-const max = maxHeap.root();
-console.log(max.getKey()); // 'z'
-console.log(max.getValue()); // null
-```
-
-### .leaf()
-returns the node with the max key in MinHeap, or with the min key in MaxHeap.
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
-
-```js
-const maxLeaf = minHeap.leaf();
-console.log(maxLeaf.getKey()); // 90
-
-const minLeaf = maxHeap.leaf();
-console.log(minLeaf.getKey()); // 'b'
+const maxHeap = new MaxHeap()
+  .insert('m')
+  .insert('x')
+  .insert('f', 'something')
+  .insert('b')
+  .insert('z', null)
+  .insert('k')
+  .insert('c', { name: 'test' });
 ```
 
 ### .extractRoot()
 removes and returns the root node in the heap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td><a href="#heapnode">HeapNode</a></td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | object</td>
+    <td align="center">O(log(n))</td>
+  </tr>
 </table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
-const min = minHeap.extractRoot();
-console.log(min.getKey()); // 20
-console.log(min.getValue()); // { name: 'test' }
-console.log(minHeap.root().getKey()); // 30
+console.log(minHeap.extractRoot()); // { key: 20, value: { name: 'test' } }
+console.log(minHeap.extractRoot()); // { key: 30, value: 'something' }
+console.log(minHeap.extractRoot()); // 40
 
-const max = maxHeap.extractRoot();
-console.log(max.getKey()); // 'z'
-console.log(max.getValue()); // null
-console.log(maxHeap.root().getKey()); // 'x'
+console.log(maxHeap.extractRoot()); // { key: 'z', value: null }
+console.log(maxHeap.extractRoot()); // 'x'
+console.log(maxHeap.extractRoot()); // 'm'
+```
+
+### .root()
+returns the root node without removing it.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | object</td>
+    <td align="center">O(1)</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.root()); // 50
+
+console.log(maxHeap.root()); // 'k'
+```
+
+### .leaf()
+returns a node with max key in MinHeap, or with min key in MaxHeap.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | object</td>
+    <td align="center">O(1)</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.leaf()); // 90
+
+console.log(maxHeap.leaf()); // 'b'
 ```
 
 ### .size()
 returns the number of nodes in the heap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td>number</td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+    <td align="center">O(1)</td>
+  </tr>
 </table>
 
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
-console.log(minHeap.size()); // 6
-console.log(maxHeap.size()); // 6
+console.log(minHeap.size()); // 4
+console.log(maxHeap.size()); // 4
 ```
 
 ### .clone()
-creates a shallow copy of a heap by slicing the nodes array and passing it to a new heap instance. 
+creates a shallow copy of the heap.
 
 <table>
- <tr><th>return</th></tr>
- <tr>
-  <td>MinHeap or MaxHeap</td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(n)</td>
+  </tr>
 </table>
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n)</td>
- </tr>
-</table>
-
-#### Example
 
 ```js
 const minHeapClone = minHeap.clone();
 minHeapClone.extractRoot();
+console.log(minHeapClone.root()); // 60
+console.log(minHeap.root()); // 50
 
-console.log(minHeapClone.root().getKey()); // 40
-console.log(minHeap.root().getKey()); // 30
+const maxHeapClone = maxHeap.clone();
+maxHeapClone.extractRoot();
+console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
+console.log(maxHeap.root()); // 'k'
+```
+
+### .isValid()
+checks if the heap is valid.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.isValid()); // true
+
+console.log(maxHeap.isValid()); // true
+```
+
+### .fix()
+fixes a heap by making the necessary changes in node positions.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.fix().isValid()); // true
+
+console.log(maxHeap.fix().isValid()); // true
 ```
 
 ### .sort()
 implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min Heap in descending order</b>.
 
 <table>
- <tr><th>return</th><th>description</th></tr>
- <tr>
-  <td>array</td>
-  <td>a sorted list by key of <a href="#heapnode">HeapNode</a></td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">array&lt;number|string|object&gt;</td>
+    <td align="center">O(n*log(n))</td>
+  </tr>
 </table>
 
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n*log(n))</td>
- </tr>
-</table>
-
-*note : calling .sort() directly on a heap will mutate its nodes location. If you want to avoid that, you can sort a shallow copy of the heap.*
-
-#### Example
+*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might either sort a shallow copy. You can also use use .fix() to fix the mutated heap positions*
 
 ```js
-console.log(maxHeap.clone().sort()); // does not mutate the heap structure
+console.log(maxHeap.clone().sort()); // sorting a copy of the heap
 /*
 [
-  HeapNode { key: 'b', value: undefined },
-  HeapNode { key: 'c', value: { name: 'test' } },
-  HeapNode { key: 'f', value: 'something' },
-  HeapNode { key: 'k', value: undefined },
-  HeapNode { key: 'm', value: undefined },
-  HeapNode { key: 'x', value: undefined }
+  'b',
+  { key: 'c', value: { name: 'test' } },
+  { key: 'f', value: 'something' },
+  'k'
 ]
 */
-console.log(maxHeap.root()); // HeapNode { key: 'x', value: undefined }
+console.log(maxHeap.root()); // 'k'
 
-console.log(minHeap.clone().sort()); // does not mutate the heap structure
+console.log(minHeap.sort()); // will mutate the heap
 /*
-[
-  HeapNode { key: 90, value: undefined },
-  HeapNode { key: 80, value: undefined },
-  HeapNode { key: 60, value: null },
-  HeapNode { key: 50, value: undefined },
-  HeapNode { key: 40, value: undefined },
-  HeapNode { key: 30, value: 'something' }
-]
+[ 90, 80, { key: 60, value: null }, 50 ]
 */
-console.log(minHeap.root()); // HeapNode { key: 30, value: 'something' }
+console.log(minHeap.isValid()); // false
+minHeap.fix(); // fix it
+console.log(minHeap.isValid()); // true
 ```
+
 To sort a list of elements directtly using Heap Sort, it can be done like:
 
 ```js
-const unsortedList = [3, 7, 2, 10, 4, 9, 8, 5, 1, 6];
-
-const ascSorted = MaxHeap.heapify(unsortedList).sort().map((node) => node.getKey());
+const ascSorted = MaxHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-const descSorted = MinHeap.heapify(unsortedList).sort().map((node) => node.getKey());
+const descSorted = MinHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 ```
 
@@ -391,8 +313,6 @@ clears the nodes in the heap.
  </tr>
 </table>
 
-#### Example
-
 ```js
 minHeap.clear();
 maxHeap.clear();
@@ -404,26 +324,154 @@ console.log(maxHeap.size()); // 0
 console.log(maxHeap.root()); // null
 ```
 
-### HeapNode
-
-#### .getKey()
-returns the node's key.
+### Heap.heapify(list)
+Heapifies an existing list. It returns a heap instance as well as changing the list positions properly.
 
 <table>
- <tr><th>return</th></tr>
- <tr><td>string or number</td></tr>
+ <tr>
+  <th>params</th>
+  <th>return</th>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>list: array&lt;number|string|object&gt;</td>
+  <td>MinHeap | MaxHeap</td>
+  <td>O(n)</td>
+ </tr>
 </table>
 
-#### .getValue()
-returns the node's associated value.
+```js
+const numList = [
+  50,
+  80,
+  30,
+  90,
+  60,
+  40,
+  20
+];
+MinHeap.heapify(numList);
+console.log(numList);
+/*
+[
+  20,
+  60,
+  30,
+  90,
+  80,
+  50,
+  40
+]
+*/
+
+const strList = [
+  'm',
+  'x',
+  'f',
+  'b',
+  'z',
+  'k',
+  'c'
+];
+const maxHeap = MaxHeap.heapify(strList);
+console.log(strList);
+/*
+[
+  'z',
+  'x',
+  'k',
+  'b',
+  'm',
+  'f',
+  'c'
+]
+*/
+console.log(maxHeap.isValid()); // true
+
+const objList = [
+  { key: 50, value: 't1' },
+  { key: 80, value: 't2' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 60, value: 't5' },
+  { key: 40, value: 't6' },
+  { key: 20, value: 't7' }
+];
+MinHeap.heapify(objList);
+console.log(objList);
+/*
+[
+  { key: 20, value: 't7' },
+  { key: 60, value: 't5' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 80, value: 't2' },
+  { key: 50, value: 't1' },
+  { key: 40, value: 't6' }
+]
+*/
+```
+
+### Heap.isHeapified(list)
+Checks if a given list is heapified.
 
 <table>
- <tr><th>return</th></tr>
- <tr><td>object</td></tr>
+ <tr>
+  <th>params</th>
+  <th>return</th>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>list: array&lt;number|string|object&gt;</td>
+  <td>boolean</td>
+  <td>O(log(n))</td>
+ </tr>
 </table>
+
+```js
+MinHeap.isHeapified([
+  50,
+  80,
+  30,
+  90,
+  60,
+  40,
+  20
+]); // false
+
+MinHeap.isHeapified([
+  20,
+  60,
+  30,
+  90,
+  80,
+  50,
+  40
+]); // true
+
+MaxHeap.isHeapified([
+  'm',
+  'x',
+  'f',
+  'b',
+  'z',
+  'k',
+  'c'
+]); // false
+
+MaxHeap.isHeapified([
+  'z',
+  'x',
+  'k',
+  'b',
+  'm',
+  'f',
+  'c'
+]); // true
+```
 
 ## Build
-lint + tests
+
 ```
 grunt build
 ```

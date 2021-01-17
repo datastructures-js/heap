@@ -1,7 +1,6 @@
 /**
- * @datastructures-js/heap
- * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  * @license MIT
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  */
 
 const Heap = require('./heap');
@@ -12,96 +11,37 @@ const Heap = require('./heap');
  */
 class MaxHeap extends Heap {
   /**
+   * Checks two nodes are in relatively valid position
    * @private
-   * gets the max child's index of two node's children
-   * @param {number} leftChildIndex
-   * @param {number} rightChildIndex
-   * @returns {number}
-   */
-  _getMaxChildIndex(leftChildIndex, rightChildIndex) {
-    const leftChild = this._nodes[leftChildIndex];
-    const rightChild = this._nodes[rightChildIndex];
-    if (leftChild.getKey() > rightChild.getKey()) {
-      return leftChildIndex;
-    }
-    return rightChildIndex;
-  }
-
-  /**
-   * @private
-   * returns the max child's index of two children before an index
-   * @param {number} index
-   * @param {number} leftChildIndex
-   * @param {number} rightChildIndex
-   * @returns {number}
-   */
-  _getMaxChildIndexBefore(index, leftChildIndex, rightChildIndex) {
-    const leftChild = this._nodes[leftChildIndex];
-    const rightChild = this._nodes[rightChildIndex];
-    if (rightChild.getKey() > leftChild.getKey() && rightChildIndex < index) {
-      return rightChildIndex;
-    }
-    return leftChildIndex;
-  }
-
-  /**
-   * @protected
-   * checks if child's key is bigger that its parent's key
+   * @param {object} parent
+   * @param {object} child
    * @returns {boolean}
    */
-  _shouldSwap(childIndex, parentIndex) {
-    if (childIndex < 0 || childIndex >= this.size()) return false;
-    if (parentIndex < 0 || parentIndex >= this.size()) return false;
-
-    const child = this._nodes[childIndex];
-    const parent = this._nodes[parentIndex];
-
-    return child.getKey() > parent.getKey();
+  _compareKeys(parentKey, childKey) {
+    return parentKey > childKey;
   }
 
   /**
-   * @protected
-   * @override
-   * implements the parent's function to select a child's index
-   * @param {number} leftChildIndex
-   * @param {number} rightChildIndex
-   * @returns {number}
-   */
-  _compareChildren(leftChildIndex, rightChildIndex) {
-    return this._getMaxChildIndex(leftChildIndex, rightChildIndex);
-  }
-
-  /**
-   * @protected
-   * @override
-   * implements the parent's function to select a child's index before an index
+   * Returns max child's index of two children before an index
+   * @private
    * @param {number} index
    * @param {number} leftChildIndex
    * @param {number} rightChildIndex
    * @returns {number}
    */
   _compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
-    return this._getMaxChildIndexBefore(index, leftChildIndex, rightChildIndex);
-  }
+    const leftChildKey = this._getKey(this._nodes[leftChildIndex]);
+    const rightChildKey = this._getKey(this._nodes[rightChildIndex]);
 
-  /**
-   * @public
-   * @override
-   * inserts a node into the heap and rebase leaf node to min key
-   * @param {number|string} key
-   * @param {object} value
-   */
-  insert(key, value) {
-    const newNode = super.insert(key, value);
-    if (this._leaf === null || key < this._leaf.getKey()) {
-      this._leaf = newNode;
+    if (rightChildKey > leftChildKey && rightChildIndex < index) {
+      return rightChildIndex;
     }
-    return newNode;
+    return leftChildIndex;
   }
 
   /**
+   * Returns a shallow copy of the heap
    * @public
-   * returns a shallow copy of a max heap
    * @returns {MaxHeap}
    */
   clone() {
@@ -109,14 +49,25 @@ class MaxHeap extends Heap {
   }
 
   /**
+   * Builds a max heap from an array of items
    * @public
    * @static
-   * builds a max heap from an array of items
-   * @param {array} items
+   * @param {array} list
    * @returns {MaxHeap}
    */
-  static heapify(items) {
-    return super._heapify(items, MaxHeap);
+  static heapify(list) {
+    return super._heapify(list, MaxHeap);
+  }
+
+  /**
+   * Checks if a list of items is a valid max heap
+   * @public
+   * @static
+   * @param {array} list
+   * @returns {boolean}
+   */
+  static isHeapified(list) {
+    return super._isHeapified(list, MaxHeap);
   }
 }
 

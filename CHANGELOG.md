@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2020-01-17
+
+### Changed
+- simplified heap nodes. preserves numbers and strings, and use object literal for key:value.
+- `.heapify` static function now heapify the input list as well as returning a heap insatnce.
+
+### Added
+- `.fix()` to fix positions of nodes in the heap.
+- `.isValid` to validate heap nodes are in right positions.
+- `.isHeapified` static function to valida if a given list is heapified.
+
+### Fixed
+- jsdoc
+- README
+
 ## [2.0.0] - 2020-04-06
 ### Changed
 - remove none-standard method `.serialize()`. 
