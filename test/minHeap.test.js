@@ -134,7 +134,7 @@ describe('MinHeap unit tests', () => {
 
     it('should return null if items is not a none-empty array', () => {
       expect(() => MinHeap.heapify('test')).to.throw(Error)
-        .and.to.have.property('message', '.heapify expect an array');
+        .and.to.have.property('message', '.heapify expects an array');
     });
   });
 

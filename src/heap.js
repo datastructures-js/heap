@@ -386,7 +386,7 @@ class Heap {
    */
   static _heapify(list, HeapType) {
     if (!Array.isArray(list)) {
-      throw new Error('.heapify expect an array');
+      throw new Error('.heapify expects an array');
     }
 
     return new HeapType(list).fix();

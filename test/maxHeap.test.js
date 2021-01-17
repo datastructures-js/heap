@@ -127,7 +127,7 @@ describe('MaxHeap unit tests', () => {
 
     it('should throw an error if list is not an array', () => {
       expect(() => MaxHeap.heapify('test')).to.throw(Error)
-        .and.to.have.property('message', '.heapify expect an array');
+        .and.to.have.property('message', '.heapify expects an array');
     });
   });
 
