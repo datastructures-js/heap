@@ -281,7 +281,7 @@ class Heap {
    * Inserts a node in the right position into the heap
    * @public
    * @param {number|string} key
-   * @param {any} value
+   * @param {any} [value]
    * @returns {Heap}
    */
   insert(key, value) {
@@ -319,16 +319,21 @@ class Heap {
       return true;
     }
 
+    if (!this._hasLeftChild(parentIndex)) {
+      const rightChildIndex = this._getLeftChildIndex(parentIndex);
+      if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
+    }
+
+    if (!this._hasRightChild(parentIndex)) {
+      const leftChildIndex = this._getLeftChildIndex(parentIndex);
+      if (!this._compareByIndex(parentIndex, leftChildIndex)) return false;
+    }
+
     const leftChildIndex = this._getLeftChildIndex(parentIndex);
     const rightChildIndex = this._getRightChildIndex(parentIndex);
-
-    const isLeftInPlace = this._compareByIndex(parentIndex, leftChildIndex);
-    const isRightInPlace = this._compareByIndex(parentIndex, rightChildIndex);
-
     if (
-      (!this._hasLeftChild(parentIndex) && !isRightInPlace)
-      || (!this._hasRightChild(parentIndex) && !isLeftInPlace)
-      || (!isLeftInPlace || !isRightInPlace)
+      !this._compareByIndex(parentIndex, leftChildIndex)
+      || !this._compareByIndex(parentIndex, rightChildIndex)
     ) {
       return false;
     }
