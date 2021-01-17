@@ -33,8 +33,8 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
   * [.fix()](#fix)
   * [.sort()](#sort)
   * [.clear()](#clear)
-  * [Heap.heapify(list)](#heapify)
-  * [Heap.isHeapified(list)](#heapify)
+  * [Heap.heapify(list)](#heapheapifylist)
+  * [Heap.isHeapified(list)](#heapisHeapifiedlist)
  * [Build](#build)
  * [License](#license)
 
@@ -294,12 +294,10 @@ console.log(minHeap.isValid()); // true
 To sort a list of elements directtly using Heap Sort, it can be done like:
 
 ```js
-const unsortedList = [3, 7, 2, 10, 4, 9, 8, 5, 1, 6];
-
-const ascSorted = MaxHeap.heapify(unsortedList).sort();
+const ascSorted = MaxHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-const descSorted = MinHeap.heapify(unsortedList).sort();
+const descSorted = MinHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 ```
 
@@ -315,8 +313,6 @@ clears the nodes in the heap.
  </tr>
 </table>
 
-#### Example
-
 ```js
 minHeap.clear();
 maxHeap.clear();
@@ -328,32 +324,21 @@ console.log(maxHeap.size()); // 0
 console.log(maxHeap.root()); // null
 ```
 
-#### using ".heapify(list)"
-converts an existing array to a heap.
-
-<table>
-  <tr><th align="center" colspan="3">params</th></tr>
-  <tr><td><b>name</b></td><td><b>type</b></td><td align="center"><b>item type</b></td></tr>
-  <tr><td>list</td><td>array</td><td><i>number</i>, <i>string</i> or <i>object literal</i> with key/value props</td></tr>
-</table>
-
-<table>
- <tr><th>return</th></tr>
- <tr>
-  <td>MinHeap or MaxHeap</td>
- </tr>
-</table>
+### Heap.heapify(list)
+Heapifies an existing list. It returns a heap instance as well as changing the list positions properly.
 
 <table>
  <tr>
+  <th>params</th>
+  <th>return</th>
   <th>runtime</th>
  </tr>
  <tr>
+  <td>list: array&lt;number|string|object&gt;</td>
+  <td>MinHeap | MaxHeap</td>
   <td>O(n)</td>
  </tr>
 </table>
-
-##### Example
 
 ```js
 const numList = [
@@ -376,9 +361,34 @@ const strList = [
   { key: 'c', value: { name: 'test' } }
 ];
 
-const minHeap = MinHeap.heapify(numList);
+MinHeap.heapify(numList);
+console.log(numList);
+/*
+[
+  { key: 20, value: { name: 'test' } },
+  { key: 60, value: null },
+  { key: 30, value: 'something' },
+  90,
+  80,
+  50,
+  40
+]
+*/
 
 const maxHeap = MaxHeap.heapify(strList);
+console.log(strList);
+/*
+[
+  { key: 'z', value: null },
+  'x',
+  'k',
+  'b',
+  'm',
+  { key: 'f', value: 'something' },
+  { key: 'c', value: { name: 'test' } }
+]
+*/
+console.log(maxHeap.isValid()); // true
 ```
 
 ## Build
