@@ -350,8 +350,6 @@ const numList = [
   40,
   20
 ];
-
-
 MinHeap.heapify(numList);
 console.log(numList);
 /*
@@ -375,7 +373,6 @@ const strList = [
   'k',
   'c'
 ];
-
 const maxHeap = MaxHeap.heapify(strList);
 console.log(strList);
 /*
@@ -400,7 +397,6 @@ const objList = [
   { key: 40, value: 't6' },
   { key: 20, value: 't7' }
 ];
-
 MinHeap.heapify(objList);
 console.log(objList);
 /*
