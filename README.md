@@ -344,30 +344,30 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
 const numList = [
   50,
   80,
-  { key: 30, value: 'something' },
+  30,
   90,
-  { key: 60, value: null },
+  60,
   40,
-  { key: 20, value: { name: 'test' } }
+  20
 ];
 
 const strList = [
   'm',
   'x',
-  { key: 'f', value: 'something' },
+  'f',
   'b',
-  { key: 'z', value: null },
+  'z',
   'k',
-  { key: 'c', value: { name: 'test' } }
+  'c'
 ];
 
 MinHeap.heapify(numList);
 console.log(numList);
 /*
 [
-  { key: 20, value: { name: 'test' } },
-  { key: 60, value: null },
-  { key: 30, value: 'something' },
+  20,
+  60,
+  30,
   90,
   80,
   50,
@@ -379,16 +379,74 @@ const maxHeap = MaxHeap.heapify(strList);
 console.log(strList);
 /*
 [
-  { key: 'z', value: null },
+  'z',
   'x',
   'k',
   'b',
   'm',
-  { key: 'f', value: 'something' },
-  { key: 'c', value: { name: 'test' } }
+  'f',
+  'c'
 ]
 */
 console.log(maxHeap.isValid()); // true
+```
+
+### Heap.isHeapified(list)
+Checks if a given list is heapified.
+
+<table>
+ <tr>
+  <th>params</th>
+  <th>return</th>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>list: array&lt;number|string|object&gt;</td>
+  <td>boolean</td>
+  <td>O(log(n))</td>
+ </tr>
+</table>
+
+```js
+MinHeap.isHeapified([
+  50,
+  80,
+  30,
+  90,
+  60,
+  40,
+  20
+]); // false
+
+MinHeap.isHeapified([
+  20,
+  60,
+  30,
+  90,
+  80,
+  50,
+  40
+]); // true
+
+MaxHeap.isHeapified([
+  'm',
+  'x',
+  'f',
+  'b',
+  'z',
+  'k',
+  'c'
+]); // false
+
+MaxHeap.isHeapified([
+  'z',
+  'x',
+  'k',
+  'b',
+  'm',
+  'f',
+  'c'
+]); // true
 ```
 
 ## Build
