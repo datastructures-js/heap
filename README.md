@@ -24,12 +24,13 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 * [API](#api)
   * [new](#new)
   * [.insert(key, value)](#insertkey-value)
-  * [.isValid()](#isvalid)
   * [.extractRoot()](#extractroot)
   * [.root()](#root)
   * [.leaf()](#leaf)
   * [.size()](#size)
   * [.clone()](#clone)
+  * [.isValid()](#isvalid)
+  * [.fix()](#fix)
   * [.sort()](#sort)
   * [.clear()](#clear)
   * [Heap.heapify(list)](#heapify)
@@ -101,26 +102,6 @@ const maxHeap = new MaxHeap()
   .insert('z', null)
   .insert('k')
   .insert('c', { name: 'test' });
-```
-
-### .isValid()
-checks if the heap is valid.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
-
-```js
-console.log(minHeap.isValid()); // true
-
-console.log(maxHeap.isValid()); // true
 ```
 
 ### .extractRoot()
@@ -233,29 +214,61 @@ console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
 console.log(maxHeap.root()); // 'k'
 ```
 
+### .isValid()
+checks if the heap is valid.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.isValid()); // true
+
+console.log(maxHeap.isValid()); // true
+```
+
+### .fix()
+fixes a heap by making the necessary changes in node positions.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(minHeap.isValid()); // true
+
+console.log(maxHeap.isValid()); // true
+```
+
 ### .sort()
 implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min Heap in descending order</b>.
 
 <table>
- <tr><th>return</th><th>description</th></tr>
- <tr>
-  <td>array</td>
-  <td>a sorted list by key of <a href="#heapnode">HeapNode</a></td>
- </tr>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">array\<number|string|object\></td>
+    <td align="center">O(n*log(n))</td>
+  </tr>
 </table>
 
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(n*log(n))</td>
- </tr>
-</table>
-
-*note : calling .sort() directly on a heap will mutate its nodes location. If you want to avoid that, you can sort a shallow copy of the heap.*
-
-#### Example
+*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might sort a shallow copy of the heap or user .fix() to fix the mutated heap*
 
 ```js
 console.log(maxHeap.clone().sort()); // does not mutate the heap structure
