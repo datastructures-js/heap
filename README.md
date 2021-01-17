@@ -22,7 +22,7 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 * [require](#require)
 * [import](#import)
 * [API](#api)
-  * [new](#construction)
+  * [new](#new)
   * [.insert(key, value)](#insertkey-value)
   * [.isValid()](#isvalid)
   * [.extractRoot()](#extractroot)
@@ -83,28 +83,24 @@ insert a node into the heap. If value is provided (anything except undefined), t
   </tr>
 </table>
 
-#### Example
-
 ```js
-const minHeap = new MinHeap();
+const minHeap = new MinHeap()
+  .insert(50)
+  .insert(80)
+  .insert(30, 'something')
+  .insert(90)
+  .insert(60, null)
+  .insert(40)
+  .insert(20, { name: 'test' });
 
-const maxHeap = new MaxHeap();
-
-minHeap.insert(50);
-minHeap.insert(80);
-minHeap.insert(30, 'something');
-minHeap.insert(90);
-minHeap.insert(60, null);
-minHeap.insert(40);
-minHeap.insert(20, { name: 'test' });
-
-maxHeap.insert('m');
-maxHeap.insert('x');
-maxHeap.insert('f', 'something');
-maxHeap.insert('b');
-maxHeap.insert('z', null);
-maxHeap.insert('k');
-maxHeap.insert('c', { name: 'test' });
+const maxHeap = new MaxHeap()
+  .insert('m')
+  .insert('x')
+  .insert('f', 'something')
+  .insert('b')
+  .insert('z', null)
+  .insert('k')
+  .insert('c', { name: 'test' });
 ```
 
 ### .root()
