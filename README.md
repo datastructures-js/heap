@@ -474,7 +474,7 @@ MaxHeap.isHeapified([
 ```
 
 ## Build
-lint + tests
+
 ```
 grunt build
 ```
