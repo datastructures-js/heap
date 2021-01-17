@@ -268,7 +268,7 @@ implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min 
   </tr>
 </table>
 
-*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might either sort a shallow copy of the heap or use .fix() to fix the mutated heap positions*
+*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might either sort a shallow copy. You can also use use .fix() to fix the mutated heap positions*
 
 ```js
 console.log(maxHeap.clone().sort()); // sorting a copy of the heap
