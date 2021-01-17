@@ -1,6 +1,6 @@
 {
   "name": "@datastructures-js/heap",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Min/Max Heap & Heap Sort implementation in javascript",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "heap sort",
     "heapify"
   ],
-  "author": "Eyas Ranjous <https://github.com/eyas-ranjous>",
+  "author": "Eyas Ranjous <eyas-ranjous@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/datastructures-js/heap/issues"
