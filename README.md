@@ -205,8 +205,8 @@ creates a shallow copy of the heap.
 ```js
 const minHeapClone = minHeap.clone();
 minHeapClone.extractRoot();
-console.log(minHeapClone.root()); // 40
-console.log(minHeap.root()); // 30
+console.log(minHeapClone.root()); // 60
+console.log(minHeap.root()); // 50
 
 const maxHeapClone = maxHeap.clone();
 maxHeapClone.extractRoot();
@@ -249,9 +249,9 @@ fixes a heap by making the necessary changes in node positions.
 </table>
 
 ```js
-console.log(minHeap.isValid()); // true
+console.log(minHeap.fix().isValid()); // true
 
-console.log(maxHeap.isValid()); // true
+console.log(maxHeap.fix().isValid()); // true
 ```
 
 ### .sort()
@@ -268,34 +268,27 @@ implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min 
   </tr>
 </table>
 
-*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might sort a shallow copy of the heap or user .fix() to fix the mutated heap*
+*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might either sort a shallow copy of the heap or use .fix() to fix the mutated heap positions*
 
 ```js
-console.log(maxHeap.clone().sort()); // does not mutate the heap structure
+console.log(maxHeap.clone().sort()); // sorting a copy of the heap
 /*
 [
-  HeapNode { key: 'b', value: undefined },
-  HeapNode { key: 'c', value: { name: 'test' } },
-  HeapNode { key: 'f', value: 'something' },
-  HeapNode { key: 'k', value: undefined },
-  HeapNode { key: 'm', value: undefined },
-  HeapNode { key: 'x', value: undefined }
+  'b',
+  { key: 'c', value: { name: 'test' } },
+  { key: 'f', value: 'something' },
+  'k'
 ]
 */
-console.log(maxHeap.root()); // HeapNode { key: 'x', value: undefined }
+console.log(maxHeap.root()); // 'k'
 
-console.log(minHeap.clone().sort()); // does not mutate the heap structure
+console.log(minHeap.sort()); // will mutate the heap
 /*
-[
-  HeapNode { key: 90, value: undefined },
-  HeapNode { key: 80, value: undefined },
-  HeapNode { key: 60, value: null },
-  HeapNode { key: 50, value: undefined },
-  HeapNode { key: 40, value: undefined },
-  HeapNode { key: 30, value: 'something' }
-]
+[ 90, 80, { key: 60, value: null }, 50 ]
 */
-console.log(minHeap.root()); // HeapNode { key: 30, value: 'something' }
+console.log(minHeap.isValid()); // false
+minHeap.fix(); // fix it
+console.log(minHeap.isValid()); // true
 ```
 To sort a list of elements directtly using Heap Sort, it can be done like:
 
