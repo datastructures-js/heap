@@ -1,5 +1,5 @@
 # @datastructures-js/heap
-[![build:?](https://travis-ci.org/datastructures-js/heap.svg?branch=master)](https://travis-ci.org/datastructures-js/heap) 
+[![build:?](https://travis-ci.org/datastructures-js/heap.svg?branch=master)](https://travis-ci.org/datastructures-js/heap)
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 
@@ -255,7 +255,7 @@ console.log(maxHeap.fix().isValid()); // true
 ```
 
 ### .sort()
-implements Heap Sort and sorts a <b>Max Heap in ascneding order</b> or a <b>Min Heap in descending order</b>.
+implements Heap Sort and sorts a <b>Max Heap in ascending order</b> or a <b>Min Heap in descending order</b>.
 
 <table>
   <tr>
