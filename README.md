@@ -352,15 +352,7 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
 </table>
 
 ```js
-const numList = [
-  50,
-  80,
-  30,
-  90,
-  60,
-  40,
-  20
-];
+const numList = [50, 80, 30, 90, 60, 40, 20];
 MinHeap.heapify(numList);
 console.log(numList);
 /*
@@ -375,15 +367,7 @@ console.log(numList);
 ]
 */
 
-const strList = [
-  'm',
-  'x',
-  'f',
-  'b',
-  'z',
-  'k',
-  'c'
-];
+const strList = ['m', 'x', 'f', 'b',  'z', 'k', 'c'];
 const maxHeap = MaxHeap.heapify(strList);
 console.log(strList);
 /*
@@ -440,45 +424,13 @@ Checks if a given list is heapified.
 </table>
 
 ```js
-MinHeap.isHeapified([
-  50,
-  80,
-  30,
-  90,
-  60,
-  40,
-  20
-]); // false
+MinHeap.isHeapified([50, 80, 30, 90, 60, 40, 20]); // false
 
-MinHeap.isHeapified([
-  20,
-  60,
-  30,
-  90,
-  80,
-  50,
-  40
-]); // true
+MinHeap.isHeapified([20, 60, 30, 90, 80, 50, 40]); // true
 
-MaxHeap.isHeapified([
-  'm',
-  'x',
-  'f',
-  'b',
-  'z',
-  'k',
-  'c'
-]); // false
+MaxHeap.isHeapified(['m', 'x', 'f', 'b', 'z', 'k', 'c']); // false
 
-MaxHeap.isHeapified([
-  'z',
-  'x',
-  'k',
-  'b',
-  'm',
-  'f',
-  'c'
-]); // true
+MaxHeap.isHeapified(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
 ```
 
 ## Build
