@@ -3,7 +3,9 @@
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 
-a complete javascript implementation for the Min/Max Heap data structures & Heap Sort algorithm.
+a javascript implementation for Heap data structure & Heap Sort algorithm.
+
+<img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
 <table>
 <tr><th>Min Heap</th><th>Max Heap</th></tr>
