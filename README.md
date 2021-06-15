@@ -19,7 +19,7 @@ a javascript implementation for Heap data structure & Heap Sort algorithm.
 </tr>
 </table>
 
-# Table of Contents
+# Contents
 * [Install](#install)
 * [require](#require)
 * [import](#import)
