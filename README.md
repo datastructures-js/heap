@@ -24,7 +24,7 @@ a javascript implementation for Heap data structure & Heap Sort algorithm.
 * [require](#require)
 * [import](#import)
 * [API](#api)
-  * [new](#new)
+  * [constructor](#constructor)
   * [.insert(key[, value])](#insertkey-value)
   * [.extractRoot()](#extractroot)
   * [.root()](#root)
@@ -52,18 +52,27 @@ const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
 
 ### import
 ```js
-import { MinHeap, MaxHeap } from '@datastructures-js/heap';
+import { MinHeap, MaxHeap, HeapNode } from '@datastructures-js/heap';
+// HeapNode is the key/value interface
 ```
 
 ## API
 
-### new
+### constructor
 creates an empty heap.
 
+##### JS
 ```js
 const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
+```
+
+##### TS
+```js
+const minHeap = new MinHeap<number, [number, number]>();
+
+const maxHeap = new MaxHeap<string, { name: string }>();
 ```
 
 ### .insert(key[, value])
@@ -115,7 +124,7 @@ removes and returns the root node in the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
@@ -139,7 +148,7 @@ returns the root node without removing it.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -159,7 +168,7 @@ returns a node with max key in MinHeap, or with min key in MaxHeap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -336,7 +345,7 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number|string|object&gt;</td>
+  <td>list: array&lt;number | string | { key, value }&gt;</td>
   <td>MinHeap | MaxHeap</td>
   <td>O(n)</td>
  </tr>
@@ -424,7 +433,7 @@ Checks if a given list is heapified.
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number|string|object&gt;</td>
+  <td>list: array&lt;number | string | { key, value }&gt;</td>
   <td>boolean</td>
   <td>O(log(n))</td>
  </tr>
