@@ -3,7 +3,7 @@
  * @copyright 2019 Eyas Ranjous <eyas.ranjous@gmail.com>
  */
 
-const Heap = require('./heap');
+const { Heap } = require('./heap');
 
 /**
  * @class MinHeap
@@ -71,4 +71,4 @@ class MinHeap extends Heap {
   }
 }
 
-module.exports = MinHeap;
+exports.MinHeap = MinHeap;

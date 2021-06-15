@@ -3,7 +3,7 @@
  * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  */
 
-const Heap = require('./heap');
+const { Heap } = require('./heap');
 
 /**
  * @class MaxHeap
@@ -71,4 +71,4 @@ class MaxHeap extends Heap {
   }
 }
 
-module.exports = MaxHeap;
+exports.MaxHeap = MaxHeap;

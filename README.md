@@ -3,7 +3,9 @@
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 
-a complete javascript implementation for the Min/Max Heap data structures & Heap Sort algorithm.
+a javascript implementation for Heap data structure & Heap Sort algorithm.
+
+<img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
 <table>
 <tr><th>Min Heap</th><th>Max Heap</th></tr>
@@ -17,12 +19,12 @@ a complete javascript implementation for the Min/Max Heap data structures & Heap
 </tr>
 </table>
 
-# Table of Contents
+# Contents
 * [Install](#install)
 * [require](#require)
 * [import](#import)
 * [API](#api)
-  * [new](#new)
+  * [constructor](#constructor)
   * [.insert(key[, value])](#insertkey-value)
   * [.extractRoot()](#extractroot)
   * [.root()](#root)
@@ -50,18 +52,27 @@ const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
 
 ### import
 ```js
-import { MinHeap, MaxHeap } from '@datastructures-js/heap';
+import { MinHeap, MaxHeap, HeapNode } from '@datastructures-js/heap';
+// HeapNode is the key/value interface
 ```
 
 ## API
 
-### new
+### constructor
 creates an empty heap.
 
+##### JS
 ```js
 const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
+```
+
+##### TS
+```js
+const minHeap = new MinHeap<number, [number, number]>();
+
+const maxHeap = new MaxHeap<string, { name: string }>();
 ```
 
 ### .insert(key[, value])
@@ -113,7 +124,7 @@ removes and returns the root node in the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
@@ -137,7 +148,7 @@ returns the root node without removing it.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -157,7 +168,7 @@ returns a node with max key in MinHeap, or with min key in MaxHeap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | object</td>
+    <td align="center">number | string | { key, value }</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -334,58 +345,21 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number|string|object&gt;</td>
+  <td>list: array&lt;number | string | { key, value }&gt;</td>
   <td>MinHeap | MaxHeap</td>
   <td>O(n)</td>
  </tr>
 </table>
 
+##### JS
 ```js
-const numList = [
-  50,
-  80,
-  30,
-  90,
-  60,
-  40,
-  20
-];
+const numList = [50, 80, 30, 90, 60, 40, 20];
 MinHeap.heapify(numList);
-console.log(numList);
-/*
-[
-  20,
-  60,
-  30,
-  90,
-  80,
-  50,
-  40
-]
-*/
+console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
 
-const strList = [
-  'm',
-  'x',
-  'f',
-  'b',
-  'z',
-  'k',
-  'c'
-];
+const strList = ['m', 'x', 'f', 'b',  'z', 'k', 'c'];
 const maxHeap = MaxHeap.heapify(strList);
-console.log(strList);
-/*
-[
-  'z',
-  'x',
-  'k',
-  'b',
-  'm',
-  'f',
-  'c'
-]
-*/
+console.log(strList); // ['z', 'x', 'k', 'b', 'm', 'f', 'c']
 console.log(maxHeap.isValid()); // true
 
 const objList = [
@@ -412,6 +386,36 @@ console.log(objList);
 */
 ```
 
+##### TS
+```js
+const numList = [50, 80, 30, 90, 60, 40, 20];
+MinHeap.heapify<number>(numList);
+console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
+
+const objList = [
+  { key: 50, value: 't1' },
+  { key: 80, value: 't2' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 60, value: 't5' },
+  { key: 40, value: 't6' },
+  { key: 20, value: 't7' }
+];
+MinHeap.heapify<number, string>(objList);
+console.log(objList);
+/*
+[
+  { key: 20, value: 't7' },
+  { key: 60, value: 't5' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 80, value: 't2' },
+  { key: 50, value: 't1' },
+  { key: 40, value: 't6' }
+]
+*/
+```
+
 ### Heap.isHeapified(list)
 Checks if a given list is heapified.
 
@@ -422,52 +426,28 @@ Checks if a given list is heapified.
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number|string|object&gt;</td>
+  <td>list: array&lt;number | string | { key, value }&gt;</td>
   <td>boolean</td>
   <td>O(log(n))</td>
  </tr>
 </table>
 
+##### JS
 ```js
-MinHeap.isHeapified([
-  50,
-  80,
-  30,
-  90,
-  60,
-  40,
-  20
-]); // false
+MinHeap.isHeapified([50, 80, 30, 90, 60, 40, 20]); // false
 
-MinHeap.isHeapified([
-  20,
-  60,
-  30,
-  90,
-  80,
-  50,
-  40
-]); // true
+MinHeap.isHeapified([20, 60, 30, 90, 80, 50, 40]); // true
 
-MaxHeap.isHeapified([
-  'm',
-  'x',
-  'f',
-  'b',
-  'z',
-  'k',
-  'c'
-]); // false
+MaxHeap.isHeapified(['m', 'x', 'f', 'b', 'z', 'k', 'c']); // false
 
-MaxHeap.isHeapified([
-  'z',
-  'x',
-  'k',
-  'b',
-  'm',
-  'f',
-  'c'
-]); // true
+MaxHeap.isHeapified(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
+```
+
+##### TS
+```js
+MinHeap.isHeapified<number>([20, 60, 30, 90, 80, 50, 40]); // true
+
+MaxHeap.isHeapified<string>(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
 ```
 
 ## Build

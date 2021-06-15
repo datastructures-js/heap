@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const MaxHeap = require('../src/maxHeap');
+const { MaxHeap } = require('../src/maxHeap');
 
 describe('MaxHeap unit tests', () => {
   const maxHeap = new MaxHeap();
