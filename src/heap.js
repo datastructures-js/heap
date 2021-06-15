@@ -18,43 +18,14 @@ class Heap {
   }
 
   /**
-   * Calculates left child's index from a parent's index
-   * @private
-   * @param {number} parentIndex
-   * @returns {number}
-   */
-  _getLeftChildIndex(parentIndex) {
-    return (parentIndex * 2) + 1;
-  }
-
-  /**
-   * Calculates right child's index from a parent's index
-   * @private
-   * @param {number} parentIndex
-   * @returns {number}
-   */
-  _getRightChildIndex(parentIndex) {
-    return (parentIndex * 2) + 2;
-  }
-
-  /**
-   * Calculates parent's index from a child's index
-   * @private
-   * @param {number} parentIndex
-   * @returns {number}
-   */
-  _getParentIndex(childIndex) {
-    return Math.floor((childIndex - 1) / 2);
-  }
-
-  /**
    * Checks if a parent has a left child
    * @private
    * @param {number} parentIndex
    * @returns {boolean}
    */
   _hasLeftChild(parentIndex) {
-    return this._getLeftChildIndex(parentIndex) < this.size();
+    const leftChildIndex = (parentIndex * 2) + 1;
+    return leftChildIndex < this.size();
   }
 
   /**
@@ -64,17 +35,8 @@ class Heap {
    * @returns {boolean}
    */
   _hasRightChild(parentIndex) {
-    return this._getRightChildIndex(parentIndex) < this.size();
-  }
-
-  /**
-   * Checks if a child has a parent
-   * @private
-   * @param {number} childIndex
-   * @returns {boolean}
-   */
-  _hasParent(childIndex) {
-    return this._getParentIndex(childIndex) >= 0;
+    const rightChildIndex = (parentIndex * 2) + 2;
+    return rightChildIndex < this.size();
   }
 
   /**
@@ -148,16 +110,16 @@ class Heap {
 
   /**
    * Bubbles a node from a starting index up in the heap
-   * @param {number} [startingIndex]
+   * @param {number} startingIndex
    * @public
    */
-  heapifyUp(startingIndex = this.size() - 1) {
+  heapifyUp(startingIndex) {
     let childIndex = startingIndex;
-    let parentIndex = this._getParentIndex(childIndex);
+    let parentIndex = Math.floor((childIndex - 1) / 2);
     while (this._shouldSwap(parentIndex, childIndex)) {
       this._swap(parentIndex, childIndex);
       childIndex = parentIndex;
-      parentIndex = this._getParentIndex(childIndex);
+      parentIndex = Math.floor((childIndex - 1) / 2);
     }
   }
 
@@ -175,8 +137,8 @@ class Heap {
       return -1;
     }
 
-    const leftChildIndex = this._getLeftChildIndex(parentIndex);
-    const rightChildIndex = this._getRightChildIndex(parentIndex);
+    const leftChildIndex = (parentIndex * 2) + 1;
+    const rightChildIndex = (parentIndex * 2) + 2;
 
     if (!this._hasLeftChild(parentIndex)) {
       return rightChildIndex;
@@ -248,8 +210,8 @@ class Heap {
       }
 
       parentIndex = childIndex;
-      leftChildIndex = this._getLeftChildIndex(parentIndex);
-      rightChildIndex = this._getRightChildIndex(parentIndex);
+      leftChildIndex = (parentIndex * 2) + 1;
+      rightChildIndex = (parentIndex * 2) + 2;
     }
   }
 
@@ -287,7 +249,7 @@ class Heap {
   insert(key, value) {
     const newNode = value !== undefined ? { key, value } : key;
     this._nodes.push(newNode);
-    this.heapifyUp();
+    this.heapifyUp(this._nodes.length - 1);
     if (this._leaf === null || !this._compare(newNode, this._leaf)) {
       this._leaf = newNode;
     }
@@ -311,23 +273,27 @@ class Heap {
    * @public
    * @returns {boolean}
    */
-  isValid(parentIndex = 0) {
-    let isValidLeft = true;
-    let isValidRight = true;
+  isValid() {
+    const isValidRecursive = (parentIndex) => {
+      let isValidLeft = true;
+      let isValidRight = true;
 
-    if (this._hasLeftChild(parentIndex)) {
-      const leftChildIndex = this._getLeftChildIndex(parentIndex);
-      if (!this._compareByIndex(parentIndex, leftChildIndex)) return false;
-      isValidLeft = this.isValid(leftChildIndex);
-    }
+      if (this._hasLeftChild(parentIndex)) {
+        const leftChildIndex = (parentIndex * 2) + 1;
+        if (!this._compareByIndex(parentIndex, leftChildIndex)) return false;
+        isValidLeft = isValidRecursive(leftChildIndex);
+      }
 
-    if (this._hasRightChild(parentIndex)) {
-      const rightChildIndex = this._getRightChildIndex(parentIndex);
-      if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
-      isValidRight = this.isValid(rightChildIndex);
-    }
+      if (this._hasRightChild(parentIndex)) {
+        const rightChildIndex = (parentIndex * 2) + 2;
+        if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
+        isValidRight = isValidRecursive(rightChildIndex);
+      }
 
-    return isValidLeft && isValidRight;
+      return isValidLeft && isValidRight;
+    };
+
+    return isValidRecursive(0);
   }
 
   /**
