@@ -351,36 +351,15 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
  </tr>
 </table>
 
+##### JS
 ```js
 const numList = [50, 80, 30, 90, 60, 40, 20];
 MinHeap.heapify(numList);
-console.log(numList);
-/*
-[
-  20,
-  60,
-  30,
-  90,
-  80,
-  50,
-  40
-]
-*/
+console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
 
 const strList = ['m', 'x', 'f', 'b',  'z', 'k', 'c'];
 const maxHeap = MaxHeap.heapify(strList);
-console.log(strList);
-/*
-[
-  'z',
-  'x',
-  'k',
-  'b',
-  'm',
-  'f',
-  'c'
-]
-*/
+console.log(strList); // ['z', 'x', 'k', 'b', 'm', 'f', 'c']
 console.log(maxHeap.isValid()); // true
 
 const objList = [
@@ -393,6 +372,36 @@ const objList = [
   { key: 20, value: 't7' }
 ];
 MinHeap.heapify(objList);
+console.log(objList);
+/*
+[
+  { key: 20, value: 't7' },
+  { key: 60, value: 't5' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 80, value: 't2' },
+  { key: 50, value: 't1' },
+  { key: 40, value: 't6' }
+]
+*/
+```
+
+##### TS
+```js
+const numList = [50, 80, 30, 90, 60, 40, 20];
+MinHeap.heapify<number>(numList);
+console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
+
+const objList = [
+  { key: 50, value: 't1' },
+  { key: 80, value: 't2' },
+  { key: 30, value: 't3' },
+  { key: 90, value: 't4' },
+  { key: 60, value: 't5' },
+  { key: 40, value: 't6' },
+  { key: 20, value: 't7' }
+];
+MinHeap.heapify<number, string>(objList);
 console.log(objList);
 /*
 [
@@ -423,6 +432,7 @@ Checks if a given list is heapified.
  </tr>
 </table>
 
+##### JS
 ```js
 MinHeap.isHeapified([50, 80, 30, 90, 60, 40, 20]); // false
 
@@ -431,6 +441,13 @@ MinHeap.isHeapified([20, 60, 30, 90, 80, 50, 40]); // true
 MaxHeap.isHeapified(['m', 'x', 'f', 'b', 'z', 'k', 'c']); // false
 
 MaxHeap.isHeapified(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
+```
+
+##### TS
+```js
+MinHeap.isHeapified<number>([20, 60, 30, 90, 80, 50, 40]); // true
+
+MaxHeap.isHeapified<string>(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
 ```
 
 ## Build
