@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const MinHeap = require('../src/minHeap');
+const { MinHeap } = require('../src/minHeap');
 
 describe('MinHeap unit tests', () => {
   const minHeap = new MinHeap();
