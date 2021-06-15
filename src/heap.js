@@ -157,7 +157,7 @@ class Heap {
    * Pushes a node from a starting index down in the heap
    * @private
    */
-  _heapifyDown(startingIndex = 0) {
+  _heapifyDown(startingIndex) {
     let parentIndex = startingIndex;
     let childIndex = this._compareChildrenOf(parentIndex);
     while (this._shouldSwap(parentIndex, childIndex)) {
@@ -178,7 +178,7 @@ class Heap {
     const root = this.root();
     this._nodes[0] = this._nodes[this.size() - 1];
     this._nodes.pop();
-    this._heapifyDown();
+    this._heapifyDown(0);
 
     if (root === this._leaf) {
       this._leaf = this.root();
@@ -249,7 +249,7 @@ class Heap {
   insert(key, value) {
     const newNode = value !== undefined ? { key, value } : key;
     this._nodes.push(newNode);
-    this.heapifyUp(this._nodes.length - 1);
+    this.heapifyUp(this.size() - 1);
     if (this._leaf === null || !this._compare(newNode, this._leaf)) {
       this._leaf = newNode;
     }
@@ -371,4 +371,4 @@ class Heap {
   }
 }
 
-module.exports = Heap;
+exports.Heap = Heap;
