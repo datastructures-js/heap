@@ -79,22 +79,6 @@ class Heap {
   }
 
   /**
-   * Compares parent & child nodes
-   * and returns true if they are in right positions
-   *
-   * @private
-   * @param {object|number|string} parent
-   * @param {object|number|string} child
-   * @returns {boolean}
-   */
-  _compareByIndex(parentIndex, childIndex) {
-    return this._compareKeys(
-      this._getKey(this._nodes[parentIndex]),
-      this._getKey(this._nodes[childIndex])
-    );
-  }
-
-  /**
    * Checks if parent and child nodes should be swapped
    * @private
    * @param {number} parentIndex
@@ -105,7 +89,10 @@ class Heap {
     if (parentIndex < 0 || parentIndex >= this.size()) return false;
     if (childIndex < 0 || childIndex >= this.size()) return false;
 
-    return !this._compareByIndex(parentIndex, childIndex);
+    return !this._compare(
+      this._nodes[parentIndex],
+      this._nodes[childIndex]
+    );
   }
 
   /**
@@ -116,6 +103,7 @@ class Heap {
   heapifyUp(startingIndex) {
     let childIndex = startingIndex;
     let parentIndex = Math.floor((childIndex - 1) / 2);
+
     while (this._shouldSwap(parentIndex, childIndex)) {
       this._swap(parentIndex, childIndex);
       childIndex = parentIndex;
@@ -148,9 +136,12 @@ class Heap {
       return leftChildIndex;
     }
 
-    return this._compareByIndex(leftChildIndex, rightChildIndex)
-      ? leftChildIndex
-      : rightChildIndex;
+    const isLeft = this._compare(
+      this._nodes[leftChildIndex],
+      this._nodes[rightChildIndex]
+    );
+
+    return isLeft ? leftChildIndex : rightChildIndex;
   }
 
   /**
@@ -160,6 +151,7 @@ class Heap {
   _heapifyDown(startingIndex) {
     let parentIndex = startingIndex;
     let childIndex = this._compareChildrenOf(parentIndex);
+
     while (this._shouldSwap(parentIndex, childIndex)) {
       this._swap(parentIndex, childIndex);
       parentIndex = childIndex;
@@ -280,13 +272,29 @@ class Heap {
 
       if (this._hasLeftChild(parentIndex)) {
         const leftChildIndex = (parentIndex * 2) + 1;
-        if (!this._compareByIndex(parentIndex, leftChildIndex)) return false;
+        isValidLeft = this._compare(
+          this._nodes[parentIndex],
+          this._nodes[leftChildIndex]
+        );
+
+        if (!isValidLeft) {
+          return false;
+        }
+
         isValidLeft = isValidRecursive(leftChildIndex);
       }
 
       if (this._hasRightChild(parentIndex)) {
         const rightChildIndex = (parentIndex * 2) + 2;
-        if (!this._compareByIndex(parentIndex, rightChildIndex)) return false;
+        isValidRight = this._compare(
+          this._nodes[parentIndex],
+          this._nodes[rightChildIndex]
+        );
+
+        if (!isValidRight) {
+          return false;
+        }
+
         isValidRight = isValidRecursive(rightChildIndex);
       }
 
