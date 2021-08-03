@@ -47,12 +47,12 @@ npm install --save @datastructures-js/heap
 
 ### require
 ```js
-const { MinHeap, MaxHeap } = require('@datastructures-js/heap');
+const { MinHeap, MaxHeap, CustomHeap } = require('@datastructures-js/heap');
 ```
 
 ### import
 ```js
-import { MinHeap, MaxHeap, HeapNode } from '@datastructures-js/heap';
+import { MinHeap, MaxHeap, CustomHeap, HeapNode } from '@datastructures-js/heap';
 // HeapNode is the key/value interface
 ```
 
@@ -66,6 +66,10 @@ creates an empty heap.
 const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
+
+// using a custom comparator
+const customMinHeap = new CustomHeap((a, b) => a.id - b.id);
+const customMaxHeap = new CustomHeap((a, b) => b.id - a.id);
 ```
 
 ##### TS
@@ -73,6 +77,10 @@ const maxHeap = new MaxHeap();
 const minHeap = new MinHeap<number, [number, number]>();
 
 const maxHeap = new MaxHeap<string, { name: string }>();
+
+// using a custom comparator
+const customMinHeap = new CustomHeap<{ id: number }>((a, b) => a.id - b.id);
+const customMaxHeap = new CustomHeap<{ id: number }>((a, b) => b.id - a.id);
 ```
 
 ### .insert(key[, value])
@@ -90,7 +98,7 @@ insert a node into the heap. If value is provided (anything except undefined), t
       <br />
       value: any
     </td>
-    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
