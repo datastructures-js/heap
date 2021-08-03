@@ -1,14 +1,21 @@
-import { HeapNode, Heap } from './heap';
+import { Heap } from './heap';
 
-export class CustomHeap<T extends number|string, U = undefined> extends Heap<T, U> {
+export class CustomHeap<T> extends Heap<T> {
   constructor(
-    comparator: (a: HeapNode<T, U> | T, b: HeapNode<T, U> | T) => boolean,
-    elements?: (HeapNode<T, U> | T)[],
-    leaf?: (HeapNode<T, U> | T)
+    comparator: (a: T, b: T) => number | boolean,
+    elements?: T[],
+    leaf?: T
   );
-  clone(): CustomHeap<T, U>;
-  static heapify<T extends number|string, U = undefined>(list: (HeapNode<T, U> | T)[]): CustomHeap<T, U>;
-  static isHeapified<T extends number|string, U = undefined>(list: (HeapNode<T, U> | T)[]): boolean;
-}
 
-export { HeapNode };
+  clone(): CustomHeap<T>;
+
+  static heapify<T extends any>(
+    list: T[],
+    comparator: (a: T, b: T) => number | boolean
+  ): CustomHeap<T>;
+
+  static isHeapified<T extends any>(
+    list: T[],
+    comparator: (a: T, b: T) => number | boolean
+  ): boolean;
+}

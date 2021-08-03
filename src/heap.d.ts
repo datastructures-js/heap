@@ -1,9 +1,9 @@
-export interface HeapNode<T extends number|string, U> {
+export interface HeapNode<T extends any, U> {
   key: T;
   value: U;
 }
 
-export abstract class Heap<T extends number|string, U = undefined> {
+export abstract class Heap<T extends any, U = undefined> {
   constructor(elements?: (HeapNode<T, U> | T)[], leaf?: (HeapNode<T, U> | T));
   extractRoot(): HeapNode<T, U> | T;
   insert(key: T, value?: U): Heap<T, U>;
