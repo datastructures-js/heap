@@ -4,7 +4,7 @@ const { CustomHeap } = require('../src/customHeap');
 describe('CustomHeap unit tests', () => {
   describe('constructor', () => {
     it('creates a min heap with a comparator', () => {
-      const heap = new CustomHeap((a, b) => a.id < b.id);
+      const heap = new CustomHeap((a, b) => a.id - b.id);
       heap.insert({ id: 10 });
       heap.insert({ id: 90 });
       heap.insert({ id: 40 });
@@ -18,7 +18,7 @@ describe('CustomHeap unit tests', () => {
     });
 
     it('creates a max heap with a comparator', () => {
-      const heap = new CustomHeap((a, b) => a.id > b.id);
+      const heap = new CustomHeap((a, b) => b.id - a.id);
       heap.insert({ id: 10 });
       heap.insert({ id: 90 });
       heap.insert({ id: 40 });
