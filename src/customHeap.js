@@ -29,7 +29,7 @@ class CustomHeap extends Heap {
    */
   _compare(parentNode, childNode) {
     const val = this._comparator(parentNode, childNode);
-    return (val <= 0 || val === true) ? true : false;
+    return val <= 0 || val === true;
   }
 
   /**
