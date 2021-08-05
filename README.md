@@ -67,9 +67,9 @@ const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
 
-// using a custom comparator
-const customMinHeap = new CustomHeap((a, b) => a.id - b.id);
-const customMaxHeap = new CustomHeap((a, b) => b.id - a.id);
+// the comparator receievs the parent (a) and child (b) in each comparison
+const customMinHeap = new CustomHeap((a, b) => a.name > b.name ? 1 : -1);
+const customMaxHeap = new CustomHeap((a, b) => a.name > b.name ? -1 : 1);
 ```
 
 ##### TS
@@ -78,14 +78,20 @@ const minHeap = new MinHeap<number, [number, number]>();
 
 const maxHeap = new MaxHeap<string, { name: string }>();
 
-// using a custom comparator
-const customMinHeap = new CustomHeap<{ id: number }>((a, b) => a.id - b.id);
-const customMaxHeap = new CustomHeap<{ id: number }>((a, b) => b.id - a.id);
+// the comparator receievs the parent (a) and child (b) in each comparison
+const customMinHeap = new CustomHeap<{ name: string }>(
+  (a, b) => a.name > b.name ? 1 : -1
+);
+
+const customMaxHeap = new CustomHeap<{ name: string }>(
+  (a, b) => a.name > b.name ? -1 : 1
+);
 ```
 
 ### .insert(key[, value])
 insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string).
 
+#### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">params</th>
@@ -98,13 +104,13 @@ insert a node into the heap. If value is provided (anything except undefined), t
       <br />
       value: any
     </td>
-    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
+    <td align="center">MinHeap | MaxHeap</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
 
 ```js
-const minHeap = new MinHeap()
+minHeap
   .insert(50)
   .insert(80)
   .insert(30, 'something')
@@ -113,7 +119,7 @@ const minHeap = new MinHeap()
   .insert(40)
   .insert(20, { name: 'test' });
 
-const maxHeap = new MaxHeap()
+maxHeap
   .insert('m')
   .insert('x')
   .insert('f', 'something')
@@ -123,9 +129,37 @@ const maxHeap = new MaxHeap()
   .insert('c', { name: 'test' });
 ```
 
+#### CustomHeap
+<table>
+  <tr>
+    <th align="center">params</th>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td>
+      element: T
+    </td>
+    <td align="center">CustomHeap</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+customMaxHeap
+  .insert({ name: 'm' })
+  .insert({ name: 'x' })
+  .insert({ name: 'f' })
+  .insert({ name: 'b' })
+  .insert({ name: 'z' })
+  .insert({ name: 'k' })
+  .insert({ name: 'c' });
+```
+
 ### .extractRoot()
 removes and returns the root node in the heap.
 
+#### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -147,9 +181,28 @@ console.log(maxHeap.extractRoot()); // 'x'
 console.log(maxHeap.extractRoot()); // 'm'
 ```
 
+#### CustomHeap
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">T</td>
+    <td align="center">O(log(n))</td>
+  </tr>
+</table>
+
+```js
+console.log(customMaxHeap.extractRoot()); // { name: 'z' }
+console.log(customMaxHeap.extractRoot()); // { name: 'x' }
+console.log(customMaxHeap.extractRoot()); // { name: 'm' }
+```
+
 ### .root()
 returns the root node without removing it.
 
+#### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -167,9 +220,26 @@ console.log(minHeap.root()); // 50
 console.log(maxHeap.root()); // 'k'
 ```
 
+#### CustomHeap
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">number | string | { key, value }</td>
+    <td align="center">O(1)</td>
+  </tr>
+</table>
+
+```js
+console.log(customMaxHeap.root()); // { name: 'z' }
+```
+
 ### .leaf()
 returns a node with max key in MinHeap, or with min key in MaxHeap.
 
+#### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -187,6 +257,12 @@ console.log(minHeap.leaf()); // 90
 console.log(maxHeap.leaf()); // 'b'
 ```
 
+```js
+console.log(customMaxHeap.leaf()); // { name: 'c' }
+```
+
+#### CustomHeap
+
 ### .size()
 returns the number of nodes in the heap.
 
@@ -201,10 +277,10 @@ returns the number of nodes in the heap.
   </tr>
 </table>
 
-
 ```js
 console.log(minHeap.size()); // 4
 console.log(maxHeap.size()); // 4
+console.log(customMaxHeap.size()); // 4
 ```
 
 ### .clone()
@@ -216,7 +292,7 @@ creates a shallow copy of the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
     <td align="center">O(n)</td>
   </tr>
 </table>
@@ -251,6 +327,8 @@ checks if the heap is valid.
 console.log(minHeap.isValid()); // true
 
 console.log(maxHeap.isValid()); // true
+
+console.log(customMaxHeap.isValid()); // true
 ```
 
 ### .fix()
@@ -262,7 +340,7 @@ fixes a heap by making the necessary changes in node positions.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
@@ -271,6 +349,8 @@ fixes a heap by making the necessary changes in node positions.
 console.log(minHeap.fix().isValid()); // true
 
 console.log(maxHeap.fix().isValid()); // true
+
+console.log(customMaxHeap.fix().isValid()); // true
 ```
 
 ### .sort()
