@@ -69,7 +69,7 @@ const maxHeap = new MaxHeap();
 
 // the comparator receievs the parent (a) and child (b) in each comparison
 // the comparator is allowed to return number or boolean, when returning false or a number bigger than 0 that means apply swap.
-const customMinHeap = new CustomHeap((a, b) => a.name > b.name ? 1 : -1);
+const customMinHeap = new CustomHeap((a, b) => a.name > b.name);
 const customMaxHeap = new CustomHeap((a, b) => a.name > b.name ? -1 : 1);
 ```
 
@@ -81,9 +81,7 @@ const maxHeap = new MaxHeap<string, { name: string }>();
 
 // the comparator receievs the parent (a) and child (b) in each comparison
 // the comparator is allowed to return number or boolean, when returning false or a number bigger than 0 that means apply swap.
-const customMinHeap = new CustomHeap<{ name: string }>(
-  (a, b) => a.name > b.name ? 1 : -1
-);
+const customMinHeap = new CustomHeap<{ name: string }>((a, b) => a.name > b.name);
 
 const customMaxHeap = new CustomHeap<{ name: string }>(
   (a, b) => a.name > b.name ? -1 : 1
@@ -91,7 +89,7 @@ const customMaxHeap = new CustomHeap<{ name: string }>(
 ```
 
 ### .insert(key[, value])
-insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string).
+insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string). For CustomHeap, anything can be inserted as a comparator is provided to compare nodes.
 
 #### MinHeap/MaxHeap
 <table>
