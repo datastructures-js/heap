@@ -53,7 +53,7 @@ const { MinHeap, MaxHeap, CustomHeap } = require('@datastructures-js/heap');
 ### import
 ```js
 import { MinHeap, MaxHeap, CustomHeap, HeapNode } from '@datastructures-js/heap';
-// HeapNode is the key/value interface
+// HeapNode is the key/value interface for MinHeap/MaxHeap
 ```
 
 ## API
@@ -71,6 +71,8 @@ const maxHeap = new MaxHeap();
 const customMinHeap = new CustomHeap((a, b) => a.name > b.name ? 1 : -1);
 const customMaxHeap = new CustomHeap((a, b) => a.name > b.name ? -1 : 1);
 ```
+
+*Note: Use **CustomHeap** when you need advanced comparison logic between heap nodes. For primitive comparisons, use MinHeap/MaxHeap.
 
 ##### TS
 ```js
@@ -104,7 +106,7 @@ insert a node into the heap. If value is provided (anything except undefined), t
       <br />
       value: any
     </td>
-    <td align="center">MinHeap | MaxHeap</td>
+    <td align="center">MinHeap&lt;T, U&gt; | MaxHeap&lt;T, U&gt;</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
@@ -138,9 +140,9 @@ maxHeap
   </tr>
   <tr>
     <td>
-      element: T
+      key: T
     </td>
-    <td align="center">CustomHeap</td>
+    <td align="center">CustomHeap&lt;T&gt;</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
@@ -166,7 +168,7 @@ removes and returns the root node in the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | { key, value }</td>
+    <td align="center">number | string | { key: number|string, value: any }</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
