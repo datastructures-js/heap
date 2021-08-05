@@ -9,12 +9,12 @@ export class CustomHeap<T> extends Heap<T> {
 
   clone(): CustomHeap<T>;
 
-  static heapify<T extends any>(
+  static heapify<T>(
     list: T[],
     comparator: (a: T, b: T) => number | boolean
   ): CustomHeap<T>;
 
-  static isHeapified<T extends any>(
+  static isHeapified<T>(
     list: T[],
     comparator: (a: T, b: T) => number | boolean
   ): boolean;
