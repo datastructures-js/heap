@@ -209,7 +209,7 @@ returns the root node without removing it.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | { key, value }</td>
+    <td align="center">number | string | HeapNode</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -227,13 +227,13 @@ console.log(maxHeap.root()); // 'k'
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | { key, value }</td>
+    <td align="center">T</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
 
 ```js
-console.log(customMaxHeap.root()); // { name: 'z' }
+console.log(customMaxHeap.root()); // { name: 'k' }
 ```
 
 ### .leaf()
@@ -246,7 +246,7 @@ returns a node with max key in MinHeap, or with min key in MaxHeap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | { key, value }</td>
+    <td align="center">number | string | HeapNode</td>
     <td align="center">O(1)</td>
   </tr>
 </table>
@@ -257,11 +257,21 @@ console.log(minHeap.leaf()); // 90
 console.log(maxHeap.leaf()); // 'b'
 ```
 
-```js
-console.log(customMaxHeap.leaf()); // { name: 'c' }
-```
-
 #### CustomHeap
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">T</td>
+    <td align="center">O(1)</td>
+  </tr>
+</table>
+
+```js
+console.log(customMaxHeap.leaf()); // { name: 'b' }
+```
 
 ### .size()
 returns the number of nodes in the heap.
@@ -304,6 +314,11 @@ console.log(minHeapClone.root()); // 60
 console.log(minHeap.root()); // 50
 
 const maxHeapClone = maxHeap.clone();
+maxHeapClone.extractRoot();
+console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
+console.log(maxHeap.root()); // 'k'
+
+const customMaxHeapClone = customMaxHeap.clone();
 maxHeapClone.extractRoot();
 console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
 console.log(maxHeap.root()); // 'k'
