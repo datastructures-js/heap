@@ -467,8 +467,8 @@ maxHeap.clear();
 console.log(minHeap.size()); // 0
 console.log(minHeap.root()); // null
 
-console.log(maxHeap.size()); // 0
-console.log(maxHeap.root()); // null
+console.log(customMaxHeap.size()); // 0
+console.log(customMaxHeap.root()); // null
 ```
 
 ### Heap.heapify(list)
