@@ -94,7 +94,7 @@ const customMaxHeap = new CustomHeap<{ name: string }>(
 ### .insert(key[, value])
 insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string). For CustomHeap, anything can be inserted as a comparator is provided to compare nodes.
 
-#### MinHeap/MaxHeap
+##### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">params</th>
@@ -132,7 +132,7 @@ maxHeap
   .insert('c', { name: 'test' });
 ```
 
-#### CustomHeap
+##### CustomHeap
 <table>
   <tr>
     <th align="center">params</th>
@@ -162,7 +162,7 @@ customMaxHeap
 ### .extractRoot()
 removes and returns the root node in the heap.
 
-#### MinHeap/MaxHeap
+##### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -184,7 +184,7 @@ console.log(maxHeap.extractRoot()); // 'x'
 console.log(maxHeap.extractRoot()); // 'm'
 ```
 
-#### CustomHeap
+##### CustomHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -205,7 +205,7 @@ console.log(customMaxHeap.extractRoot()); // { name: 'm' }
 ### .root()
 returns the root node without removing it.
 
-#### MinHeap/MaxHeap
+##### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -223,7 +223,7 @@ console.log(minHeap.root()); // 50
 console.log(maxHeap.root()); // 'k'
 ```
 
-#### CustomHeap
+##### CustomHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -242,7 +242,7 @@ console.log(customMaxHeap.root()); // { name: 'k' }
 ### .leaf()
 returns a node with max key in MinHeap, or with min key in MaxHeap.
 
-#### MinHeap/MaxHeap
+##### MinHeap/MaxHeap
 <table>
   <tr>
     <th align="center">return</th>
@@ -260,7 +260,7 @@ console.log(minHeap.leaf()); // 90
 console.log(maxHeap.leaf()); // 'b'
 ```
 
-#### CustomHeap
+##### CustomHeap
 <table>
   <tr>
     <th align="center">return</th>
