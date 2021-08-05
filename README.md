@@ -322,9 +322,9 @@ console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
 console.log(maxHeap.root()); // 'k'
 
 const customMaxHeapClone = customMaxHeap.clone();
-maxHeapClone.extractRoot();
-console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
-console.log(maxHeap.root()); // 'k'
+customMaxHeap.extractRoot();
+console.log(customMaxHeap.root()); // { name: 'f' }
+console.log(customMaxHeapClone.root()); // { name: 'k' }
 ```
 
 ### .isValid()
