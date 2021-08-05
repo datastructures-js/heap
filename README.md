@@ -474,6 +474,7 @@ console.log(customMaxHeap.root()); // null
 ### Heap.heapify(list)
 Heapifies an existing list. It returns a heap instance as well as changing the list positions properly.
 
+##### MinHeap/MaxHeap
 <table>
  <tr>
   <th>params</th>
@@ -481,13 +482,13 @@ Heapifies an existing list. It returns a heap instance as well as changing the l
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number | string | { key, value }&gt;</td>
+  <td>list: array&lt;number | string | HeapNode&gt;</td>
   <td>MinHeap | MaxHeap</td>
   <td>O(n)</td>
  </tr>
 </table>
 
-##### JS
+###### JS
 ```js
 const numList = [50, 80, 30, 90, 60, 40, 20];
 MinHeap.heapify(numList);
@@ -522,7 +523,7 @@ console.log(objList);
 */
 ```
 
-##### TS
+###### TS
 ```js
 const numList = [50, 80, 30, 90, 60, 40, 20];
 MinHeap.heapify<number>(numList);
@@ -552,9 +553,7 @@ console.log(objList);
 */
 ```
 
-### Heap.isHeapified(list)
-Checks if a given list is heapified.
-
+##### CustomHeap
 <table>
  <tr>
   <th>params</th>
@@ -562,13 +561,62 @@ Checks if a given list is heapified.
   <th>runtime</th>
  </tr>
  <tr>
-  <td>list: array&lt;number | string | { key, value }&gt;</td>
+  <td>
+    list: array&lt;T&gt;
+    <br />
+    comparator: (a: T, b: T) => number
+  </td>
+  <td>CustomHeap&lt;T&gt;</td>
+  <td>O(n)</td>
+ </tr>
+</table>
+
+```js
+const counts = [
+  { count: 50 },
+  { count: 80 },
+  { count: 30 },
+  { count: 90 },
+  { count: 60 },
+  { count: 40 },
+  { count: 20 }
+];
+CustomHeap.heapify<{ count: number }>(counts, (a, b) => a.count - b.count);
+
+console.log(counts); // minHeap list
+/*
+[
+  { count: 20 },
+  { count: 60 },
+  { count: 30 },
+  { count: 90 },
+  { count: 80 },
+  { count: 50 },
+  { count: 40 }
+]
+*/
+```
+
+### Heap.isHeapified(list)
+Checks if a given list is heapified.
+
+##### MinHeap/MaxHeap
+<table>
+ <tr>
+  <th>params</th>
+  <th>return</th>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>
+    list: array&lt;number | string | HeapNode&gt;
+  </td>
   <td>boolean</td>
   <td>O(log(n))</td>
  </tr>
 </table>
 
-##### JS
+###### JS
 ```js
 MinHeap.isHeapified([50, 80, 30, 90, 60, 40, 20]); // false
 
@@ -579,11 +627,44 @@ MaxHeap.isHeapified(['m', 'x', 'f', 'b', 'z', 'k', 'c']); // false
 MaxHeap.isHeapified(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
 ```
 
-##### TS
+###### TS
 ```js
 MinHeap.isHeapified<number>([20, 60, 30, 90, 80, 50, 40]); // true
 
 MaxHeap.isHeapified<string>(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
+```
+
+##### CustomHeap
+
+<table>
+ <tr>
+  <th>params</th>
+  <th>return</th>
+  <th>runtime</th>
+ </tr>
+ <tr>
+  <td>
+    list: array&lt;T&gt;
+    <br />
+    comparator: (a: T, b: T) => number
+  </td>
+  <td>boolean</td>
+  <td>O(log(n))</td>
+ </tr>
+</table>
+
+```js
+const counts = [
+  { count: 20 },
+  { count: 60 },
+  { count: 30 },
+  { count: 90 },
+  { count: 80 },
+  { count: 50 },
+  { count: 40 }
+];
+
+console.log(CustomHeap.isHeapified<{ count: number }>(counts, (a, b) => a.count - b.count)); // true
 ```
 
 ## Build
