@@ -59,7 +59,7 @@ import { MinHeap, MaxHeap, CustomHeap, HeapNode } from '@datastructures-js/heap'
 ## API
 
 ### constructor
-creates an empty heap.
+creates an empty heap. use **CustomHeap** when you need advanced comparison logic between heap nodes. For primitive comparisons, use MinHeap/MaxHeap.
 
 ##### JS
 ```js
@@ -71,8 +71,6 @@ const maxHeap = new MaxHeap();
 const customMinHeap = new CustomHeap((a, b) => a.name > b.name ? 1 : -1);
 const customMaxHeap = new CustomHeap((a, b) => a.name > b.name ? -1 : 1);
 ```
-
-*Note: Use **CustomHeap** when you need advanced comparison logic between heap nodes. For primitive comparisons, use MinHeap/MaxHeap.
 
 ##### TS
 ```js
