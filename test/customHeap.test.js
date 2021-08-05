@@ -35,7 +35,7 @@ describe('CustomHeap unit tests', () => {
     it('heapify with comparator', () => {
       const maxHeap = CustomHeap.heapify(
         [{ n: 1 }, { n: 2 }, { n: 3 }, { n: 4 }, { n: 5 }, { n: 6 }, { n: 7 }],
-        (a, b) => a.n > b.n
+        (a, b) => b.n - a.n
       );
       expect(maxHeap.isValid()).to.equal(true);
     });
@@ -43,7 +43,7 @@ describe('CustomHeap unit tests', () => {
     it('isHeapified with comparator', () => {
       const isHeapified = CustomHeap.isHeapified(
         [{ n: 7 }, { n: 4 }, { n: 6 }, { n: 1 }, { n: 3 }, { n: 2 }, { n: 5 }],
-        (a, b) => a.n > b.n
+        (a, b) => b.n - a.n
       );
       expect(isHeapified).to.equal(true);
     });
@@ -53,7 +53,7 @@ describe('CustomHeap unit tests', () => {
     it('heapify with comparator', () => {
       const minHeap = CustomHeap.heapify(
         [{ n: 7 }, { n: 6 }, { n: 5 }, { n: 4 }, { n: 3 }, { n: 2 }, { n: 1 }],
-        (a, b) => a.n < b.n
+        (a, b) => a.n - b.n
       );
       expect(minHeap.isValid()).to.equal(true);
     });
@@ -61,7 +61,7 @@ describe('CustomHeap unit tests', () => {
     it('isHeapified with comparator', () => {
       const isHeapified = CustomHeap.isHeapified(
         [{ n: 1 }, { n: 4 }, { n: 2 }, { n: 7 }, { n: 5 }, { n: 6 }, { n: 3 }],
-        (a, b) => a.n < b.n
+        (a, b) => a.n - b.n
       );
       expect(isHeapified).to.equal(true);
     });
