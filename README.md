@@ -100,9 +100,9 @@ insert a node into the heap. If value is provided (anything except undefined), t
   </tr>
   <tr>
     <td>
-      key: number | string
+      key: T (number | string)
       <br />
-      value: any
+      value: U (any)
     </td>
     <td align="center">MinHeap&lt;T, U&gt; | MaxHeap&lt;T, U&gt;</td>
     <td align="center">O(log(n))</td>
@@ -166,7 +166,7 @@ removes and returns the root node in the heap.
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">number | string | { key: number|string, value: any }</td>
+    <td align="center">number | string | HeapNode</td>
     <td align="center">O(log(n))</td>
   </tr>
 </table>
