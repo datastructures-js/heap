@@ -25,11 +25,31 @@ class CustomHeap extends Heap {
    * @private
    * @param {object|number|string} parent
    * @param {object|number|string} child
-   * @returns {boolean}
+   * @returns {number}
    */
   _compare(parentNode, childNode) {
-    const val = this._comparator(parentNode, childNode);
-    return val <= 0 || val === true;
+    return this._comparator(parentNode, childNode) <= 0;
+  }
+
+  /**
+   * Returns child's index of two children before an index
+   * @private
+   * @param {number} index
+   * @param {number} leftChildIndex
+   * @param {number} rightChildIndex
+   * @returns {number}
+   */
+  _compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
+    const compare = this._comparator(
+      this._nodes[rightChildIndex],
+      this._nodes[leftChildIndex]
+    );
+
+    if (compare <= 0 && rightChildIndex < index) {
+      return rightChildIndex;
+    }
+
+    return leftChildIndex;
   }
 
   /**
