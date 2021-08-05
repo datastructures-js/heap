@@ -67,10 +67,13 @@ const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
 
-// the comparator receievs the parent (a) and child (b) in each comparison
-// the comparator is allowed to return number or boolean, when returning false or a number bigger than 0 that means apply swap.
-const customMinHeap = new CustomHeap((a, b) => a.name < b.name); // true means do not swap
-const customMaxHeap = new CustomHeap((a, b) => a.name > b.name ? -1 : 1); // -1 means do not swap
+// comparator receievs the parent (a) and child (b) in each comparison and can return number or boolean
+const customMinHeap = new CustomHeap(
+  (a, b) => a.name < b.name // if true, it does not swap
+);
+const customMaxHeap = new CustomHeap(
+  (a, b) => a.name > b.name ? -1 : 1 // if less or equal to 0, it does not swap
+);
 ```
 
 ##### TS
@@ -79,12 +82,13 @@ const minHeap = new MinHeap<number, [number, number]>();
 
 const maxHeap = new MaxHeap<string, { name: string }>();
 
-// the comparator receievs the parent (a) and child (b) in each comparison
-// the comparator is allowed to return number or boolean, when returning false or a number bigger than 0 that means apply swap.
-const customMinHeap = new CustomHeap<{ name: string }>((a, b) => a.name > b.name);
+// comparator receievs the parent (a) and child (b) in each comparison and can return number or boolean
+const customMinHeap = new CustomHeap<{ name: string }>(
+  (a, b) => a.name < b.name // if true, it does not swap
+);
 
 const customMaxHeap = new CustomHeap<{ name: string }>(
-  (a, b) => a.name > b.name ? -1 : 1
+  (a, b) => a.name > b.name ? -1 : 1 // if less or equal to 0, it does not swap
 );
 ```
 
