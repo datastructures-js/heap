@@ -374,13 +374,15 @@ console.log(customMaxHeap.fix().isValid()); // true
 ### .sort()
 implements Heap Sort and sorts a <b>Max Heap in ascending order</b> or a <b>Min Heap in descending order</b>.
 
+##### MinHeap/MaxHeap
+
 <table>
   <tr>
     <th align="center">return</th>
     <th align="center">runtime</th>
   </tr>
   <tr>
-    <td align="center">array&lt;number|string|object&gt;</td>
+    <td align="center">array&lt;number|string|HeapNode&gt;</td>
     <td align="center">O(n*log(n))</td>
   </tr>
 </table>
@@ -416,6 +418,34 @@ const ascSorted = MaxHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 
 const descSorted = MinHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
 // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+```
+
+##### CustomHeap
+<table>
+  <tr>
+    <th align="center">return</th>
+    <th align="center">runtime</th>
+  </tr>
+  <tr>
+    <td align="center">array&lt;T&gt;</td>
+    <td align="center">O(n*log(n))</td>
+  </tr>
+</table>
+
+```js
+// sorting custom max heap in ascending order
+console.log(customMaxHeap.clone().sort());
+/*
+[
+  { name: 'b' },
+  { name: 'c' },
+  { name: 'f' },
+  { name: 'k' },
+  { name: 'm' },
+  { name: 'x' },
+  { name: 'z' }
+]
+*/
 ```
 
 ### .clear()
