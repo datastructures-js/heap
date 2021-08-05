@@ -67,7 +67,8 @@ const minHeap = new MinHeap();
 
 const maxHeap = new MaxHeap();
 
-// comparator receievs the parent (a) and child (b) in each comparison and can return number
+// comparator receievs the parent (a) and child (b) in each comparison
+// and should return a number, if bigger than 0, it will swap nodes.
 const customMinHeap = new CustomHeap((a, b) => a.count - b.count);
 
 const customMaxHeap = new CustomHeap((a, b) => a.name < b.name ? 1 : -1);
@@ -79,7 +80,8 @@ const minHeap = new MinHeap<number, [number, number]>();
 
 const maxHeap = new MaxHeap<string, { name: string }>();
 
-// comparator receievs the parent (a) and child (b) in each comparison and can return number
+// comparator receievs the parent (a) and child (b) in each comparison
+// and should return a number, if bigger than 0, it will swap nodes.
 const customMinHeap = new CustomHeap<{ count: number }>(
   (a, b) => a.count - b.count
 );
