@@ -7,8 +7,6 @@ export class CustomHeap<T> extends Heap<T> {
     leaf?: T
   );
 
-  clone(): CustomHeap<T>;
-
   static heapify<T>(
     list: T[],
     comparator: (a: T, b: T) => number | boolean

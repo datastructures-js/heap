@@ -15,4 +15,5 @@ export abstract class Heap<T extends any, U = undefined> {
   size(): number;
   isEmpty(): boolean;
   clear(): void;
+  clone(): Heap<T, U>;
 }
