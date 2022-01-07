@@ -121,8 +121,8 @@ describe('MinHeap unit tests', () => {
         { key: 30, value: 'something' },
         90,
         80,
-        50,
-        40
+        40,
+        50
       ]);
       expect(heap.extractRoot().key).to.equal(20);
       expect(heap.size()).to.equal(6);
