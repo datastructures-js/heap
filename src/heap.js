@@ -238,21 +238,17 @@ class Heap {
 
       if (this._hasLeftChild(parentIndex)) {
         const leftChildIndex = (parentIndex * 2) + 1;
-
         if (this._compare(parentIndex, leftChildIndex) > 0) {
           return false;
         }
-
         isValidLeft = isValidRecursive(leftChildIndex);
       }
 
       if (this._hasRightChild(parentIndex)) {
         const rightChildIndex = (parentIndex * 2) + 2;
-
         if (this._compare(parentIndex, rightChildIndex) > 0) {
           return false;
         }
-
         isValidRight = isValidRecursive(rightChildIndex);
       }
 
