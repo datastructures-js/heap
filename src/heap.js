@@ -110,7 +110,7 @@ class Heap {
   }
 
   /**
-   * Recursively bubbles up a node if it's in a wronge position
+   * Recursively bubbles up a node if it's in a wrong position
    * @private
    */
   _heapifyUp(startIndex) {
@@ -125,7 +125,7 @@ class Heap {
   }
 
   /**
-   * Recursively bubbles down a node if it's in a wronge position
+   * Recursively bubbles down a node if it's in a wrong position
    * @private
    */
   _heapifyDown(startIndex) {
