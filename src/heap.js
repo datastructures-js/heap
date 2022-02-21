@@ -140,7 +140,7 @@ class Heap {
   }
 
   /**
-   * Pushes a node with down in the heap before an index
+   * Recursively bubbles down a node before a given index
    * @private
    */
   _heapifyDownUntil(index) {
