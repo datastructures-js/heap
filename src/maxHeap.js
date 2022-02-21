@@ -13,6 +13,7 @@ class MaxHeap extends Heap {
   /**
    * @param {function} [getValueCb]
    * @param {array} [values]
+   * @param {any} [leaf]
    */
   constructor(getValueCb, values, leaf) {
     const comparator = (a, b) => {

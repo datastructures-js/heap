@@ -323,7 +323,7 @@ class Heap {
    * @public
    * @static
    * @param {array} values
-   * @param {function} [comparator]
+   * @param {function} comparator
    * @returns {Heap}
    */
   static heapify(values, comparator) {
@@ -343,6 +343,7 @@ class Heap {
    * @public
    * @static
    * @param {array} values
+   * @param {function} comparator
    * @returns {boolean}
    */
   static isHeapified(values, comparator) {

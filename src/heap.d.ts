@@ -1,5 +1,5 @@
-export abstract class Heap<T> {
-  constructor(comparator: (a: T, b: T) => number, values?: T[]);
+export class Heap<T> {
+  constructor(comparator: (a: T, b: T) => number, values?: T[], leaf?: T);
   insert(value: T): Heap<T>;
   extractRoot(): T;
   sort(): T[];
