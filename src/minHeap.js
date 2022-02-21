@@ -1,6 +1,6 @@
 /**
  * @license MIT
- * @copyright 2019 Eyas Ranjous <eyas.ranjous@gmail.com>
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  */
 
 const { Heap } = require('./heap');
@@ -11,63 +11,53 @@ const { Heap } = require('./heap');
  */
 class MinHeap extends Heap {
   /**
-   * Checks two nodes are in relatively valid position
-   * @private
-   * @param {object} parent
-   * @param {object} child
-   * @returns {boolean}
+   * @param {function} [getValueCb]
+   * @param {array} [values]
    */
-  _compareKeys(parentKey, childKey) {
-    return parentKey < childKey;
+  constructor(getValueCb, values, leaf) {
+    const comparator = (a, b) => {
+      const aVal = typeof getValueCb === 'function' ? getValueCb(a) : a;
+      const bVal = typeof getValueCb === 'function' ? getValueCb(b) : b;
+      return aVal < bVal ? -1 : 1;
+    };
+    super(comparator, values, leaf);
+    this._getValueCb = getValueCb;
   }
 
   /**
-   * Returns min child's index of two children before an index
-   * @protected
-   * @param {number} index
-   * @param {number} leftChildIndex
-   * @param {number} rightChildIndex
-   * @returns {number}
-   */
-  _compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
-    const leftChildKey = this._getKey(this._nodes[leftChildIndex]);
-    const rightChildKey = this._getKey(this._nodes[rightChildIndex]);
-
-    if (rightChildKey < leftChildKey && rightChildIndex < index) {
-      return rightChildIndex;
-    }
-    return leftChildIndex;
-  }
-
-  /**
-   * Returns a shallow copy of the heap
+   * Returns a shallow copy of the MinHeap
    * @public
    * @returns {MinHeap}
    */
   clone() {
-    return super._clone(MinHeap);
+    return new MinHeap(this._getValueCb, this._nodes.slice(), this._leaf);
   }
 
   /**
-   * Builds a min heap from an array of items
+   * Builds a MinHeap from an array
    * @public
    * @static
-   * @param {array} list
-   * @returns {MinHeap}
+   * @param {array} [values]
+   * @param {function} [priorityCb]
+   * @returns {Heap}
    */
-  static heapify(list) {
-    return super._heapify(list, MinHeap);
+  static heapify(values, getValueCb) {
+    if (!Array.isArray(values)) {
+      throw new Error('MinHeap.heapify expects an array');
+    }
+    return new MinHeap(getValueCb, values).fix();
   }
 
   /**
-   * Checks if a list of list is a valid min heap
+   * Checks if a list of values is a valid min heap
    * @public
    * @static
-   * @param {array} list
+   * @param {array} [values]
+   * @param {function} [getValueCb]
    * @returns {boolean}
    */
-  static isHeapified(list) {
-    return super._isHeapified(list, MinHeap);
+  static isHeapified(values, getValueCb) {
+    return new MinHeap(getValueCb, values).isValid();
   }
 }
 

@@ -3,25 +3,25 @@
  * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
  *
  * @class
- * @abstract
  */
 class Heap {
   /**
-   * Creates a heap instance
-   * @param {array<string|number|object>} nodes
-   * @param {string|number|object} [leaf]
-   * @returns {number}
+   * @param {function} [function]
+   * @param {array} [values]
+   * @param {any} [leaf]
    */
-  constructor(nodes, leaf) {
-    this._nodes = Array.isArray(nodes) ? nodes : [];
+  constructor(comparator, values, leaf) {
+    if (typeof comparator !== 'function') {
+      throw new Error('Heap constructor expects a comparator function');
+    }
+    this._comparator = comparator;
+    this._nodes = Array.isArray(values) ? values : [];
     this._leaf = leaf || null;
   }
 
   /**
    * Checks if a parent has a left child
    * @private
-   * @param {number} parentIndex
-   * @returns {boolean}
    */
   _hasLeftChild(parentIndex) {
     const leftChildIndex = (parentIndex * 2) + 1;
@@ -29,10 +29,16 @@ class Heap {
   }
 
   /**
+   * Compares two nodes
+   * @private
+   */
+  _compare(i, j) {
+    return this._comparator(this._nodes[i], this._nodes[j]);
+  }
+
+  /**
    * Checks if a parent has a right child
    * @private
-   * @param {number} parentIndex
-   * @returns {boolean}
    */
   _hasRightChild(parentIndex) {
     const rightChildIndex = (parentIndex * 2) + 2;
@@ -40,21 +46,8 @@ class Heap {
   }
 
   /**
-   * Returns heap node's key
-   * @private
-   * @param {object|number|string} node
-   * @returns {number|string}
-   */
-  _getKey(node) {
-    if (typeof node === 'object') return node.key;
-    return node;
-  }
-
-  /**
    * Swaps two nodes in the heap
    * @private
-   * @param {number} i
-   * @param {number} j
    */
   _swap(i, j) {
     const temp = this._nodes[i];
@@ -63,65 +56,27 @@ class Heap {
   }
 
   /**
-   * Compares parent & child nodes
-   * and returns true if they are in right positions
-   *
+   * Checks if parent and child should be swapped
    * @private
-   * @param {object|number|string} parent
-   * @param {object|number|string} child
-   * @returns {boolean}
-   */
-  _compare(parentNode, childNode) {
-    return this._compareKeys(
-      this._getKey(parentNode),
-      this._getKey(childNode)
-    );
-  }
-
-  /**
-   * Checks if parent and child nodes should be swapped
-   * @private
-   * @param {number} parentIndex
-   * @param {number} childIndex
-   * @returns {boolean}
    */
   _shouldSwap(parentIndex, childIndex) {
-    if (parentIndex < 0 || parentIndex >= this.size()) return false;
-    if (childIndex < 0 || childIndex >= this.size()) return false;
-
-    return !this._compare(
-      this._nodes[parentIndex],
-      this._nodes[childIndex]
-    );
-  }
-
-  /**
-   * Bubbles a node from a starting index up in the heap
-   * @param {number} startingIndex
-   * @public
-   */
-  heapifyUp(startingIndex) {
-    let childIndex = startingIndex;
-    let parentIndex = Math.floor((childIndex - 1) / 2);
-
-    while (this._shouldSwap(parentIndex, childIndex)) {
-      this._swap(parentIndex, childIndex);
-      childIndex = parentIndex;
-      parentIndex = Math.floor((childIndex - 1) / 2);
+    if (parentIndex < 0 || parentIndex >= this.size()) {
+      return false;
     }
+
+    if (childIndex < 0 || childIndex >= this.size()) {
+      return false;
+    }
+
+    return this._compare(parentIndex, childIndex) > 0;
   }
 
   /**
-   * Compares left and right & children of a parent
+   * Compares children of a parent
    * @private
-   * @param {number} parentIndex
-   * @returns {number} - a child's index
    */
   _compareChildrenOf(parentIndex) {
-    if (
-      !this._hasLeftChild(parentIndex)
-      && !this._hasRightChild(parentIndex)
-    ) {
+    if (!this._hasLeftChild(parentIndex) && !this._hasRightChild(parentIndex)) {
       return -1;
     }
 
@@ -136,20 +91,45 @@ class Heap {
       return leftChildIndex;
     }
 
-    const isLeft = this._compare(
-      this._nodes[leftChildIndex],
-      this._nodes[rightChildIndex]
-    );
-
-    return isLeft ? leftChildIndex : rightChildIndex;
+    const compare = this._compare(leftChildIndex, rightChildIndex);
+    return compare > 0 ? rightChildIndex : leftChildIndex;
   }
 
   /**
-   * Pushes a node from a starting index down in the heap
+   * Compares two children before a position
    * @private
    */
-  _heapifyDown(startingIndex) {
-    let parentIndex = startingIndex;
+  _compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
+    const compare = this._compare(rightChildIndex, leftChildIndex);
+
+    if (compare <= 0 && rightChildIndex < index) {
+      return rightChildIndex;
+    }
+
+    return leftChildIndex;
+  }
+
+  /**
+   * Recursively bubbles up a node if it's in a wronge position
+   * @private
+   */
+  _heapifyUp(startIndex) {
+    let childIndex = startIndex;
+    let parentIndex = Math.floor((childIndex - 1) / 2);
+
+    while (this._shouldSwap(parentIndex, childIndex)) {
+      this._swap(parentIndex, childIndex);
+      childIndex = parentIndex;
+      parentIndex = Math.floor((childIndex - 1) / 2);
+    }
+  }
+
+  /**
+   * Recursively bubbles down a node if it's in a wronge position
+   * @private
+   */
+  _heapifyDown(startIndex) {
+    let parentIndex = startIndex;
     let childIndex = this._compareChildrenOf(parentIndex);
 
     while (this._shouldSwap(parentIndex, childIndex)) {
@@ -160,29 +140,8 @@ class Heap {
   }
 
   /**
-   * Removes and returns the root node in the heap
-   * @public
-   * @returns {object}
-   */
-  extractRoot() {
-    if (this.isEmpty()) return null;
-
-    const root = this.root();
-    this._nodes[0] = this._nodes[this.size() - 1];
-    this._nodes.pop();
-    this._heapifyDown(0);
-
-    if (root === this._leaf) {
-      this._leaf = this.root();
-    }
-
-    return root;
-  }
-
-  /**
    * Pushes a node with down in the heap before an index
    * @private
-   * @param {number} index
    */
   _heapifyDownUntil(index) {
     let parentIndex = 0;
@@ -208,60 +167,67 @@ class Heap {
   }
 
   /**
-   * Returns a shallow copy of the heap
-   * @protected
-   * @param {class} HeapType
+   * Inserts a new value into the heap
+   * @public
+   * @param {any} value
    * @returns {Heap}
    */
-  _clone(HeapType) {
-    return new HeapType(this._nodes.slice(), this._leaf);
+  insert(value) {
+    this._nodes.push(value);
+    this._heapifyUp(this.size() - 1);
+    if (this._leaf === null || this._comparator(value, this._leaf) > 0) {
+      this._leaf = value;
+    }
+    return this;
   }
 
   /**
-   * Sorts the heap by swapping root with all nodes and fixing positions
+   * Removes and returns the root node in the heap
    * @public
-   * @returns {array} the sorted nodes
+   * @returns {any}
+   */
+  extractRoot() {
+    if (this.isEmpty()) return null;
+
+    const root = this.root();
+    this._nodes[0] = this._nodes[this.size() - 1];
+    this._nodes.pop();
+    this._heapifyDown(0);
+
+    if (root === this._leaf) {
+      this._leaf = this.root();
+    }
+
+    return root;
+  }
+
+  /**
+   * Applies heap sort and return the values sorted by priority
+   * @public
+   * @returns {array}
    */
   sort() {
     for (let i = this.size() - 1; i > 0; i -= 1) {
       this._swap(0, i);
       this._heapifyDownUntil(i);
     }
-
     return this._nodes;
   }
 
   /**
-   * Inserts a node in the right position into the heap
-   * @public
-   * @param {number|string} key
-   * @param {any} [value]
-   * @returns {Heap}
-   */
-  insert(key, value) {
-    const newNode = value !== undefined ? { key, value } : key;
-    this._nodes.push(newNode);
-    this.heapifyUp(this.size() - 1);
-    if (this._leaf === null || !this._compare(newNode, this._leaf)) {
-      this._leaf = newNode;
-    }
-    return this;
-  }
-
-  /**
-   * Fixes all positions of the nodes in the heap
+   * Fixes node positions in the heap
    * @public
    * @returns {Heap}
    */
   fix() {
     for (let i = 0; i < this.size(); i += 1) {
-      this.heapifyUp(i);
+      this._heapifyUp(i);
     }
     return this;
   }
 
   /**
-   * Verifies that the heap is valid
+   * Verifies that all heap nodes are in the right position
    * @public
    * @returns {boolean}
    */
@@ -272,12 +238,8 @@ class Heap {
 
       if (this._hasLeftChild(parentIndex)) {
         const leftChildIndex = (parentIndex * 2) + 1;
-        isValidLeft = this._compare(
-          this._nodes[parentIndex],
-          this._nodes[leftChildIndex]
-        );
 
-        if (!isValidLeft) {
+        if (this._compare(parentIndex, leftChildIndex) > 0) {
           return false;
         }
 
@@ -286,12 +248,8 @@ class Heap {
 
       if (this._hasRightChild(parentIndex)) {
         const rightChildIndex = (parentIndex * 2) + 2;
-        isValidRight = this._compare(
-          this._nodes[parentIndex],
-          this._nodes[rightChildIndex]
-        );
 
-        if (!isValidRight) {
+        if (this._compare(parentIndex, rightChildIndex) > 0) {
           return false;
         }
 
@@ -305,19 +263,31 @@ class Heap {
   }
 
   /**
+   * Returns a shallow copy of the heap
+   * @public
+   * @returns {Heap}
+   */
+  clone() {
+    return new Heap(this._comparator, this._nodes.slice(), this._leaf);
+  }
+
+  /**
    * Returns the root node in the heap
    * @public
-   * @returns {object|number|string|null}
+   * @returns {any}
    */
   root() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty()) {
+      return null;
+    }
+
     return this._nodes[0];
   }
 
   /**
    * Returns a leaf node in the heap
    * @public
-   * @returns {object|number|string|null}
+   * @returns {any}
    */
   leaf() {
     return this._leaf;
@@ -351,31 +321,34 @@ class Heap {
   }
 
   /**
-   * Convert a list of items into a heap
-   * @protected
+   * Builds a heap from a array of values
+   * @public
    * @static
-   * @param {array} array
-   * @param {class} HeapType
+   * @param {array} values
+   * @param {function} [comparator]
    * @returns {Heap}
    */
-  static _heapify(list, HeapType) {
-    if (!Array.isArray(list)) {
-      throw new Error('.heapify expects an array');
+  static heapify(values, comparator) {
+    if (!Array.isArray(values)) {
+      throw new Error('Heap.heapify expects an array of values');
     }
 
-    return new HeapType(list).fix();
+    if (typeof comparator !== 'function') {
+      throw new Error('Heap.heapify expects a comparator function');
+    }
+
+    return new Heap(comparator, values).fix();
   }
 
   /**
-   * Checks if a list of items is a valid heap
-   * @protected
+   * Checks if a list of values is a valid heap
+   * @public
    * @static
-   * @param {array} array
-   * @param {class} HeapType
+   * @param {array} values
    * @returns {boolean}
    */
-  static _isHeapified(list, HeapType) {
-    return new HeapType(list).isValid();
+  static isHeapified(values, comparator) {
+    return new Heap(comparator, values).isValid();
   }
 }
 

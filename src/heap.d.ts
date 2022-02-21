@@ -1,19 +1,16 @@
-export interface HeapNode<T extends any, U> {
-  key: T;
-  value: U;
-}
-
-export abstract class Heap<T extends any, U = undefined> {
-  constructor(elements?: (HeapNode<T, U> | T)[], leaf?: (HeapNode<T, U> | T));
-  extractRoot(): HeapNode<T, U> | T;
-  insert(key: T, value?: U): Heap<T, U>;
-  sort(): (HeapNode<T, U> | T)[];
+export abstract class Heap<T> {
+  constructor(comparator: (a: T, b: T) => number, values?: T[]);
+  insert(value: T): Heap<T>;
+  extractRoot(): T;
+  sort(): T[];
   fix(): void;
   isValid(): boolean;
-  root(): HeapNode<T, U> | T;
-  leaf(): HeapNode<T, U> | T;
+  clone(): Heap<T>;
+  root(): T;
+  leaf(): T;
   size(): number;
   isEmpty(): boolean;
   clear(): void;
-  clone(): Heap<T, U>;
+  static heapify<T>(values: T[], comparator: (a: T, b: T) => number): Heap<T>;
+  static isHeapified<T>(values: T[], comparator: (a: T, b: T) => number): boolean;
 }
