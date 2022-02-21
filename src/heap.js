@@ -6,7 +6,7 @@
  */
 class Heap {
   /**
-   * @param {function} [function]
+   * @param {function} comparator
    * @param {array} [values]
    * @param {any} [leaf]
    */
@@ -187,7 +187,9 @@ class Heap {
    * @returns {any}
    */
   extractRoot() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty()) {
+      return null;
+    }
 
     const root = this.root();
     this._nodes[0] = this._nodes[this.size() - 1];
