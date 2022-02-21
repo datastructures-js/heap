@@ -3,7 +3,7 @@ export class Heap<T> {
   insert(value: T): Heap<T>;
   extractRoot(): T;
   sort(): T[];
-  fix(): void;
+  fix(): Heap<T>;
   isValid(): boolean;
   clone(): Heap<T>;
   root(): T;
