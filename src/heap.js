@@ -8,7 +8,7 @@ class Heap {
   /**
    * @param {function} comparator
    * @param {array} [values]
-   * @param {any} [leaf]
+   * @param {number|string|object} [leaf]
    */
   constructor(comparator, values, leaf) {
     if (typeof comparator !== 'function') {
@@ -169,7 +169,7 @@ class Heap {
   /**
    * Inserts a new value into the heap
    * @public
-   * @param {any} value
+   * @param {number|string|object} value
    * @returns {Heap}
    */
   insert(value) {
@@ -184,7 +184,7 @@ class Heap {
   /**
    * Removes and returns the root node in the heap
    * @public
-   * @returns {any}
+   * @returns {number|string|object}
    */
   extractRoot() {
     if (this.isEmpty()) {
@@ -272,7 +272,7 @@ class Heap {
   /**
    * Returns the root node in the heap
    * @public
-   * @returns {any}
+   * @returns {number|string|object}
    */
   root() {
     if (this.isEmpty()) {
@@ -285,7 +285,7 @@ class Heap {
   /**
    * Returns a leaf node in the heap
    * @public
-   * @returns {any}
+   * @returns {number|string|object}
    */
   leaf() {
     return this._leaf;
