@@ -6,7 +6,7 @@ A javascript implementation for Heap data structure. Heap base class allows crea
 
 <img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
-# Contents
+# contents
 * [Install](#install)
 * [require](#require)
 * [import](#import)
@@ -324,7 +324,8 @@ converts a list of values into a heap without using an additional space.
 
 ##### TS
 ```ts
-Heap.heapify<ICar>(cars, carComparator);
+const heapifiedCars = Heap.heapify<ICar>(cars, carComparator);
+console.log(heapifiedCars.isValid()); // true
 // list is heapified
 console.log(cars);
 /*
@@ -339,11 +340,13 @@ console.log(cars);
 ]
 */
 
-MinHeap.heapify<number>(numbers);
+const heapifiedNumbers = MinHeap.heapify<number>(numbers);
+console.log(heapifiedNumbers.isValid()); // true
 console.log(numbers);
 // [-5, -1, -2, 3, 0, 5, 4]
 
-MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
+const heapifiedBids = MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
+console.log(heapifiedBids.isValid()); // true
 console.log(bids);
 /*
 [

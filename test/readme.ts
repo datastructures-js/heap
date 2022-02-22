@@ -88,13 +88,16 @@ console.log(carsHeap.isValid());
 console.log(numbersHeap.isValid());
 console.log(bidsHeap.isValid());
 
-Heap.heapify<ICar>(cars, carComparator);
+const heapifiedCars = Heap.heapify<ICar>(cars, carComparator);
+console.log(heapifiedCars.isValid()); // true
 console.log(cars);
 
-MinHeap.heapify<number>(numbers);
+const heapifiedNumbers = MinHeap.heapify<number>(numbers);
+console.log(heapifiedNumbers.isValid()); // true
 console.log(numbers);
 
-MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
+const heapifiedBids = MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
+console.log(heapifiedBids.isValid()); // true
 console.log(bids);
 
 console.log(Heap.isHeapified<ICar>(cars, carComparator)); // true
