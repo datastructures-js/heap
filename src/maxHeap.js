@@ -38,8 +38,8 @@ class MaxHeap extends Heap {
    * Builds a MaxHeap from an array
    * @public
    * @static
-   * @param {array} [values]
-   * @param {function} [priorityCb]
+   * @param {array} values
+   * @param {function} [getValueCb]
    * @returns {Heap}
    */
   static heapify(values, getValueCb) {
@@ -53,7 +53,7 @@ class MaxHeap extends Heap {
    * Checks if a list of values is a valid max heap
    * @public
    * @static
-   * @param {array} [values]
+   * @param {array} values
    * @param {function} [getValueCb]
    * @returns {boolean}
    */

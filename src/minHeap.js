@@ -53,7 +53,7 @@ class MinHeap extends Heap {
    * Checks if a list of values is a valid min heap
    * @public
    * @static
-   * @param {array} [values]
+   * @param {array} values
    * @param {function} [getValueCb]
    * @returns {boolean}
    */
