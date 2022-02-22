@@ -38,8 +38,8 @@ class MinHeap extends Heap {
    * Builds a MinHeap from an array
    * @public
    * @static
-   * @param {array} [values]
-   * @param {function} [priorityCb]
+   * @param {array} values
+   * @param {function} [getValueCb]
    * @returns {Heap}
    */
   static heapify(values, getValueCb) {
