@@ -363,7 +363,8 @@ console.log(bids);
 
 ##### JS
 ```ts
-Heap.heapify(cars, carComparator);
+const heapifiedCars = Heap.heapify(cars, carComparator);
+console.log(heapifiedCars.isValid()); // true
 // list is heapified
 console.log(cars);
 /*
@@ -378,11 +379,13 @@ console.log(cars);
 ]
 */
 
-MinHeap.heapify(numbers);
+const heapifiedNumbers = MinHeap.heapify(numbers);
+console.log(heapifiedNumbers.isValid()); // true
 console.log(numbers);
 // [-5, -1, -2, 3, 0, 5, 4]
 
-MaxHeap.heapify(bids, (bid) => bid.value);
+const heapifiedBids = MaxHeap.heapify(bids, (bid) => bid.value);
+console.log(heapifiedBids.isValid()); // true
 console.log(bids);
 /*
 [
