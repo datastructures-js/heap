@@ -1,7 +1,7 @@
+const { Heap } = require('./src/heap');
 const { MinHeap } = require('./src/minHeap');
 const { MaxHeap } = require('./src/maxHeap');
-const { CustomHeap } = require('./src/customHeap');
 
+exports.Heap = Heap;
 exports.MinHeap = MinHeap;
 exports.MaxHeap = MaxHeap;
-exports.CustomHeap = CustomHeap;

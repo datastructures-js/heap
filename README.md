@@ -1,42 +1,29 @@
 # @datastructures-js/heap
-[![build:?](https://travis-ci.org/datastructures-js/heap.svg?branch=master)](https://travis-ci.org/datastructures-js/heap)
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 
-a javascript implementation for Heap data structure & Heap Sort algorithm.
+A javascript implementation for Heap data structure. Heap base class allows creating heaps using a custom comparator, and MinHeap/MaxHeap classes extend it for use cases that do not require complex comparison like primitive values and known comparison object prop.
 
 <img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
-<table>
-<tr><th>Min Heap</th><th>Max Heap</th></tr>
-<tr>
-  <td>
-    <img alt="Min Heap" src="https://user-images.githubusercontent.com/6517308/36940955-78f30c82-1f15-11e8-9ed1-6d9414c243c4.png">
-  </td>
-  <td>
-    <img alt="Max Heap" src="https://user-images.githubusercontent.com/6517308/36940962-844a7fe8-1f15-11e8-8165-6fd62ba1914f.png">
-  </td>
-</tr>
-</table>
-
-# Contents
+# contents
 * [Install](#install)
 * [require](#require)
 * [import](#import)
 * [API](#api)
   * [constructor](#constructor)
-  * [.insert(key[, value])](#insertkey-value)
-  * [.extractRoot()](#extractroot)
-  * [.root()](#root)
-  * [.leaf()](#leaf)
-  * [.size()](#size)
-  * [.clone()](#clone)
-  * [.isValid()](#isvalid)
-  * [.fix()](#fix)
-  * [.sort()](#sort)
-  * [.clear()](#clear)
-  * [Heap.heapify(list)](#heapheapifylist)
-  * [Heap.isHeapified(list)](#heapisHeapifiedlist)
+  * [insert](#insert)
+  * [extractRoot](#extractroot)
+  * [root](#root)
+  * [leaf](#leaf)
+  * [size](#size)
+  * [sort](#sort)
+  * [isValid](#isvalid)
+  * [fix](#fix)
+  * [clone](#clone)
+  * [clear](#clear)
+  * [heapify](#heapify)
+  * [isHeapified](#isheapified)
  * [Build](#build)
  * [License](#license)
 
@@ -45,626 +32,389 @@ a javascript implementation for Heap data structure & Heap Sort algorithm.
 npm install --save @datastructures-js/heap
 ```
 
-### require
+## require
 ```js
-const { MinHeap, MaxHeap, CustomHeap } = require('@datastructures-js/heap');
+const { Heap, MinHeap, MaxHeap } = require('@datastructures-js/heap');
 ```
 
-### import
+## import
 ```js
-import { MinHeap, MaxHeap, CustomHeap, HeapNode } from '@datastructures-js/heap';
-// HeapNode is the key/value interface for MinHeap/MaxHeap
+import { Heap, MinHeap, MaxHeap } from '@datastructures-js/heap';
 ```
 
 ## API
 
 ### constructor
-creates an empty heap. use **CustomHeap** when you need advanced comparison logic between heap nodes. For primitive comparisons, use MinHeap/MaxHeap.
+
+#### Heap
+constructor requires a comparator function that tells the heap when to swap values. Function works similar to javascript sort callback, bigger than 0, means, swap elements.
+
+##### TS
+```ts
+interface ICar {
+  year: number;
+  price: number;
+}
+
+const carComparator = (a: ICar, b: ICar) => {
+  if (a.year > b.year) {
+    return -1;
+  }
+  if (a.year < b.year) {
+    // prioratize newest cars
+    return 1;
+  }
+  // with least price
+  return a.price < b.price ? -1 : 1;
+};
+
+const carsHeap = new Heap<ICar>(carComparator);
+```
 
 ##### JS
 ```js
-const minHeap = new MinHeap();
+const carComparator = (a, b) => {
+  if (a.year > b.year) {
+    return -1;
+  }
+  if (a.year < b.year) {
+    // prioratize newest cars
+    return 1;
+  }
+  // with least price
+  return a.price < b.price ? -1 : 1;
+};
 
-const maxHeap = new MaxHeap();
-
-// comparator receievs the parent (a) and child (b) in each comparison
-// and should return a number, if bigger than 0, it will swap nodes.
-const customMinHeap = new CustomHeap((a, b) => a.count - b.count);
-
-const customMaxHeap = new CustomHeap((a, b) => a.name < b.name ? 1 : -1);
+const carsHeap = new Heap(carComparator);
 ```
+
+#### MinHeap, MaxHeap
+constructor does not require a comparator here and it's useful when working with primitive values like numbers, it can also be used with objects by passing a callback that indicates what object prop will be used in comparison.
 
 ##### TS
-```js
-const minHeap = new MinHeap<number, [number, number]>();
+```ts
+const numbersHeap = new MinHeap<number>();
 
-const maxHeap = new MaxHeap<string, { name: string }>();
-
-// comparator receievs the parent (a) and child (b) in each comparison
-// and should return a number, if bigger than 0, it will swap nodes.
-const customMinHeap = new CustomHeap<{ count: number }>(
-  (a, b) => a.count - b.count
-);
-
-const customMaxHeap = new CustomHeap<{ name: string }>(
-  (a, b) => a.name < b.name ? 1 : -1
-);
+interface IBid {
+  id: number;
+  value: number;
+}
+const bidsHeap = new MaxHeap<IBid>((bid: IBid) => bid.value);
 ```
 
-### .insert(key[, value])
-insert a node into the heap. If value is provided (anything except undefined), the node is stored as `{key: ..., value: ...}` otherwise, the node is the key (number or string). For CustomHeap, anything can be inserted as a comparator is provided to compare nodes.
-
-##### MinHeap/MaxHeap
-<table>
-  <tr>
-    <th align="center">params</th>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td>
-      key: T (number | string)
-      <br />
-      value: U (any)
-    </td>
-    <td align="center">MinHeap&lt;T, U&gt; | MaxHeap&lt;T, U&gt;</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
-
+##### JS
 ```js
-minHeap
-  .insert(50)
-  .insert(80)
-  .insert(30, 'something')
-  .insert(90)
-  .insert(60, null)
-  .insert(40)
-  .insert(20, { name: 'test' });
-
-maxHeap
-  .insert('m')
-  .insert('x')
-  .insert('f', 'something')
-  .insert('b')
-  .insert('z', null)
-  .insert('k')
-  .insert('c', { name: 'test' });
+const numbersHeap = new MinHeap();
+const bidsHeap = new MaxHeap((bid) => bid.value);
 ```
 
-##### CustomHeap
-<table>
-  <tr>
-    <th align="center">params</th>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td>
-      key: T
-    </td>
-    <td align="center">CustomHeap&lt;T&gt;</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
+### insert
+inserts a value in a correct position into the heap in O(log(n)) runtime.
 
 ```js
-customMaxHeap
-  .insert({ name: 'm' })
-  .insert({ name: 'x' })
-  .insert({ name: 'f' })
-  .insert({ name: 'b' })
-  .insert({ name: 'z' })
-  .insert({ name: 'k' })
-  .insert({ name: 'c' });
+const cars = [
+  { year: 2013, price: 35000 },
+  { year: 2010, price: 2000 },
+  { year: 2013, price: 30000 },
+  { year: 2017, price: 50000 },
+  { year: 2013, price: 25000 },
+  { year: 2015, price: 40000 },
+  { year: 2022, price: 70000 }
+];
+cars.forEach((car) => carsHeap.insert(car));
+
+const numbers = [3, -2, 5, 0, -1, -5, 4];
+numbers.forEach((num) => numbersHeap.insert(num));
+
+const bids = [
+  { id: 1, value: 1000 },
+  { id: 2, value: 20000 },
+  { id: 3, value: 1000 },
+  { id: 4, value: 1500 },
+  { id: 5, value: 12000 },
+  { id: 6, value: 4000 },
+  { id: 7, value: 8000 }
+];
+bids.forEach((bid) => bidsHeap.insert(bid));
 ```
 
-### .extractRoot()
-removes and returns the root node in the heap.
-
-##### MinHeap/MaxHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">number | string | HeapNode</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
+### extractRoot
+removes and returns the root (top) value of the heap in O(log(n)) runtime.
 
 ```js
-console.log(minHeap.extractRoot()); // { key: 20, value: { name: 'test' } }
-console.log(minHeap.extractRoot()); // { key: 30, value: 'something' }
-console.log(minHeap.extractRoot()); // 40
+while (!carsHeap.isEmpty()) {
+  console.log(carsHeap.extractRoot());
+}
+/*
+{ year: 2022, price: 70000 }
+{ year: 2017, price: 50000 }
+{ year: 2015, price: 40000 }
+{ year: 2013, price: 25000 }
+{ year: 2013, price: 30000 }
+{ year: 2013, price: 35000 }
+{ year: 2010, price: 2000 }
+*/
 
-console.log(maxHeap.extractRoot()); // { key: 'z', value: null }
-console.log(maxHeap.extractRoot()); // 'x'
-console.log(maxHeap.extractRoot()); // 'm'
+while (!numbersHeap.isEmpty()) {
+  console.log(numbersHeap.extractRoot());
+}
+/*
+-5
+-2
+-1
+0
+3
+4
+5
+*/
+
+while (!bidsHeap.isEmpty()) {
+  console.log(bidsHeap.extractRoot());
+}
+/*
+{ id: 2, value: 20000 }
+{ id: 5, value: 12000 }
+{ id: 7, value: 8000 }
+{ id: 6, value: 4000 }
+{ id: 4, value: 1500 }
+{ id: 3, value: 1000 }
+{ id: 1, value: 1000 }
+*/
 ```
 
-##### CustomHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">T</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
-
-```js
-console.log(customMaxHeap.extractRoot()); // { name: 'z' }
-console.log(customMaxHeap.extractRoot()); // { name: 'x' }
-console.log(customMaxHeap.extractRoot()); // { name: 'm' }
-```
-
-### .root()
+### root
 returns the root node without removing it.
 
-##### MinHeap/MaxHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">number | string | HeapNode</td>
-    <td align="center">O(1)</td>
-  </tr>
-</table>
-
 ```js
-console.log(minHeap.root()); // 50
+// reload values
+cars.forEach((car) => carsHeap.insert(car));
+numbers.forEach((num) => numbersHeap.insert(num));
+bids.forEach((bid) => bidsHeap.insert(bid));
 
-console.log(maxHeap.root()); // 'k'
+console.log(carsHeap.root()); // { year: 2022, price: 70000 }
+console.log(numbersHeap.root()); // -5
+console.log(bidsHeap.root()); // { id: 2, value: 20000 }
 ```
 
-##### CustomHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">T</td>
-    <td align="center">O(1)</td>
-  </tr>
-</table>
+### leaf
+returns a leaf node in the heap.
 
 ```js
-console.log(customMaxHeap.root()); // { name: 'k' }
+console.log(carsHeap.leaf()); // { year: 2010, price: 2000 }
+console.log(numbersHeap.leaft()); // 5
+console.log(bidsHeap.leaf()); // { id: 1, value: 1000 }
 ```
 
-### .leaf()
-returns a node with max key in MinHeap, or with min key in MaxHeap.
-
-##### MinHeap/MaxHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">number | string | HeapNode</td>
-    <td align="center">O(1)</td>
-  </tr>
-</table>
-
-```js
-console.log(minHeap.leaf()); // 90
-
-console.log(maxHeap.leaf()); // 'b'
-```
-
-##### CustomHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">T</td>
-    <td align="center">O(1)</td>
-  </tr>
-</table>
-
-```js
-console.log(customMaxHeap.leaf()); // { name: 'b' }
-```
-
-### .size()
+### size
 returns the number of nodes in the heap.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-    <td align="center">O(1)</td>
-  </tr>
-</table>
-
 ```js
-console.log(minHeap.size()); // 4
-console.log(maxHeap.size()); // 4
-console.log(customMaxHeap.size()); // 4
+console.log(carsHeap.size()); // 7
+console.log(numbersHeap.size()); // 7
+console.log(bidsHeap.size()); // 7
 ```
 
-### .clone()
+### sort
+returns a list of sorted values in O(n*log(n)) runtime, based on the comparator logic, and in reverse order. In MaxHeap it returns the list of sorted values in ascending order, and in descending order in MinHeap. sort mutates the node positions in the heap, to prevent that, you can sort a clone of the heap.
+
+```js
+console.log(carsHeap.sort());
+/*
+[
+  { year: 2010, price: 2000 },
+  { year: 2013, price: 35000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 25000 },
+  { year: 2015, price: 40000 },
+  { year: 2017, price: 50000 },
+  { year: 2022, price: 70000 }
+]
+*/
+
+console.log(numbersHeap.sort());
+// [5, 4, 3, 0, -1, -2, -5]
+
+console.log(bidsHeap.sort());
+/*
+[
+  { id: 1, value: 1000 },
+  { id: 3, value: 1000 },
+  { id: 4, value: 1500 },
+  { id: 6, value: 4000 },
+  { id: 7, value: 8000 },
+  { id: 5, value: 12000 },
+  { id: 2, value: 20000 }
+]
+*/
+```
+
+### isValid
+checks if the heap is valid (all nodes are positioned correctly) in log(n) runtime.
+
+```js
+// after sorting the heaps directly, node positions are mutated
+console.log(carsHeap.isValid()); // false
+console.log(numbersHeap.isValid()); // false
+console.log(bidsHeap.isValid()); // false
+```
+
+### fix
+fixes the heap by making the necessary swaps between nodes in O(n*log(n)) runtime.
+
+```js
+console.log(carsHeap.fix().isValid()); // true
+console.log(numbersHeap.fix().isValid()); // true
+console.log(bidsHeap.fix().isValid()); // true
+```
+
+### clone
 creates a shallow copy of the heap.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
-    <td align="center">O(n)</td>
-  </tr>
-</table>
-
 ```js
-const minHeapClone = minHeap.clone();
-minHeapClone.extractRoot();
-console.log(minHeapClone.root()); // 60
-console.log(minHeap.root()); // 50
-
-const maxHeapClone = maxHeap.clone();
-maxHeapClone.extractRoot();
-console.log(maxHeapClone.root()); // { key: 'f', value: 'something' }
-console.log(maxHeap.root()); // 'k'
-
-const customMaxHeapClone = customMaxHeap.clone();
-customMaxHeap.extractRoot();
-console.log(customMaxHeap.root()); // { name: 'f' }
-console.log(customMaxHeapClone.root()); // { name: 'k' }
-```
-
-### .isValid()
-checks if the heap is valid.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
-
-```js
-console.log(minHeap.isValid()); // true
-
-console.log(maxHeap.isValid()); // true
-
-console.log(customMaxHeap.isValid()); // true
-```
-
-### .fix()
-fixes a heap by making the necessary changes in node positions.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">MinHeap | MaxHeap | CustomHeap</td>
-    <td align="center">O(log(n))</td>
-  </tr>
-</table>
-
-```js
-console.log(minHeap.fix().isValid()); // true
-
-console.log(maxHeap.fix().isValid()); // true
-
-console.log(customMaxHeap.fix().isValid()); // true
-```
-
-### .sort()
-implements Heap Sort and sorts a <b>Max Heap in ascending order</b> or a <b>Min Heap in descending order</b>.
-
-##### MinHeap/MaxHeap
-
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">array&lt;number|string|HeapNode&gt;</td>
-    <td align="center">O(n*log(n))</td>
-  </tr>
-</table>
-
-*note: calling .sort() directly on a heap will mutate its nodes location. To avoid that, you might either sort a shallow copy. You can also use use .fix() to fix the mutated heap positions*
-
-```js
-console.log(maxHeap.clone().sort()); // sorting a copy of the heap
+console.log(carsHeap.clone().sort());
 /*
 [
-  'b',
-  { key: 'c', value: { name: 'test' } },
-  { key: 'f', value: 'something' },
-  'k'
+  { year: 2010, price: 2000 },
+  { year: 2013, price: 35000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 25000 },
+  { year: 2015, price: 40000 },
+  { year: 2017, price: 50000 },
+  { year: 2022, price: 70000 }
 ]
 */
-console.log(maxHeap.root()); // 'k'
 
-console.log(minHeap.sort()); // will mutate the heap
-/*
-[ 90, 80, { key: 60, value: null }, 50 ]
-*/
-console.log(minHeap.isValid()); // false
-minHeap.fix(); // fix it
-console.log(minHeap.isValid()); // true
-```
+console.log(numbersHeap.clone().sort());
+// [5, 4, 3, 0, -1, -2, -5]
 
-To sort a list of elements directtly using Heap Sort, it can be done like:
-
-```js
-const ascSorted = MaxHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
-// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-const descSorted = MinHeap.heapify([3, 7, 2, 10, 4, 9, 8, 5, 1, 6]).sort();
-// [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-```
-
-##### CustomHeap
-<table>
-  <tr>
-    <th align="center">return</th>
-    <th align="center">runtime</th>
-  </tr>
-  <tr>
-    <td align="center">array&lt;T&gt;</td>
-    <td align="center">O(n*log(n))</td>
-  </tr>
-</table>
-
-```js
-// sorting custom max heap in ascending order
-console.log(customMaxHeap.clone().sort());
+console.log(bidsHeap.clone().sort());
 /*
 [
-  { name: 'b' },
-  { name: 'c' },
-  { name: 'f' },
-  { name: 'k' },
-  { name: 'm' },
-  { name: 'x' },
-  { name: 'z' }
+  { id: 1, value: 1000 },
+  { id: 3, value: 1000 },
+  { id: 4, value: 1500 },
+  { id: 6, value: 4000 },
+  { id: 7, value: 8000 },
+  { id: 5, value: 12000 },
+  { id: 2, value: 20000 }
+]
+*/
+
+// original heaps not mutated
+console.log(carsHeap.isValid()); // true
+console.log(numbersHeap.isValid()); // true
+console.log(bidsHeap.isValid()); // true
+```
+
+### clear
+clears the heap.
+
+```js
+carsHeap.clear();
+numbersHeap.clear();
+bidsHeap.clear();
+
+console.log(carsHeap.size()); // 0
+console.log(numbersHeap.size()); // 0
+console.log(bidsHeap.size()); // 0
+```
+
+### heapify
+converts a list of values into a heap without using an additional space.
+
+##### TS
+```ts
+const heapifiedCars = Heap.heapify<ICar>(cars, carComparator);
+console.log(heapifiedCars.isValid()); // true
+// list is heapified
+console.log(cars);
+/*
+[
+  { year: 2022, price: 70000 },
+  { year: 2013, price: 25000 },
+  { year: 2017, price: 50000 },
+  { year: 2010, price: 2000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 35000 },
+  { year: 2015, price: 40000 }
+]
+*/
+
+const heapifiedNumbers = MinHeap.heapify<number>(numbers);
+console.log(heapifiedNumbers.isValid()); // true
+console.log(numbers);
+// [-5, -1, -2, 3, 0, 5, 4]
+
+const heapifiedBids = MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
+console.log(heapifiedBids.isValid()); // true
+console.log(bids);
+/*
+[
+  { id: 2, value: 20000 },
+  { id: 5, value: 12000 },
+  { id: 7, value: 8000 },
+  { id: 1, value: 1000 },
+  { id: 4, value: 1500 },
+  { id: 3, value: 1000 },
+  { id: 6, value: 4000 }
 ]
 */
 ```
 
-### .clear()
-clears the nodes in the heap.
-
-<table>
- <tr>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>O(1)</td>
- </tr>
-</table>
-
-```js
-minHeap.clear();
-maxHeap.clear();
-
-console.log(minHeap.size()); // 0
-console.log(minHeap.root()); // null
-
-console.log(customMaxHeap.size()); // 0
-console.log(customMaxHeap.root()); // null
-```
-
-### Heap.heapify(list)
-Heapifies an existing list. It returns a heap instance as well as changing the list positions properly.
-
-##### MinHeap/MaxHeap
-<table>
- <tr>
-  <th>params</th>
-  <th>return</th>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>list: array&lt;number | string | HeapNode&gt;</td>
-  <td>MinHeap | MaxHeap</td>
-  <td>O(n)</td>
- </tr>
-</table>
-
-###### JS
-```js
-const numList = [50, 80, 30, 90, 60, 40, 20];
-MinHeap.heapify(numList);
-console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
-
-const strList = ['m', 'x', 'f', 'b',  'z', 'k', 'c'];
-const maxHeap = MaxHeap.heapify(strList);
-console.log(strList); // ['z', 'x', 'k', 'b', 'm', 'f', 'c']
-console.log(maxHeap.isValid()); // true
-
-const objList = [
-  { key: 50, value: 't1' },
-  { key: 80, value: 't2' },
-  { key: 30, value: 't3' },
-  { key: 90, value: 't4' },
-  { key: 60, value: 't5' },
-  { key: 40, value: 't6' },
-  { key: 20, value: 't7' }
-];
-MinHeap.heapify(objList);
-console.log(objList);
+##### JS
+```ts
+const heapifiedCars = Heap.heapify(cars, carComparator);
+console.log(heapifiedCars.isValid()); // true
+// list is heapified
+console.log(cars);
 /*
 [
-  { key: 20, value: 't7' },
-  { key: 60, value: 't5' },
-  { key: 30, value: 't3' },
-  { key: 90, value: 't4' },
-  { key: 80, value: 't2' },
-  { key: 50, value: 't1' },
-  { key: 40, value: 't6' }
+  { year: 2022, price: 70000 },
+  { year: 2013, price: 25000 },
+  { year: 2017, price: 50000 },
+  { year: 2010, price: 2000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 35000 },
+  { year: 2015, price: 40000 }
+]
+*/
+
+const heapifiedNumbers = MinHeap.heapify(numbers);
+console.log(heapifiedNumbers.isValid()); // true
+console.log(numbers);
+// [-5, -1, -2, 3, 0, 5, 4]
+
+const heapifiedBids = MaxHeap.heapify(bids, (bid) => bid.value);
+console.log(heapifiedBids.isValid()); // true
+console.log(bids);
+/*
+[
+  { id: 2, value: 20000 },
+  { id: 5, value: 12000 },
+  { id: 7, value: 8000 },
+  { id: 1, value: 1000 },
+  { id: 4, value: 1500 },
+  { id: 3, value: 1000 },
+  { id: 6, value: 4000 }
 ]
 */
 ```
 
-###### TS
-```js
-const numList = [50, 80, 30, 90, 60, 40, 20];
-MinHeap.heapify<number>(numList);
-console.log(numList); // [20, 60, 30, 90, 80, 50, 40]
-
-const objList = [
-  { key: 50, value: 't1' },
-  { key: 80, value: 't2' },
-  { key: 30, value: 't3' },
-  { key: 90, value: 't4' },
-  { key: 60, value: 't5' },
-  { key: 40, value: 't6' },
-  { key: 20, value: 't7' }
-];
-MinHeap.heapify<number, string>(objList);
-console.log(objList);
-/*
-[
-  { key: 20, value: 't7' },
-  { key: 60, value: 't5' },
-  { key: 30, value: 't3' },
-  { key: 90, value: 't4' },
-  { key: 80, value: 't2' },
-  { key: 50, value: 't1' },
-  { key: 40, value: 't6' }
-]
-*/
-```
-
-##### CustomHeap
-<table>
- <tr>
-  <th>params</th>
-  <th>return</th>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>
-    list: array&lt;T&gt;
-    <br />
-    comparator: (a: T, b: T) => number
-  </td>
-  <td>CustomHeap&lt;T&gt;</td>
-  <td>O(n)</td>
- </tr>
-</table>
-
-```js
-const counts = [
-  { count: 50 },
-  { count: 80 },
-  { count: 30 },
-  { count: 90 },
-  { count: 60 },
-  { count: 40 },
-  { count: 20 }
-];
-CustomHeap.heapify<{ count: number }>(counts, (a, b) => a.count - b.count);
-
-console.log(counts); // minHeap list
-/*
-[
-  { count: 20 },
-  { count: 60 },
-  { count: 30 },
-  { count: 90 },
-  { count: 80 },
-  { count: 50 },
-  { count: 40 }
-]
-*/
-```
-
-### Heap.isHeapified(list)
+### isHeapified
 Checks if a given list is heapified.
 
-##### MinHeap/MaxHeap
-<table>
- <tr>
-  <th>params</th>
-  <th>return</th>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>
-    list: array&lt;number | string | HeapNode&gt;
-  </td>
-  <td>boolean</td>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
-###### JS
-```js
-MinHeap.isHeapified([50, 80, 30, 90, 60, 40, 20]); // false
-
-MinHeap.isHeapified([20, 60, 30, 90, 80, 50, 40]); // true
-
-MaxHeap.isHeapified(['m', 'x', 'f', 'b', 'z', 'k', 'c']); // false
-
-MaxHeap.isHeapified(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
+#### TS
+```ts
+console.log(Heap.isHeapified<ICar>(cars, carComparator)); // true
+console.log(MinHeap.isHeapified<number>(numbers)); // true
+console.log(MaxHeap.isHeapified<IBid>(bids, (bid) => bid.value)); // true
 ```
 
-###### TS
+#### JS
 ```js
-MinHeap.isHeapified<number>([20, 60, 30, 90, 80, 50, 40]); // true
-
-MaxHeap.isHeapified<string>(['z', 'x', 'k', 'b', 'm', 'f', 'c']); // true
-```
-
-##### CustomHeap
-
-<table>
- <tr>
-  <th>params</th>
-  <th>return</th>
-  <th>runtime</th>
- </tr>
- <tr>
-  <td>
-    list: array&lt;T&gt;
-    <br />
-    comparator: (a: T, b: T) => number
-  </td>
-  <td>boolean</td>
-  <td>O(log(n))</td>
- </tr>
-</table>
-
-```js
-const counts = [
-  { count: 20 },
-  { count: 60 },
-  { count: 30 },
-  { count: 90 },
-  { count: 80 },
-  { count: 50 },
-  { count: 40 }
-];
-
-console.log(CustomHeap.isHeapified<{ count: number }>(counts, (a, b) => a.count - b.count)); // true
+console.log(Heap.isHeapified(cars, carComparator)); // true
+console.log(MinHeap.isHeapified(numbers)); // true
+console.log(MaxHeap.isHeapified(bids, (bid) => bid.value)); // true
 ```
 
 ## Build

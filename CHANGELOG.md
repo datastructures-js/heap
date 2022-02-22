@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2022-02-21
+### Changed
+- better code, better world.
+
 ## [3.2.0] - 2021-08-05
 ### Added
 - CustomHeap to allow constructing a heap with a custom comparator callback.

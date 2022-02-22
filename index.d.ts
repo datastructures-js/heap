@@ -1,9 +1,7 @@
-import { HeapNode } from './src/heap';
+import { Heap } from './src/heap';
 import { MinHeap } from './src/minHeap';
 import { MaxHeap } from './src/maxHeap';
-import { CustomHeap } from './src/customHeap';
 
-export { HeapNode }
+export { Heap }
 export { MinHeap }
 export { MaxHeap }
-export { CustomHeap }
