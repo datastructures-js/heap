@@ -29,20 +29,20 @@ class Heap {
   }
 
   /**
-   * Compares two nodes
-   * @private
-   */
-  _compare(i, j) {
-    return this._comparator(this._nodes[i], this._nodes[j]);
-  }
-
-  /**
    * Checks if a parent has a right child
    * @private
    */
   _hasRightChild(parentIndex) {
     const rightChildIndex = (parentIndex * 2) + 2;
     return rightChildIndex < this.size();
+  }
+
+  /**
+   * Compares two nodes
+   * @private
+   */
+  _compare(i, j) {
+    return this._comparator(this._nodes[i], this._nodes[j]);
   }
 
   /**
