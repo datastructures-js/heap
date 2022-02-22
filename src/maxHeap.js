@@ -40,7 +40,7 @@ class MaxHeap extends Heap {
    * @static
    * @param {array} values
    * @param {function} [getValueCb]
-   * @returns {Heap}
+   * @returns {MaxHeap}
    */
   static heapify(values, getValueCb) {
     if (!Array.isArray(values)) {
