@@ -39,7 +39,13 @@ const { Heap, MinHeap, MaxHeap } = require('@datastructures-js/heap');
 
 ## import
 ```js
-import { Heap, MinHeap, MaxHeap } from '@datastructures-js/heap';
+import {
+  Heap,
+  MinHeap,
+  MaxHeap,
+  ICompare,
+  IGetCompareValue,
+} from '@datastructures-js/heap';
 ```
 
 ## API
@@ -56,7 +62,7 @@ interface ICar {
   price: number;
 }
 
-const compareCars = (a: ICar, b: ICar) => {
+const compareCars: ICompare<ICar> = (a: ICar, b: ICar) => {
   if (a.year > b.year) {
     return -1;
   }
@@ -99,7 +105,8 @@ interface IBid {
   id: number;
   value: number;
 }
-const bidsHeap = new MaxHeap<IBid>((bid: IBid) => bid.value);
+const getBidCompareValue: IGetCompareValue<IBid> = (bid: IBid) => bid.value;
+const bidsHeap = new MaxHeap<IBid>(getBidCompareValue);
 ```
 
 ##### JS
