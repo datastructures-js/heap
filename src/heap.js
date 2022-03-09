@@ -6,15 +6,15 @@
  */
 class Heap {
   /**
-   * @param {function} comparator
+   * @param {function} compare
    * @param {array} [values]
    * @param {number|string|object} [leaf]
    */
-  constructor(comparator, values, leaf) {
-    if (typeof comparator !== 'function') {
-      throw new Error('Heap constructor expects a comparator function');
+  constructor(compare, values, leaf) {
+    if (typeof compare !== 'function') {
+      throw new Error('Heap constructor expects a compare function');
     }
-    this._comparator = comparator;
+    this._compare = compare;
     this._nodes = Array.isArray(values) ? values : [];
     this._leaf = leaf || null;
   }
@@ -41,8 +41,8 @@ class Heap {
    * Compares two nodes
    * @private
    */
-  _compare(i, j) {
-    return this._comparator(this._nodes[i], this._nodes[j]);
+  _compareAt(i, j) {
+    return this._compare(this._nodes[i], this._nodes[j]);
   }
 
   /**
@@ -68,7 +68,7 @@ class Heap {
       return false;
     }
 
-    return this._compare(parentIndex, childIndex) > 0;
+    return this._compareAt(parentIndex, childIndex) > 0;
   }
 
   /**
@@ -91,7 +91,7 @@ class Heap {
       return leftChildIndex;
     }
 
-    const compare = this._compare(leftChildIndex, rightChildIndex);
+    const compare = this._compareAt(leftChildIndex, rightChildIndex);
     return compare > 0 ? rightChildIndex : leftChildIndex;
   }
 
@@ -100,7 +100,7 @@ class Heap {
    * @private
    */
   _compareChildrenBefore(index, leftChildIndex, rightChildIndex) {
-    const compare = this._compare(rightChildIndex, leftChildIndex);
+    const compare = this._compareAt(rightChildIndex, leftChildIndex);
 
     if (compare <= 0 && rightChildIndex < index) {
       return rightChildIndex;
@@ -175,7 +175,7 @@ class Heap {
   insert(value) {
     this._nodes.push(value);
     this._heapifyUp(this.size() - 1);
-    if (this._leaf === null || this._comparator(value, this._leaf) > 0) {
+    if (this._leaf === null || this._compare(value, this._leaf) > 0) {
       this._leaf = value;
     }
     return this;
@@ -240,7 +240,7 @@ class Heap {
 
       if (this._hasLeftChild(parentIndex)) {
         const leftChildIndex = (parentIndex * 2) + 1;
-        if (this._compare(parentIndex, leftChildIndex) > 0) {
+        if (this._compareAt(parentIndex, leftChildIndex) > 0) {
           return false;
         }
         isValidLeft = isValidRecursive(leftChildIndex);
@@ -248,7 +248,7 @@ class Heap {
 
       if (this._hasRightChild(parentIndex)) {
         const rightChildIndex = (parentIndex * 2) + 2;
-        if (this._compare(parentIndex, rightChildIndex) > 0) {
+        if (this._compareAt(parentIndex, rightChildIndex) > 0) {
           return false;
         }
         isValidRight = isValidRecursive(rightChildIndex);
@@ -266,7 +266,7 @@ class Heap {
    * @returns {Heap}
    */
   clone() {
-    return new Heap(this._comparator, this._nodes.slice(), this._leaf);
+    return new Heap(this._compare, this._nodes.slice(), this._leaf);
   }
 
   /**
@@ -323,19 +323,19 @@ class Heap {
    * @public
    * @static
    * @param {array} values
-   * @param {function} comparator
+   * @param {function} compare
    * @returns {Heap}
    */
-  static heapify(values, comparator) {
+  static heapify(values, compare) {
     if (!Array.isArray(values)) {
       throw new Error('Heap.heapify expects an array of values');
     }
 
-    if (typeof comparator !== 'function') {
-      throw new Error('Heap.heapify expects a comparator function');
+    if (typeof compare !== 'function') {
+      throw new Error('Heap.heapify expects a compare function');
     }
 
-    return new Heap(comparator, values).fix();
+    return new Heap(compare, values).fix();
   }
 
   /**
@@ -343,11 +343,11 @@ class Heap {
    * @public
    * @static
    * @param {array} values
-   * @param {function} comparator
+   * @param {function} compare
    * @returns {boolean}
    */
-  static isHeapified(values, comparator) {
-    return new Heap(comparator, values).isValid();
+  static isHeapified(values, compare) {
+    return new Heap(compare, values).isValid();
   }
 }
 

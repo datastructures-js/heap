@@ -1,11 +1,11 @@
-import { Heap, MinHeap, MaxHeap } from '../index';
+import { Heap, MinHeap, MaxHeap, ICompare, IGetCompareValue } from '../index';
 
 interface ICar {
   year: number;
   price: number;
 }
 
-const carComparator = (a: ICar, b: ICar) => {
+const compareCars: ICompare<ICar> = (a: ICar, b: ICar) => {
   if (a.year > b.year) {
     return -1;
   }
@@ -17,7 +17,7 @@ const carComparator = (a: ICar, b: ICar) => {
   return a.price < b.price ? -1 : 1;
 };
 
-const carsHeap = new Heap<ICar>(carComparator);
+const carsHeap = new Heap<ICar>(compareCars);
 
 const cars = [
   { year: 2013, price: 35000 },
@@ -40,7 +40,8 @@ interface IBid {
   id: number;
   value: number;
 }
-const bidsHeap = new MaxHeap<IBid>((bid: IBid) => bid.value);
+const getBidCompareValue: IGetCompareValue<IBid> = (bid: IBid) => bid.value;
+const bidsHeap = new MaxHeap<IBid>(getBidCompareValue);
 
 const numbers = [3, -2, 5, 0, -1, -5, 4];
 numbers.forEach((num) => numbersHeap.insert(num));
@@ -88,7 +89,7 @@ console.log(carsHeap.isValid());
 console.log(numbersHeap.isValid());
 console.log(bidsHeap.isValid());
 
-const heapifiedCars = Heap.heapify<ICar>(cars, carComparator);
+const heapifiedCars = Heap.heapify<ICar>(cars, compareCars);
 console.log(heapifiedCars.isValid()); // true
 console.log(cars);
 
@@ -100,6 +101,6 @@ const heapifiedBids = MaxHeap.heapify<IBid>(bids, (bid) => bid.value);
 console.log(heapifiedBids.isValid()); // true
 console.log(bids);
 
-console.log(Heap.isHeapified<ICar>(cars, carComparator)); // true
+console.log(Heap.isHeapified<ICar>(cars, compareCars)); // true
 console.log(MinHeap.isHeapified<number>(numbers)); // true
 console.log(MaxHeap.isHeapified<IBid>(bids, (bid) => bid.value)); // true
