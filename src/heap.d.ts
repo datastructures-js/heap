@@ -1,13 +1,13 @@
-interface IComparator<T> {
+export interface IComparator<T> {
   (a: T, b: T): number;
 }
 
 export interface IGetCompareValue<T> {
-  (value: T): number|string;
+  (value: T): number | string;
 }
 
 export class Heap<T> {
-  constructor(comparator: (a: T, b: T) => number, values?: T[], leaf?: T);
+  constructor(comparator: IComparator<T>, values?: T[], leaf?: T);
   insert(value: T): Heap<T>;
   extractRoot(): T;
   sort(): T[];
