@@ -16,12 +16,12 @@ class MaxHeap extends Heap {
    * @param {number|string|object} [leaf]
    */
   constructor(getValueCb, values, leaf) {
-    const comparator = (a, b) => {
+    const compare = (a, b) => {
       const aVal = typeof getValueCb === 'function' ? getValueCb(a) : a;
       const bVal = typeof getValueCb === 'function' ? getValueCb(b) : b;
       return aVal < bVal ? 1 : -1;
     };
-    super(comparator, values, leaf);
+    super(compare, values, leaf);
     this._getValueCb = getValueCb;
   }
 
