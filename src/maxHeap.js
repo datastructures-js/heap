@@ -11,18 +11,18 @@ const { Heap } = require('./heap');
  */
 class MaxHeap extends Heap {
   /**
-   * @param {function} [getValueCb]
+   * @param {function} [getCompareValue]
    * @param {array} [values]
    * @param {number|string|object} [leaf]
    */
-  constructor(getValueCb, values, leaf) {
+  constructor(getCompareValue, values, leaf) {
     const compare = (a, b) => {
-      const aVal = typeof getValueCb === 'function' ? getValueCb(a) : a;
-      const bVal = typeof getValueCb === 'function' ? getValueCb(b) : b;
+      const aVal = typeof getCompareValue === 'function' ? getCompareValue(a) : a;
+      const bVal = typeof getCompareValue === 'function' ? getCompareValue(b) : b;
       return aVal < bVal ? 1 : -1;
     };
     super(compare, values, leaf);
-    this._getValueCb = getValueCb;
+    this._getCompareValue = getCompareValue;
   }
 
   /**
@@ -31,7 +31,7 @@ class MaxHeap extends Heap {
    * @returns {MaxHeap}
    */
   clone() {
-    return new MaxHeap(this._getValueCb, this._nodes.slice(), this._leaf);
+    return new MaxHeap(this._getCompareValue, this._nodes.slice(), this._leaf);
   }
 
   /**
@@ -39,14 +39,14 @@ class MaxHeap extends Heap {
    * @public
    * @static
    * @param {array} values
-   * @param {function} [getValueCb]
+   * @param {function} [getCompareValue]
    * @returns {MaxHeap}
    */
-  static heapify(values, getValueCb) {
+  static heapify(values, getCompareValue) {
     if (!Array.isArray(values)) {
       throw new Error('MaxHeap.heapify expects an array');
     }
-    return new MaxHeap(getValueCb, values).fix();
+    return new MaxHeap(getCompareValue, values).fix();
   }
 
   /**
@@ -54,11 +54,11 @@ class MaxHeap extends Heap {
    * @public
    * @static
    * @param {array} values
-   * @param {function} [getValueCb]
+   * @param {function} [getCompareValue]
    * @returns {boolean}
    */
-  static isHeapified(values, getValueCb) {
-    return new MaxHeap(getValueCb, values).isValid();
+  static isHeapified(values, getCompareValue) {
+    return new MaxHeap(getCompareValue, values).isValid();
   }
 }
 
