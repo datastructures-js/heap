@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 [![npm](https://img.shields.io/npm/dm/@datastructures-js/heap.svg)](https://www.npmjs.com/package/@datastructures-js/heap) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/@datastructures-js/heap)
 
-A javascript implementation for Heap data structure. Heap base class allows creating heaps using a custom comparator, and MinHeap/MaxHeap classes extend it for use cases that do not require complex comparison like primitive values and known comparison object prop.
+A javascript implementation for Heap data structure. Heap base class allows creating heaps using a custom compare function, and MinHeap/MaxHeap classes extend it for use cases that do not require complex comparison like primitive values and known comparison object prop.
 
 <img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
@@ -47,7 +47,7 @@ import { Heap, MinHeap, MaxHeap } from '@datastructures-js/heap';
 ### constructor
 
 #### Heap
-constructor requires a comparator function that tells the heap when to swap values. Function works similar to javascript sort callback, bigger than 0, means, swap elements.
+constructor requires a compare function that tells the heap when to swap values. Function works similar to javascript sort callback, bigger than 0, means, swap elements.
 
 ##### TS
 ```ts
@@ -56,7 +56,7 @@ interface ICar {
   price: number;
 }
 
-const carComparator = (a: ICar, b: ICar) => {
+const compareCars = (a: ICar, b: ICar) => {
   if (a.year > b.year) {
     return -1;
   }
@@ -68,12 +68,12 @@ const carComparator = (a: ICar, b: ICar) => {
   return a.price < b.price ? -1 : 1;
 };
 
-const carsHeap = new Heap<ICar>(carComparator);
+const carsHeap = new Heap<ICar>(compareCars);
 ```
 
 ##### JS
 ```js
-const carComparator = (a, b) => {
+const compareCars = (a, b) => {
   if (a.year > b.year) {
     return -1;
   }
@@ -85,11 +85,11 @@ const carComparator = (a, b) => {
   return a.price < b.price ? -1 : 1;
 };
 
-const carsHeap = new Heap(carComparator);
+const carsHeap = new Heap(compareCars);
 ```
 
 #### MinHeap, MaxHeap
-constructor does not require a comparator here and it's useful when working with primitive values like numbers, it can also be used with objects by passing a callback that indicates what object prop will be used in comparison.
+constructor does not require a compare function and it's useful when working with primitive values like numbers, it can also be used with objects by passing a callback that indicates what object prop will be used in comparison.
 
 ##### TS
 ```ts
@@ -215,7 +215,7 @@ console.log(bidsHeap.size()); // 7
 ```
 
 ### sort
-returns a list of sorted values in O(n*log(n)) runtime, based on the comparator logic, and in reverse order. In MaxHeap it returns the list of sorted values in ascending order, and in descending order in MinHeap. sort mutates the node positions in the heap, to prevent that, you can sort a clone of the heap.
+returns a list of sorted values in O(n*log(n)) runtime, based on the comparison logic, and in reverse order. In MaxHeap it returns the list of sorted values in ascending order, and in descending order in MinHeap. sort mutates the node positions in the heap, to prevent that, you can sort a clone of the heap.
 
 ```js
 console.log(carsHeap.sort());
@@ -324,7 +324,7 @@ converts a list of values into a heap without using an additional space.
 
 ##### TS
 ```ts
-const heapifiedCars = Heap.heapify<ICar>(cars, carComparator);
+const heapifiedCars = Heap.heapify<ICar>(cars, compareCars);
 console.log(heapifiedCars.isValid()); // true
 // list is heapified
 console.log(cars);
@@ -363,7 +363,7 @@ console.log(bids);
 
 ##### JS
 ```ts
-const heapifiedCars = Heap.heapify(cars, carComparator);
+const heapifiedCars = Heap.heapify(cars, compareCars);
 console.log(heapifiedCars.isValid()); // true
 // list is heapified
 console.log(cars);
@@ -405,14 +405,14 @@ Checks if a given list is heapified.
 
 #### TS
 ```ts
-console.log(Heap.isHeapified<ICar>(cars, carComparator)); // true
+console.log(Heap.isHeapified<ICar>(cars, compareCars)); // true
 console.log(MinHeap.isHeapified<number>(numbers)); // true
 console.log(MaxHeap.isHeapified<IBid>(bids, (bid) => bid.value)); // true
 ```
 
 #### JS
 ```js
-console.log(Heap.isHeapified(cars, carComparator)); // true
+console.log(Heap.isHeapified(cars, compareCars)); // true
 console.log(MinHeap.isHeapified(numbers)); // true
 console.log(MaxHeap.isHeapified(bids, (bid) => bid.value)); // true
 ```
