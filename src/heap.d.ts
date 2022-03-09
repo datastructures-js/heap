@@ -1,4 +1,4 @@
-export interface IComparator<T> {
+export interface ICompare<T> {
   (a: T, b: T): number;
 }
 
@@ -7,7 +7,7 @@ export interface IGetCompareValue<T> {
 }
 
 export class Heap<T> {
-  constructor(comparator: IComparator<T>, values?: T[], leaf?: T);
+  constructor(comparator: ICompare<T>, values?: T[], leaf?: T);
   insert(value: T): Heap<T>;
   extractRoot(): T;
   sort(): T[];
@@ -19,6 +19,6 @@ export class Heap<T> {
   size(): number;
   isEmpty(): boolean;
   clear(): void;
-  static heapify<T>(values: T[], comparator: IComparator<T> | IGetCompareValue<T>): Heap<T>;
-  static isHeapified<T>(values: T[], comparator: IComparator<T> | IGetCompareValue<T>): boolean;
+  static heapify<T>(values: T[], comparator: ICompare<T> | IGetCompareValue<T>): Heap<T>;
+  static isHeapified<T>(values: T[], comparator: ICompare<T> | IGetCompareValue<T>): boolean;
 }
