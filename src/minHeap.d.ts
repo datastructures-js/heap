@@ -1,8 +1,5 @@
 import { Heap } from './heap';
-
-export interface IGetCompareValue<T> {
-  (value: T): number | string;
-}
+import { IGetCompareValue } from './maxHeap';
 
 export class MinHeap<T> {
   constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
