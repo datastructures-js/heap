@@ -7,16 +7,16 @@
 class Heap {
   /**
    * @param {function} compare
-   * @param {array} [values]
-   * @param {number|string|object} [leaf]
+   * @param {array} [_values]
+   * @param {number|string|object} [_leaf]
    */
-  constructor(compare, values, leaf) {
+  constructor(compare, _values, _leaf) {
     if (typeof compare !== 'function') {
       throw new Error('Heap constructor expects a compare function');
     }
     this._compare = compare;
-    this._nodes = Array.isArray(values) ? values : [];
-    this._leaf = leaf || null;
+    this._nodes = Array.isArray(_values) ? _values : [];
+    this._leaf = _leaf || null;
   }
 
   /**

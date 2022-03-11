@@ -1,8 +1,22 @@
-import { Heap, IGetCompareValue } from './heap';
+import { Heap } from './heap';
 
-export class MinHeap<T> extends Heap<T> {
-  constructor(getCompareValue?: IGetCompareValue<T>, values?: T[], leaf?: T);
+export interface IGetCompareValue<T> {
+  (value: T): number | string;
+}
+
+export class MinHeap<T> {
+  constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
+  insert(value: T): MinHeap<T>;
+  extractRoot(): T;
+  sort(): T[];
+  fix(): MinHeap<T>;
+  isValid(): boolean;
   clone(): MinHeap<T>;
+  root(): T;
+  leaf(): T;
+  size(): number;
+  isEmpty(): boolean;
+  clear(): void;
   static heapify<T>(values: T[], getCompareValue?: IGetCompareValue<T>): MinHeap<T>;
   static isHeapified<T>(values: T[], getCompareValue?: IGetCompareValue<T>): boolean;
 }
