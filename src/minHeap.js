@@ -21,9 +21,6 @@ class MinHeap {
    * @param {Heap} [_heap]
    */
   constructor(getCompareValue, _heap) {
-    if (getCompareValue && typeof getCompareValue !== 'function') {
-      throw new Error('MinHeap constructor accepts a function to get compare value from object');
-    }
     this._getCompareValue = getCompareValue;
     this._heap = _heap || new Heap(getMinCompare(getCompareValue));
   }
