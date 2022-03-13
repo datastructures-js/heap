@@ -1,8 +1,22 @@
-import { Heap, IGetCompareValue } from './heap';
+import { Heap } from './heap';
 
-export class MaxHeap<T> extends Heap<T> {
-  constructor(getCompareValue?: IGetCompareValue<T>, values?: T[], leaf?: T);
+export interface IGetCompareValue<T> {
+  (value: T): number | string;
+}
+
+export class MaxHeap<T> {
+  constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
+  insert(value: T): MaxHeap<T>;
+  extractRoot(): T;
+  sort(): T[];
+  fix(): MaxHeap<T>;
+  isValid(): boolean;
   clone(): MaxHeap<T>;
+  root(): T;
+  leaf(): T;
+  size(): number;
+  isEmpty(): boolean;
+  clear(): void;
   static heapify<T>(values: T[], getCompareValue?: IGetCompareValue<T>): MaxHeap<T>;
   static isHeapified<T>(values: T[], getCompareValue?: IGetCompareValue<T>): boolean;
 }

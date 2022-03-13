@@ -2,10 +2,6 @@ export interface ICompare<T> {
   (a: T, b: T): number;
 }
 
-export interface IGetCompareValue<T> {
-  (value: T): number | string;
-}
-
 export class Heap<T> {
   constructor(comparator: ICompare<T>, values?: T[], leaf?: T);
   insert(value: T): Heap<T>;
@@ -19,6 +15,6 @@ export class Heap<T> {
   size(): number;
   isEmpty(): boolean;
   clear(): void;
-  static heapify<T>(values: T[], comparator: ICompare<T> | IGetCompareValue<T>): Heap<T>;
-  static isHeapified<T>(values: T[], comparator: ICompare<T> | IGetCompareValue<T>): boolean;
+  static heapify<T>(values: T[], comparator: ICompare<T>): Heap<T>;
+  static isHeapified<T>(values: T[], comparator: ICompare<T>): boolean;
 }

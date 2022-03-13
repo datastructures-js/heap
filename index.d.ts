@@ -1,6 +1,6 @@
-import { Heap, ICompare, IGetCompareValue } from './src/heap';
+import { Heap, ICompare } from './src/heap';
 import { MinHeap } from './src/minHeap';
-import { MaxHeap } from './src/maxHeap';
+import { MaxHeap, IGetCompareValue } from './src/maxHeap';
 
 export { Heap }
 export { ICompare }
