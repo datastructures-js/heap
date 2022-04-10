@@ -17,6 +17,10 @@ class Heap {
     this._compare = compare;
     this._nodes = Array.isArray(_values) ? _values : [];
     this._leaf = _leaf || null;
+
+    this.push = this.insert; // Alias of insert
+    this.pop = this.extractRoot; // Alias of extractRoot
+    this.top = this.root; // Alias of root
   }
 
   /**

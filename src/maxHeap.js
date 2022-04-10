@@ -23,6 +23,10 @@ class MaxHeap {
   constructor(getCompareValue, _heap) {
     this._getCompareValue = getCompareValue;
     this._heap = _heap || new Heap(getMaxCompare(getCompareValue));
+
+    this.push = this.insert; // Alias of insert
+    this.pop = this.extractRoot; // Alias of extractRoot
+    this.top = this.root; // Alias of root
   }
 
   /**

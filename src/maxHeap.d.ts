@@ -7,12 +7,15 @@ export interface IGetCompareValue<T> {
 export class MaxHeap<T> {
   constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
   insert(value: T): MaxHeap<T>;
+  push(value: T): MaxHeap<T>;
   extractRoot(): T;
+  pop(): T;
   sort(): T[];
   fix(): MaxHeap<T>;
   isValid(): boolean;
   clone(): MaxHeap<T>;
   root(): T;
+  top(): T;
   leaf(): T;
   size(): number;
   isEmpty(): boolean;
