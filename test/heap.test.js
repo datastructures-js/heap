@@ -43,7 +43,7 @@ describe('Heap', () => {
     });
 
     it('gets root value', () => {
-      expect(heap.root()).to.eql({ id: 20 });
+      expect(heap.top()).to.eql({ id: 20 });
     });
 
     it('gets leaf value', () => {
@@ -79,8 +79,8 @@ describe('Heap', () => {
   describe('max heap', () => {
     const heap = new Heap(charComparator);
 
-    it('insert values', () => {
-      charValues.forEach((value) => heap.insert(value));
+    it('push values', () => {
+      charValues.forEach((value) => heap.push(value));
     });
 
     it('sort in ascending order', () => {
@@ -119,14 +119,14 @@ describe('Heap', () => {
       expect(heap.isValid()).to.equal(true);
     });
 
-    it('extract root value', () => {
-      expect(heap.extractRoot()).to.deep.equal({ id: 'z' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'x' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'm' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'k' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'f' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'c' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'b' });
+    it('pop root value', () => {
+      expect(heap.pop()).to.deep.equal({ id: 'z' });
+      expect(heap.pop()).to.deep.equal({ id: 'x' });
+      expect(heap.pop()).to.deep.equal({ id: 'm' });
+      expect(heap.pop()).to.deep.equal({ id: 'k' });
+      expect(heap.pop()).to.deep.equal({ id: 'f' });
+      expect(heap.pop()).to.deep.equal({ id: 'c' });
+      expect(heap.pop()).to.deep.equal({ id: 'b' });
       expect(heap.isEmpty()).to.equal(true);
     });
   });

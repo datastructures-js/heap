@@ -64,8 +64,8 @@ describe('MinHeap', () => {
     ];
     const heap = new MinHeap((value) => value.id);
 
-    it('insert values', () => {
-      values.forEach((value) => heap.insert(value));
+    it('push values', () => {
+      values.forEach((value) => heap.push(value));
     });
 
     it('sort in descending order', () => {
@@ -78,7 +78,7 @@ describe('MinHeap', () => {
     });
 
     it('gets root value', () => {
-      expect(heap.root()).to.eql({ id: 20 });
+      expect(heap.top()).to.eql({ id: 20 });
     });
 
     it('gets leaf value', () => {
@@ -99,14 +99,14 @@ describe('MinHeap', () => {
       expect(heap.isValid()).to.equal(true);
     });
 
-    it('extract root value', () => {
-      expect(heap.extractRoot()).to.deep.equal({ id: 20 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 30 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 40 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 50 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 60 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 80 });
-      expect(heap.extractRoot()).to.deep.equal({ id: 90 });
+    it('pop root value', () => {
+      expect(heap.pop()).to.deep.equal({ id: 20 });
+      expect(heap.pop()).to.deep.equal({ id: 30 });
+      expect(heap.pop()).to.deep.equal({ id: 40 });
+      expect(heap.pop()).to.deep.equal({ id: 50 });
+      expect(heap.pop()).to.deep.equal({ id: 60 });
+      expect(heap.pop()).to.deep.equal({ id: 80 });
+      expect(heap.pop()).to.deep.equal({ id: 90 });
       expect(heap.isEmpty()).to.equal(true);
     });
   });

@@ -68,8 +68,8 @@ describe('MaxHeap', () => {
     ];
     const heap = new MaxHeap((value) => value.id);
 
-    it('insert values', () => {
-      values.forEach((value) => heap.insert(value));
+    it('push values', () => {
+      values.forEach((value) => heap.push(value));
     });
 
     it('sort in ascending order', () => {
@@ -84,7 +84,7 @@ describe('MaxHeap', () => {
     });
 
     it('gets root value', () => {
-      expect(heap.root()).to.eql({ id: 'z' });
+      expect(heap.top()).to.eql({ id: 'z' });
     });
 
     it('gets leaf value', () => {
@@ -106,14 +106,14 @@ describe('MaxHeap', () => {
       expect(heap.isValid()).to.equal(true);
     });
 
-    it('extract root value', () => {
-      expect(heap.extractRoot()).to.deep.equal({ id: 'z' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'x' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'm' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'k' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'f' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'c' });
-      expect(heap.extractRoot()).to.deep.equal({ id: 'b' });
+    it('pop root value', () => {
+      expect(heap.pop()).to.deep.equal({ id: 'z' });
+      expect(heap.pop()).to.deep.equal({ id: 'x' });
+      expect(heap.pop()).to.deep.equal({ id: 'm' });
+      expect(heap.pop()).to.deep.equal({ id: 'k' });
+      expect(heap.pop()).to.deep.equal({ id: 'f' });
+      expect(heap.pop()).to.deep.equal({ id: 'c' });
+      expect(heap.pop()).to.deep.equal({ id: 'b' });
       expect(heap.isEmpty()).to.equal(true);
     });
   });
