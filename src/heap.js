@@ -17,10 +17,6 @@ class Heap {
     this._compare = compare;
     this._nodes = Array.isArray(_values) ? _values : [];
     this._leaf = _leaf || null;
-
-    this.push = this.insert; // Alias of insert
-    this.pop = this.extractRoot; // Alias of extractRoot
-    this.top = this.root; // Alias of root
   }
 
   /**
@@ -186,6 +182,16 @@ class Heap {
   }
 
   /**
+   * Inserts a new value into the heap
+   * @public
+   * @param {number|string|object} value
+   * @returns {Heap}
+   */
+  push(value) {
+    return this.insert(value);
+  }
+
+  /**
    * Removes and returns the root node in the heap
    * @public
    * @returns {number|string|object}
@@ -205,6 +211,15 @@ class Heap {
     }
 
     return root;
+  }
+
+  /**
+   * Removes and returns the root node in the heap
+   * @public
+   * @returns {number|string|object}
+   */
+  pop() {
+    return this.extractRoot();
   }
 
   /**
@@ -284,6 +299,15 @@ class Heap {
     }
 
     return this._nodes[0];
+  }
+
+  /**
+   * Returns the root node in the heap
+   * @public
+   * @returns {number|string|object}
+   */
+  top() {
+    return this.root();
   }
 
   /**

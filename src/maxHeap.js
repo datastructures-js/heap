@@ -23,10 +23,6 @@ class MaxHeap {
   constructor(getCompareValue, _heap) {
     this._getCompareValue = getCompareValue;
     this._heap = _heap || new Heap(getMaxCompare(getCompareValue));
-
-    this.push = this.insert; // Alias of insert
-    this.pop = this.extractRoot; // Alias of extractRoot
-    this.top = this.root; // Alias of root
   }
 
   /**
@@ -40,12 +36,31 @@ class MaxHeap {
   }
 
   /**
+   * Inserts a new value into the heap
+   * @public
+   * @param {number|string|object} value
+   * @returns {Heap}
+   */
+  push(value) {
+    return this.insert(value);
+  }
+
+  /**
    * Removes and returns the root node in the heap
    * @public
    * @returns {number|string|object}
    */
   extractRoot() {
     return this._heap.extractRoot();
+  }
+
+  /**
+   * Removes and returns the root node in the heap
+   * @public
+   * @returns {number|string|object}
+   */
+  pop() {
+    return this.extractRoot();
   }
 
   /**
@@ -82,6 +97,15 @@ class MaxHeap {
    */
   root() {
     return this._heap.root();
+  }
+
+  /**
+   * Returns the root node in the heap
+   * @public
+   * @returns {number|string|object}
+   */
+  top() {
+    return this.root();
   }
 
   /**
