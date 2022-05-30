@@ -115,7 +115,7 @@ const numbersHeap = new MinHeap();
 const bidsHeap = new MaxHeap((bid) => bid.value);
 ```
 
-### insert
+### insert (push)
 inserts a value in a correct position into the heap in O(log(n)) runtime.
 
 ```js
@@ -131,7 +131,7 @@ const cars = [
 cars.forEach((car) => carsHeap.insert(car));
 
 const numbers = [3, -2, 5, 0, -1, -5, 4];
-numbers.forEach((num) => numbersHeap.insert(num));
+numbers.forEach((num) => numbersHeap.push(num));
 
 const bids = [
   { id: 1, value: 1000 },
@@ -145,7 +145,7 @@ const bids = [
 bids.forEach((bid) => bidsHeap.insert(bid));
 ```
 
-### extractRoot
+### extractRoot (pop)
 removes and returns the root (top) value of the heap in O(log(n)) runtime.
 
 ```js
@@ -163,7 +163,7 @@ while (!carsHeap.isEmpty()) {
 */
 
 while (!numbersHeap.isEmpty()) {
-  console.log(numbersHeap.extractRoot());
+  console.log(numbersHeap.pop());
 }
 /*
 -5
@@ -189,7 +189,7 @@ while (!bidsHeap.isEmpty()) {
 */
 ```
 
-### root
+### root (top)
 returns the root node without removing it.
 
 ```js
@@ -199,8 +199,8 @@ numbers.forEach((num) => numbersHeap.insert(num));
 bids.forEach((bid) => bidsHeap.insert(bid));
 
 console.log(carsHeap.root()); // { year: 2022, price: 70000 }
-console.log(numbersHeap.root()); // -5
-console.log(bidsHeap.root()); // { id: 2, value: 20000 }
+console.log(numbersHeap.top()); // -5
+console.log(bidsHeap.top()); // { id: 2, value: 20000 }
 ```
 
 ### leaf
