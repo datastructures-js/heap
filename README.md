@@ -266,7 +266,7 @@ console.log(bidsHeap.isValid()); // false
 ```
 
 ### fix
-fixes the heap by making the necessary swaps between nodes in O(n*log(n)) runtime.
+fixes the heap by making the necessary swaps between nodes in O(n) runtime.
 
 ```js
 console.log(carsHeap.fix().isValid()); // true
