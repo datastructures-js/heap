@@ -327,7 +327,7 @@ console.log(bidsHeap.size()); // 0
 ```
 
 ### heapify
-converts a list of values into a heap without using an additional space.
+converts a list of values into a heap without using an additional space in O(n) runtime.
 
 ##### TS
 ```ts
