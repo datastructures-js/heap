@@ -241,8 +241,8 @@ class Heap {
    * @returns {Heap}
    */
   fix() {
-    for (let i = 0; i < this.size(); i += 1) {
-      this._heapifyUp(i);
+    for (let i = Math.floor(this.size() / 2) - 1; i >= 0; i -= 1) {
+      this._heapifyDown(i);
     }
     return this;
   }
