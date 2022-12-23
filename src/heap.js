@@ -241,9 +241,19 @@ class Heap {
    * @returns {Heap}
    */
   fix() {
+    // fix node position
     for (let i = Math.floor(this.size() / 2) - 1; i >= 0; i -= 1) {
       this._heapifyDown(i);
     }
+
+    // fix leaf value
+    for (let i = Math.floor(this.size() / 2); i < this.size(); i += 1) {
+      const value = this._nodes[i];
+      if (this._leaf === null || this._compare(value, this._leaf) > 0) {
+        this._leaf = value;
+      }
+    }
+
     return this;
   }
 

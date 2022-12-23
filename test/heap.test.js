@@ -40,6 +40,7 @@ describe('Heap', () => {
     it('fix position after sort', () => {
       expect(heap.isValid()).to.equal(false);
       expect(heap.fix().isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 90 });
     });
 
     it('gets root value', () => {
@@ -93,6 +94,7 @@ describe('Heap', () => {
     it('fix position after sort', () => {
       expect(heap.isValid()).to.equal(false);
       expect(heap.fix().isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 'b' });
     });
 
     it('gets root value', () => {
@@ -135,11 +137,13 @@ describe('Heap', () => {
     it('buids min heap from array', () => {
       const heap = Heap.heapify(numValues, numComparator);
       expect(heap.isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 90 });
     });
 
     it('builds max heap from array', () => {
       const heap = Heap.heapify(charValues, charComparator);
       expect(heap.isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 'b' });
     });
   });
 
