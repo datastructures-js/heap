@@ -153,6 +153,23 @@ class MinHeap {
   }
 
   /**
+   * Implements an iterable on the heap
+   * @public
+   */
+  [Symbol.iterator]() {
+    let size = this.size();
+    return {
+      next: () => {
+        size -= 1;
+        return {
+          value: this.pop(),
+          done: size === -1
+        };
+      }
+    };
+  }
+
+  /**
    * Builds a MinHeap from an array
    * @public
    * @static

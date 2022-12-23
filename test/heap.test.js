@@ -170,4 +170,18 @@ describe('Heap', () => {
       expect(Heap.isHeapified(heapifiedValues, charComparator)).to.equal(true);
     });
   });
+
+  describe('iterator', () => {
+    it('allows iterating on heap elements', () => {
+      const testArr = [20, 30, 40, 50, 80, 90];
+      const h1 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      expect([...h1]).to.eql(testArr);
+      const h2 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      const res = [];
+      for (const n of h2) {
+        res.push(n);
+      }
+      expect(res).to.eql(testArr);
+    });
+  });
 });

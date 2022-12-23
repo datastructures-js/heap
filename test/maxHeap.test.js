@@ -117,4 +117,18 @@ describe('MaxHeap', () => {
       expect(heap.isEmpty()).to.equal(true);
     });
   });
+
+  describe('iterator', () => {
+    it('allows iterating on heap elements', () => {
+      const testArr = [90, 80, 50, 40, 30, 20];
+      const h1 = MaxHeap.heapify(testArr.slice());
+      expect([...h1]).to.eql(testArr);
+      const h2 = MaxHeap.heapify(testArr.slice());
+      const res = [];
+      for (const n of h2) {
+        res.push(n);
+      }
+      expect(res).to.eql(testArr);
+    });
+  });
 });
