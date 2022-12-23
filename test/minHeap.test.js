@@ -110,4 +110,18 @@ describe('MinHeap', () => {
       expect(heap.isEmpty()).to.equal(true);
     });
   });
+
+  describe('iterator', () => {
+    it('allows iterating on heap elements', () => {
+      const testArr = [20, 30, 40, 50, 80, 90];
+      const h1 = MinHeap.heapify(testArr.slice());
+      expect([...h1]).to.eql(testArr);
+      const h2 = MinHeap.heapify(testArr.slice());
+      const res = [];
+      for (const n of h2) {
+        res.push(n);
+      }
+      expect(res).to.eql(testArr);
+    });
+  });
 });

@@ -40,6 +40,7 @@ describe('Heap', () => {
     it('fix position after sort', () => {
       expect(heap.isValid()).to.equal(false);
       expect(heap.fix().isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 90 });
     });
 
     it('gets root value', () => {
@@ -93,6 +94,7 @@ describe('Heap', () => {
     it('fix position after sort', () => {
       expect(heap.isValid()).to.equal(false);
       expect(heap.fix().isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 'b' });
     });
 
     it('gets root value', () => {
@@ -135,11 +137,13 @@ describe('Heap', () => {
     it('buids min heap from array', () => {
       const heap = Heap.heapify(numValues, numComparator);
       expect(heap.isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 90 });
     });
 
     it('builds max heap from array', () => {
       const heap = Heap.heapify(charValues, charComparator);
       expect(heap.isValid()).to.equal(true);
+      expect(heap.leaf()).to.eql({ id: 'b' });
     });
   });
 
@@ -168,6 +172,20 @@ describe('Heap', () => {
         { id: 'c' }
       ];
       expect(Heap.isHeapified(heapifiedValues, charComparator)).to.equal(true);
+    });
+  });
+
+  describe('iterator', () => {
+    it('allows iterating on heap elements', () => {
+      const testArr = [20, 30, 40, 50, 80, 90];
+      const h1 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      expect([...h1]).to.eql(testArr);
+      const h2 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      const res = [];
+      for (const n of h2) {
+        res.push(n);
+      }
+      expect(res).to.eql(testArr);
     });
   });
 });

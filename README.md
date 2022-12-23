@@ -24,6 +24,7 @@ A javascript implementation for Heap data structure. Heap base class allows crea
   * [clear](#clear)
   * [heapify](#heapify)
   * [isHeapified](#isheapified)
+  * [Symbol.iterator](#symboliterator)
  * [Build](#build)
  * [License](#license)
 
@@ -270,7 +271,9 @@ fixes the heap by making the necessary swaps between nodes in O(n) runtime.
 
 ```js
 console.log(carsHeap.fix().isValid()); // true
+
 console.log(numbersHeap.fix().isValid()); // true
+
 console.log(bidsHeap.fix().isValid()); // true
 ```
 
@@ -372,7 +375,9 @@ console.log(bids);
 ```ts
 const heapifiedCars = Heap.heapify(cars, compareCars);
 console.log(heapifiedCars.isValid()); // true
-// list is heapified
+console.log(heapifiedCars.leaf()); // { year: 2010, price: 2000 }
+
+// original list is heapified
 console.log(cars);
 /*
 [
@@ -388,11 +393,13 @@ console.log(cars);
 
 const heapifiedNumbers = MinHeap.heapify(numbers);
 console.log(heapifiedNumbers.isValid()); // true
+console.log(heapifiedNumbers.leaf()); // 5
 console.log(numbers);
 // [-5, -1, -2, 3, 0, 5, 4]
 
 const heapifiedBids = MaxHeap.heapify(bids, (bid) => bid.value);
 console.log(heapifiedBids.isValid()); // true
+console.log(heapifiedBids.leaf()); // { id: 1, value: 1000 }
 console.log(bids);
 /*
 [
@@ -422,6 +429,41 @@ console.log(MaxHeap.isHeapified<IBid>(bids, (bid) => bid.value)); // true
 console.log(Heap.isHeapified(cars, compareCars)); // true
 console.log(MinHeap.isHeapified(numbers)); // true
 console.log(MaxHeap.isHeapified(bids, (bid) => bid.value)); // true
+```
+
+### Symbol.iterator
+The heaps implement a Symbol.iterator that makes them iterable on `pop`.
+```js
+console.log([...carsHeap]);
+/*
+[
+  { year: 2010, price: 2000 },
+  { year: 2022, price: 70000 },
+  { year: 2017, price: 50000 },
+  { year: 2015, price: 40000 },
+  { year: 2013, price: 25000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 35000 }
+]
+*/
+console.log(carsHeap.size()); // 0
+
+console.log([...numbersHeap]); // [5, -5, -2, -1, 0, 3, 4]
+console.log(numbersHeap.size()); // 0
+
+for (const bid of bidsHeap) {
+  console.log(bid);
+}
+/*
+{ id: 1, value: 1000 }
+{ id: 2, value: 20000 }
+{ id: 5, value: 12000 }
+{ id: 7, value: 8000 }
+{ id: 6, value: 4000 }
+{ id: 4, value: 1500 }
+{ id: 3, value: 1000 }
+*/
+console.log(bidsHeap.size()); // 0
 ```
 
 ## Build
