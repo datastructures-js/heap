@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## [4.2.0] - 2022-12-23
 ### Added
-Symbol.iterator to iterate on heaps pop.
+- Symbol.iterator to iterate on heaps pop.
 
 ### Fixed
 - `.fix()` to also fix heap leaf value in addition to nodes positions. 
-
 
 ## [4.1.2] - 2022-09-04
 ### Fixed
