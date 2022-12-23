@@ -432,7 +432,7 @@ console.log(MaxHeap.isHeapified(bids, (bid) => bid.value)); // true
 ```
 
 ### Symbol.iterator
-The heaps implement a Symbol.iterator makes popping elements iterable.
+The heaps implement a Symbol.iterator that makes them iterable on `pop`.
 ```js
 console.log([...carsHeap]);
 /*
