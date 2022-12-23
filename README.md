@@ -466,9 +466,6 @@ for (const bid of bidsHeap) {
 console.log(bidsHeap.size()); // 0
 ```
 
-
-#### JS
-
 ## Build
 
 ```
