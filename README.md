@@ -437,13 +437,13 @@ The heaps implement a Symbol.iterator that makes them iterable on `pop`.
 console.log([...carsHeap]);
 /*
 [
-  { year: 2010, price: 2000 },
   { year: 2022, price: 70000 },
   { year: 2017, price: 50000 },
   { year: 2015, price: 40000 },
   { year: 2013, price: 25000 },
   { year: 2013, price: 30000 },
-  { year: 2013, price: 35000 }
+  { year: 2013, price: 35000 },
+  { year: 2010, price: 2000 }
 ]
 */
 console.log(carsHeap.size()); // 0
