@@ -71,7 +71,9 @@ class MaxHeap {
   sort() {
     return this._heap.sort();
   }
-
+  toArray() {
+    return Array.from(this._heap._nodes);
+  }
   /**
    * Fixes node positions in the heap
    * @public

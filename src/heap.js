@@ -18,7 +18,9 @@ class Heap {
     this._nodes = Array.isArray(_values) ? _values : [];
     this._leaf = _leaf || null;
   }
-
+  toArray() {
+    return Array.from(this._nodes);
+  }
   /**
    * Checks if a parent has a left child
    * @private
