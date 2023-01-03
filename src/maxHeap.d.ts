@@ -24,10 +24,10 @@ export class MaxHeap<T> implements Iterable<T> {
   clear(): void;
   static heapify<T>(
     values: T[],
-    getCompareValue?: IGetCompareValue<T>,
+    getCompareValue?: IGetCompareValue<T>
   ): MaxHeap<T>;
   static isHeapified<T>(
     values: T[],
-    getCompareValue?: IGetCompareValue<T>,
+    getCompareValue?: IGetCompareValue<T>
   ): boolean;
 }

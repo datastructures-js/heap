@@ -162,7 +162,7 @@ class Heap {
       childIndex = this._compareChildrenBefore(
         index,
         leftChildIndex,
-        rightChildIndex,
+        rightChildIndex
       );
 
       if (this._shouldSwap(parentIndex, childIndex)) {

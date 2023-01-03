@@ -21,10 +21,10 @@ export class MinHeap<T> implements Iterable<T> {
   clear(): void;
   static heapify<T>(
     values: T[],
-    getCompareValue?: IGetCompareValue<T>,
+    getCompareValue?: IGetCompareValue<T>
   ): MinHeap<T>;
   static isHeapified<T>(
     values: T[],
-    getCompareValue?: IGetCompareValue<T>,
+    getCompareValue?: IGetCompareValue<T>
   ): boolean;
 }
