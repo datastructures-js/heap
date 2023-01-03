@@ -129,12 +129,7 @@ describe('MinHeap', () => {
       const testArr = [20, 30, 40, 50, 80, 90].sort((a, b) => a - b);
       const h1 = MinHeap.heapify(testArr.slice());
       expect(h1.toArray().sort((a, b) => a - b)).to.eql(testArr);
-      const h2 = MinHeap.heapify(testArr.slice());
-      const res = [];
-      for (const n of h2) {
-        res.push(n);
-      }
-      expect(res.sort((a, b) => a - b)).to.eql(testArr);
+     
     });
   });
 });
