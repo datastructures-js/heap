@@ -492,13 +492,15 @@ console.log(numbersHeap.toArray()); // [5, -5, -2, -1, 0, 3, 4]
 console.log(bidsHeap.toArray());
 
 /*
-{ id: 2, value: 20000 }
-{ id: 5, value: 12000 }
-{ id: 7, value: 8000 }
-{ id: 6, value: 4000 }
-{ id: 4, value: 1500 }
-{ id: 1, value: 1000 }
+[
+{ id: 2, value: 20000 },
+{ id: 5, value: 12000 },
+{ id: 7, value: 8000 },
+{ id: 6, value: 4000 },
+{ id: 4, value: 1500 },
+{ id: 1, value: 1000 },
 { id: 3, value: 1000 }
+]
 */
 
 ```
