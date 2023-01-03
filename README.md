@@ -470,7 +470,38 @@ console.log(bidsHeap.size()); // 0
 
 ### toArray
 
-Converts the heap to a cloned array.
+Converts the heap to a cloned array without sorting.
+
+```js
+console.log(carsHeap.toArray());
+/*
+[
+  { year: 2022, price: 70000 },
+  { year: 2017, price: 50000 },
+  { year: 2015, price: 40000 },
+  { year: 2013, price: 25000 },
+  { year: 2013, price: 30000 },
+  { year: 2013, price: 35000 },
+  { year: 2010, price: 2000 }
+]
+*/
+
+
+console.log(numbersHeap.toArray()); // [5, -5, -2, -1, 0, 3, 4]
+
+console.log(bidsHeap.toArray());
+
+/*
+{ id: 2, value: 20000 }
+{ id: 5, value: 12000 }
+{ id: 7, value: 8000 }
+{ id: 6, value: 4000 }
+{ id: 4, value: 1500 }
+{ id: 1, value: 1000 }
+{ id: 3, value: 1000 }
+*/
+
+```
 
 ## Build
 
