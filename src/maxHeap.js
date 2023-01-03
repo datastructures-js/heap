@@ -71,9 +71,15 @@ class MaxHeap {
   sort() {
     return this._heap.sort();
   }
+
+  /**
+   * Converts the heap to a cloned array.
+   * @returns {Array}
+   */
   toArray() {
     return Array.from(this._heap._nodes);
   }
+
   /**
    * Fixes node positions in the heap
    * @public

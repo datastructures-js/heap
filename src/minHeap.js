@@ -24,9 +24,15 @@ class MinHeap {
     this._getCompareValue = getCompareValue;
     this._heap = _heap || new Heap(getMinCompare(getCompareValue));
   }
+
+  /**
+   * Converts the heap to a cloned array.
+   * @returns {Array}
+   */
   toArray() {
     return Array.from(this._heap._nodes);
   }
+
   /**
    * Inserts a new value into the heap
    * @public
