@@ -20,7 +20,7 @@ class Heap {
   }
 
   /**
-   * Converts the heap to a cloned array.
+   * Converts the heap to a cloned array without sorting.
    * @public
    * @returns {Array}
    */
