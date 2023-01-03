@@ -18,9 +18,15 @@ class Heap {
     this._nodes = Array.isArray(_values) ? _values : [];
     this._leaf = _leaf || null;
   }
+
+  /**
+   * Converts the heap to a cloned array.
+   * @returns {Array}
+   */
   toArray() {
     return Array.from(this._nodes);
   }
+
   /**
    * Checks if a parent has a left child
    * @private
@@ -155,7 +161,7 @@ class Heap {
       childIndex = this._compareChildrenBefore(
         index,
         leftChildIndex,
-        rightChildIndex
+        rightChildIndex,
       );
 
       if (this._shouldSwap(parentIndex, childIndex)) {
