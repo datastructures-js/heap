@@ -188,4 +188,17 @@ describe('Heap', () => {
       expect(res).to.eql(testArr);
     });
   });
+  describe('toArray', () => {
+    it('Converts the heap to a cloned array.', () => {
+      const testArr = [20, 30, 40, 50, 80, 90].sort((a, b) => a - b);
+      const h1 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      expect(h1.toArray().sort((a, b) => a - b)).to.eql(testArr);
+      const h2 = Heap.heapify(testArr.slice(), (a, b) => a - b);
+      const res = [];
+      for (const n of h2) {
+        res.push(n);
+      }
+      expect(res.sort((a, b) => a - b)).to.eql(testArr);
+    });
+  });
 });
