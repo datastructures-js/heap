@@ -74,9 +74,11 @@ class MaxHeap {
 
   /**
    * Converts the heap to a cloned array.
+   * @public
    * @returns {Array}
    */
   toArray() {
+    // eslint-disable-next-line no-underscore-dangle
     return Array.from(this._heap._nodes);
   }
 

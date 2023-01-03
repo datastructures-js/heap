@@ -21,6 +21,7 @@ class Heap {
 
   /**
    * Converts the heap to a cloned array.
+   * @public
    * @returns {Array}
    */
   toArray() {
