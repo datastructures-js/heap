@@ -136,7 +136,6 @@ describe('MaxHeap', () => {
       const testArr = [90, 80, 50, 40, 30, 20].sort((a, b) => -a + b);
       const h1 = MaxHeap.heapify(testArr.slice());
       expect(h1.toArray().sort((a, b) => -a + b)).to.eql(testArr);
-     
     });
   });
 });
