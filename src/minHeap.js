@@ -31,7 +31,6 @@ class MinHeap {
    * @returns {Array}
    */
   toArray() {
-    // eslint-disable-next-line no-underscore-dangle
     return Array.from(this._heap._nodes);
   }
 

@@ -250,7 +250,7 @@ class Heap {
    * @returns {Heap}
    */
   fix() {
-    // fix node position
+    // fix node positions
     for (let i = Math.floor(this.size() / 2) - 1; i >= 0; i -= 1) {
       this._heapifyDown(i);
     }
