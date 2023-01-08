@@ -4,13 +4,7 @@
     "comma-dangle": ["error", {
       "functions": "ignore"
     }],
-    "no-underscore-dangle": [
-      "error",
-      {
-        "allowAfterThis": true,
-        "allowAfterSuper": true
-      }
-    ],
+    "no-underscore-dangle": 0,
     "class-methods-use-this": 0,
     "no-restricted-syntax": 0
   },
