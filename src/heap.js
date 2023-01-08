@@ -20,6 +20,15 @@ class Heap {
   }
 
   /**
+   * Converts the heap to a cloned array without sorting.
+   * @public
+   * @returns {Array}
+   */
+  toArray() {
+    return Array.from(this._nodes);
+  }
+
+  /**
    * Checks if a parent has a left child
    * @private
    */

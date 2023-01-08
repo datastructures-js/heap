@@ -3,6 +3,7 @@ import { IGetCompareValue } from "./maxHeap";
 
 export class MinHeap<T> implements Iterable<T> {
   constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
+  toArray(): T[];
   [Symbol.iterator](): Iterator<T, any, undefined>;
   insert(value: T): MinHeap<T>;
   push(value: T): MinHeap<T>;

@@ -6,6 +6,7 @@ export interface IGetCompareValue<T> {
 
 export class MaxHeap<T> implements Iterable<T> {
   constructor(getCompareValue?: IGetCompareValue<T>, _heap?: Heap<T>);
+  toArray(): T[];
   [Symbol.iterator](): Iterator<T, any, undefined>;
   insert(value: T): MaxHeap<T>;
   push(value: T): MaxHeap<T>;

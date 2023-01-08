@@ -26,6 +26,16 @@ class MinHeap {
   }
 
   /**
+   * Converts the heap to a cloned array without sorting.
+   * @public
+   * @returns {Array}
+   */
+  toArray() {
+    // eslint-disable-next-line no-underscore-dangle
+    return Array.from(this._heap._nodes);
+  }
+
+  /**
    * Inserts a new value into the heap
    * @public
    * @param {number|string|object} value

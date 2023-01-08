@@ -4,6 +4,7 @@ export interface ICompare<T> {
 
 export class Heap<T> implements Iterable<T> {
   constructor(comparator: ICompare<T>, values?: T[], leaf?: T);
+  toArray(): T[];
   [Symbol.iterator](): Iterator<T, any, undefined>;
   insert(value: T): Heap<T>;
   push(value: T): Heap<T>;
