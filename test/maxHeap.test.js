@@ -118,6 +118,21 @@ describe('MaxHeap', () => {
     });
   });
 
+  describe('isValid', () => {
+    it('consider heap with duplicates as valid', () => {
+      const maxHeap = new MaxHeap((x) => x.value);
+
+      maxHeap.insert({ value: 2268 });
+      maxHeap.insert({ value: 2268 });
+      expect(maxHeap.isValid()).to.equal(true);
+
+      const maxHeap2 = new MaxHeap();
+      maxHeap2.insert(22);
+      maxHeap2.insert(22);
+      expect(maxHeap2.isValid()).to.equal(true);
+    });
+  });
+
   describe('iterator', () => {
     it('allows iterating on heap elements', () => {
       const testArr = [90, 80, 50, 40, 30, 20];
