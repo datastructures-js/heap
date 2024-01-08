@@ -111,6 +111,21 @@ describe('MinHeap', () => {
     });
   });
 
+  describe('isValid', () => {
+    it('consider heap with duplicates as valid', () => {
+      const minHeap = new MinHeap((x) => x.value);
+
+      minHeap.insert({ value: 2268 });
+      minHeap.insert({ value: 2268 });
+      expect(minHeap.isValid()).to.equal(true);
+
+      const minHeap2 = new MinHeap();
+      minHeap2.insert(22);
+      minHeap2.insert(22);
+      expect(minHeap2.isValid()).to.equal(true);
+    });
+  });
+
   describe('iterator', () => {
     it('allows iterating on heap elements', () => {
       const testArr = [20, 30, 40, 50, 80, 90];
