@@ -215,6 +215,10 @@ class Heap {
     this._nodes.pop();
     this._heapifyDown(0);
 
+    if (root === this._leaf) {
+      this._leaf = null;
+    }
+
     return root;
   }
 
