@@ -216,7 +216,7 @@ class Heap {
     this._heapifyDown(0);
 
     if (root === this._leaf) {
-      this._leaf = this.root();
+      this._leaf = null;
     }
 
     return root;
