@@ -138,6 +138,16 @@ describe('MinHeap', () => {
       }
       expect(res).to.eql(testArr);
     });
+
+    it('iterates correctly with duplicates', () => {
+      const heap2 = new MinHeap();
+      [3, 1, 4, 1, 5].forEach((n) => heap2.insert(n));
+      const result = [];
+      for (const num of heap2) {
+        result.push(num);
+      }
+      expect(result).to.eql([1, 1, 3, 4, 5]);
+    });
   });
 
   describe('toArray', () => {
@@ -145,6 +155,24 @@ describe('MinHeap', () => {
       const testArr = [20, 30, 40, 50, 80, 90].sort((a, b) => a - b);
       const h1 = MinHeap.heapify(testArr.slice());
       expect(h1.toArray().sort((a, b) => a - b)).to.eql(testArr);
+    });
+  });
+
+  describe('constructor with initial values', () => {
+    it('should properly heapify initial values and maintain heap property after insertions', () => {
+      const heap = new MinHeap(null, [3, 1, 4]);
+      expect(heap.isValid()).to.equal(true);
+
+      heap.insert(2);
+      expect(heap.toArray()).to.eql([1, 2, 4, 3]);
+      expect(heap.isValid()).to.equal(true);
+    });
+
+    it('should handle insertion of smallest element correctly', () => {
+      const heap1 = new MinHeap(null, [3, 1, 4]);
+      heap1.insert(0);
+      expect(heap1.toArray()).to.eql([0, 1, 4, 3]);
+      expect(heap1.isValid()).to.equal(true);
     });
   });
 });

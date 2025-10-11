@@ -195,4 +195,22 @@ describe('Heap', () => {
       expect(h1.toArray().sort((a, b) => a - b)).to.eql(testArr);
     });
   });
+
+  describe('constructor with initial values', () => {
+    it('should properly heapify initial values and maintain heap property after insertions', () => {
+      const heap = new Heap((a, b) => a - b, [3, 1, 4]);
+      expect(heap.isValid()).to.equal(true);
+
+      heap.insert(2);
+      expect(heap.toArray()).to.eql([1, 2, 4, 3]);
+      expect(heap.isValid()).to.equal(true);
+    });
+
+    it('should handle insertion of smallest element correctly', () => {
+      const heap1 = new Heap((a, b) => a - b, [3, 1, 4]);
+      heap1.insert(0);
+      expect(heap1.toArray()).to.eql([0, 1, 4, 3]);
+      expect(heap1.isValid()).to.equal(true);
+    });
+  });
 });
