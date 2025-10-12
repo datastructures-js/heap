@@ -15,23 +15,14 @@ const getMinCompare = (getCompareValue) => (a, b) => {
  * @class MinHeap
  * @extends Heap
  */
-class MinHeap {
+class MinHeap extends Heap {
   /**
    * @param {function} [getCompareValue]
-   * @param {Heap} [_heap]
+   * @param {array} [values]
    */
-  constructor(getCompareValue, _heap) {
+  constructor(getCompareValue, values) {
+    super(getMinCompare(getCompareValue), values);
     this._getCompareValue = getCompareValue;
-    this._heap = _heap || new Heap(getMinCompare(getCompareValue));
-  }
-
-  /**
-   * Converts the heap to a cloned array without sorting.
-   * @public
-   * @returns {Array}
-   */
-  toArray() {
-    return Array.from(this._heap._nodes);
   }
 
   /**
@@ -41,44 +32,18 @@ class MinHeap {
    * @returns {MinHeap}
    */
   insert(value) {
-    return this._heap.insert(value);
+    super.insert(value);
+    return this;
   }
 
   /**
    * Inserts a new value into the heap
    * @public
    * @param {number|string|object} value
-   * @returns {Heap}
+   * @returns {MinHeap}
    */
   push(value) {
     return this.insert(value);
-  }
-
-  /**
-   * Removes and returns the root node in the heap
-   * @public
-   * @returns {number|string|object}
-   */
-  extractRoot() {
-    return this._heap.extractRoot();
-  }
-
-  /**
-   * Removes and returns the root node in the heap
-   * @public
-   * @returns {number|string|object}
-   */
-  pop() {
-    return this.extractRoot();
-  }
-
-  /**
-   * Applies heap sort and return the values sorted by priority
-   * @public
-   * @returns {array}
-   */
-  sort() {
-    return this._heap.sort();
   }
 
   /**
@@ -87,69 +52,8 @@ class MinHeap {
    * @returns {MinHeap}
    */
   fix() {
-    return this._heap.fix();
-  }
-
-  /**
-   * Verifies that all heap nodes are in the right position
-   * @public
-   * @returns {boolean}
-   */
-  isValid() {
-    return this._heap.isValid();
-  }
-
-  /**
-   * Returns the root node in the heap
-   * @public
-   * @returns {number|string|object}
-   */
-  root() {
-    return this._heap.root();
-  }
-
-  /**
-   * Returns the root node in the heap
-   * @public
-   * @returns {number|string|object}
-   */
-  top() {
-    return this.root();
-  }
-
-  /**
-   * Returns a leaf node in the heap
-   * @public
-   * @returns {number|string|object}
-   */
-  leaf() {
-    return this._heap.leaf();
-  }
-
-  /**
-   * Returns the number of nodes in the heap
-   * @public
-   * @returns {number}
-   */
-  size() {
-    return this._heap.size();
-  }
-
-  /**
-   * Checks if the heap is empty
-   * @public
-   * @returns {boolean}
-   */
-  isEmpty() {
-    return this._heap.isEmpty();
-  }
-
-  /**
-   * Clears the heap
-   * @public
-   */
-  clear() {
-    this._heap.clear();
+    super.fix();
+    return this;
   }
 
   /**
@@ -158,24 +62,7 @@ class MinHeap {
    * @returns {MinHeap}
    */
   clone() {
-    return new MinHeap(this._getCompareValue, this._heap.clone());
-  }
-
-  /**
-   * Implements an iterable on the heap
-   * @public
-   */
-  [Symbol.iterator]() {
-    let size = this.size();
-    return {
-      next: () => {
-        size -= 1;
-        return {
-          value: this.pop(),
-          done: size === -1
-        };
-      }
-    };
+    return new MinHeap(this._getCompareValue, this._nodes.slice());
   }
 
   /**
@@ -190,8 +77,7 @@ class MinHeap {
     if (!Array.isArray(values)) {
       throw new Error('MinHeap.heapify expects an array');
     }
-    const heap = new Heap(getMinCompare(getCompareValue), values);
-    return new MinHeap(getCompareValue, heap).fix();
+    return new MinHeap(getCompareValue, values);
   }
 
   /**
@@ -203,8 +89,7 @@ class MinHeap {
    * @returns {boolean}
    */
   static isHeapified(values, getCompareValue) {
-    const heap = new Heap(getMinCompare(getCompareValue), values);
-    return new MinHeap(getCompareValue, heap).isValid();
+    return new MinHeap(getCompareValue, values).isValid();
   }
 }
 

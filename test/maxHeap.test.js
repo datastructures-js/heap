@@ -153,4 +153,22 @@ describe('MaxHeap', () => {
       expect(h1.toArray().sort((a, b) => -a + b)).to.eql(testArr);
     });
   });
+
+  describe('constructor with initial values', () => {
+    it('should properly heapify initial values and maintain heap property after insertions', () => {
+      const heap = new MaxHeap(null, [3, 1, 4]);
+      expect(heap.isValid()).to.equal(true);
+
+      heap.insert(2);
+      expect(heap.toArray()).to.eql([4, 2, 3, 1]);
+      expect(heap.isValid()).to.equal(true);
+    });
+
+    it('should handle insertion of largest element correctly', () => {
+      const heap1 = new MaxHeap(null, [3, 1, 4]);
+      heap1.insert(5);
+      expect(heap1.toArray()).to.eql([5, 4, 3, 1]);
+      expect(heap1.isValid()).to.equal(true);
+    });
+  });
 });
