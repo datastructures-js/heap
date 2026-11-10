@@ -219,7 +219,7 @@ class Heap {
     this._nodes.pop();
     this._heapifyDown(0);
 
-    if (root === this._leaf) {
+    if (this.isEmpty()) {
       this._leaf = null;
     }
 
